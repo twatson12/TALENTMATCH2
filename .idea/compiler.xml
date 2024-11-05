@@ -2,6 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Gradle Imported" enabled="true">
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
@@ -10,10 +11,6 @@
         <module name="TalentMatch2.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="TalentMatch2" target="22" />
-      <module name="TalentMatch2.main" target="22" />
-      <module name="TalentMatch2.test" target="22" />
-    </bytecodeTargetLevel>
+    <bytecodeTargetLevel target="17" />
   </component>
 </project>

@@ -24,17 +24,23 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
 	// Firebase Admin SDK
 	implementation 'com.google.firebase:firebase-admin:9.0.0'
+}
 
+// Ensure consistent dependency resolution (if needed)
+configurations.all {
+	resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+		if (details.requested.group == 'org.springframework.boot' && details.requested.name.startsWith('spring-boot')) {
+			details.useVersion "3.3.5"
+		}
+	}
 }
 
 tasks.named('test') {
