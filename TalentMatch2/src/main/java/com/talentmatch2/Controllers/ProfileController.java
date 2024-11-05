@@ -26,25 +26,20 @@ public class ProfileController {
 
     // Get a single profile by ID
     @GetMapping("/{id}")
-    public Profile getProfileById(@PathVariable Long id) {
+    public Profile getProfileById(@PathVariable String id) {
         return profileService.getProfileById(id);
     }
 
-    // Create a new profile
-    @PostMapping
-    public Profile createProfile(@RequestBody Profile profile) {
-        return profileService.createProfile(profile);
-    }
 
     // Update an existing profile by ID
     @PutMapping("/{id}")
-    public Profile updateProfile(@PathVariable Long id, @RequestBody Profile profile) {
+    public String updateProfile(@PathVariable String id, @RequestBody Profile profile) {
         return profileService.updateProfile(id, profile);
     }
 
     // Delete a profile by ID
     @DeleteMapping("/{id}")
-    public void deleteProfile(@PathVariable Long id) {
+    public void deleteProfile(@PathVariable String id) {
         profileService.deleteProfile(id);
     }
 }
