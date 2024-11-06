@@ -1,5 +1,6 @@
 package com.talentmatch2.Models;
 
+import com.google.cloud.firestore.DocumentReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -10,7 +11,7 @@ import com.google.cloud.Timestamp;
 @AllArgsConstructor
 public class Opportunity {
     private String Description;        // Match Firebase field
-    private String EntertainerID;      // Match Firebase field, assuming it's a String reference path
+    private DocumentReference EntertainerID;      // Match Firebase field, assuming it's a String reference path
     private Timestamp Deadline;        // Match Firebase field
     private String MultiMedia;         // Match Firebase field
     private String Title;              // Match Firebase field

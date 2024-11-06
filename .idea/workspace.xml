@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c3e0afca-2e66-4e8a-b8a8-dd8ef1a0488c" name="Changes" comment="" />
+    <list default="true" id="c3e0afca-2e66-4e8a-b8a8-dd8ef1a0488c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/src/main/java/com/talentmatch2/Models/Opportunity.java" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/src/main/java/com/talentmatch2/Models/Opportunity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/src/main/java/com/talentmatch2/Models/Profile.java" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/src/main/java/com/talentmatch2/Models/Profile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/src/main/java/com/talentmatch2/Models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/src/main/java/com/talentmatch2/Models/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/src/main/java/com/talentmatch2/Services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/src/main/java/com/talentmatch2/Services/UserService.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -86,7 +95,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Artifacts",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "preferences.fileTypes",
@@ -154,6 +163,7 @@
       <workItem from="1730771618043" duration="8297000" />
       <workItem from="1730820027980" duration="2924000" />
       <workItem from="1730822983986" duration="6299000" />
+      <workItem from="1730842368257" duration="6632000" />
     </task>
     <servers />
   </component>

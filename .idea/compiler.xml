@@ -11,6 +11,6 @@
         <module name="TalentMatch2.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="17" />
+    <bytecodeTargetLevel target="22" />
   </component>
 </project>

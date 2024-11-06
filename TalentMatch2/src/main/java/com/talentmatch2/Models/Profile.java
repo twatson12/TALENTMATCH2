@@ -10,7 +10,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Profile {
-    private String portfolio;
-    private List<String> skills;
+    private String Portfolio;
+    private List<String> Skills;
     private DocumentReference userID;
+
 }

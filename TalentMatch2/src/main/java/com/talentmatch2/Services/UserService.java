@@ -18,7 +18,7 @@ public class UserService {
 
     private final CollectionReference userCollection;
 
-    @Autowired
+   @Autowired
     public UserService(Firestore firestore) {
         this.userCollection = firestore.collection("User");
     }
