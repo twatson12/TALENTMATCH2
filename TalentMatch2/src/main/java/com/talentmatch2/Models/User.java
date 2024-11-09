@@ -22,15 +22,9 @@ public class User {
     private String Lname;
     private String Password;
     private Timestamp registrationDate;
-    private DocumentReference RoleId; // Assuming this is a reference to a Role document
-    private DocumentReference SubscriptionPlanId; // Assuming this is a reference to a Subscription document
+    private String RoleName;
+    private String SubscriptionName;
 
-
-   // public void setRegistationDate(String registrationDate ) throws ParseException
-   // {
-
-   //     this.registrationDate = Timestamp.fromProto(Timestamps.parse(registrationDate));
-    //}
 
 
 }

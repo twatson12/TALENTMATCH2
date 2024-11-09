@@ -6,6 +6,7 @@ import Dashboard from './components/Dashboard';
 import './styles/App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Welcome from "./components/Welcome";
+import Search from "./components/Search";
 
 function App() {
     return (
@@ -16,6 +17,7 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/search" element={<Search/>} />
                 </Routes>
             </div>
         </Router>

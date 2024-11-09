@@ -1,6 +1,7 @@
 // src/components/Dashboard.js
 import React from 'react';
 import './Dashboard.css';
+import {Link} from "react-router-dom";
 
 
 function Dashboard() {
@@ -16,8 +17,12 @@ function Dashboard() {
                 <div className="header">
                     Header
                 </div>
+                <Link to="/search">
+                    <button className="search-button">Search</button>
+                </Link>
                 <div className="content">
                     <h2 className="dashboard-title">Dashboard Content</h2>
+
                     <div className="dashboard-content">
                         <p>Your dashboard content goes here.</p>
                     </div>
