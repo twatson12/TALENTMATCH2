@@ -1,0 +1,150 @@
+/* General Screen Background */
+.sign-in-screen {
+    background-color: #3b3b98; /* Deep purple-blue background */
+    display: flex;
+    max-width: 480px;
+    width: 100%;
+    flex-direction: column;
+    overflow: hidden;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Background Section */
+.red-carpet-background {
+    background: linear-gradient(135deg, #6a1b9a 0%, #0d47a1 100%); /* Purple to Blue Gradient */
+    display: flex;
+    min-height: 773px;
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* Sign-In Button */
+.sign-in-button {
+    border-radius: 35px;
+    background-color: rgba(93, 63, 211, 0.85); /* Vibrant purple-blue */
+    align-self: center;
+    width: 195px;
+    max-width: 100%;
+    color: #ffffff;
+    margin: 52px 0 0 13px;
+    padding: 10px 20px;
+    font: 400 24px 'Encode Sans', sans-serif;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+}
+
+/* Button Hover Effect */
+.sign-in-button:hover {
+    background-color: rgba(63, 81, 181, 0.85); /* Darker purple-blue */
+    cursor: pointer;
+}
+
+/* Icon Container */
+.icon-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+/* Left Icon */
+.icon-left {
+    aspect-ratio: 1.16;
+    object-fit: contain;
+    object-position: center;
+    width: 80px;
+    align-self: start;
+    filter: hue-rotate(250deg) brightness(1.1); /* Adds a bluish-purple tint */
+}
+
+/* Right Icon */
+.icon-right {
+    aspect-ratio: 1.51;
+    object-fit: contain;
+    object-position: center;
+    width: 80px;
+    align-self: end;
+    margin-top: 23px;
+    filter: hue-rotate(250deg) brightness(1.1); /* Adds a bluish-purple tint */
+}
+
+/* Accessibility - Visually Hidden */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+/* Centered form container */
+.login-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #3b3b98, #6a1b9a);
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+/* Styling for the form */
+.login-form {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Button Styling */
+.sign-in-button {
+    margin-top: 20px;
+    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+    background-color: rgba(93, 63, 211, 0.85);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.sign-in-button:hover {
+    background-color: rgba(63, 81, 181, 0.85);
+}
+
+/* Register link styling */
+.register-link {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: #333;
+    width: 100%;
+}
+
+.register-link a {
+    color: #6a1b9a;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.register-link a:hover {
+    color: #3b3b98;
+    text-decoration: underline;
+}
