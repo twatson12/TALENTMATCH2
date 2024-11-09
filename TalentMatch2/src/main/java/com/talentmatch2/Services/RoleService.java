@@ -10,6 +10,8 @@ import com.google.cloud.firestore.WriteResult;
 import com.talentmatch2.Models.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -21,6 +23,11 @@ public class RoleService {
     @Autowired
     public RoleService(Firestore firestore) {
         this.roleCollection = firestore.collection("Role");
+    }
+
+    public static ArrayList<Role> getRole() {
+        ArrayList<Role> roles = new ArrayList<>();
+        return roles;
     }
 
     // Save a new Role

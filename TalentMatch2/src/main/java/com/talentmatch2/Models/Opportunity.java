@@ -11,9 +11,9 @@ import com.google.cloud.Timestamp;
 @AllArgsConstructor
 public class Opportunity {
     private String Description;        // Match Firebase field
-    private DocumentReference EntertainerID;      // Match Firebase field, assuming it's a String reference path
-    private Timestamp Deadline;        // Match Firebase field
+    private DocumentReference entertainerID;      // Match Firebase field, assuming it's a String reference path
+    private String deadline;        // Match Firebase field
     private String MultiMedia;         // Match Firebase field
     private String Title;              // Match Firebase field
-    private Timestamp PostDate;        // Match Firebase field
+    private String postDate;        // Match Firebase field
 }

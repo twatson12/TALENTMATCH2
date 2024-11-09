@@ -7,16 +7,24 @@ import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.WriteResult;
+
+import com.talentmatch2.Models.Role;
 import com.talentmatch2.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+
 import java.util.List;
+
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
+
 
 @Service
 public class UserService {
 
     private final CollectionReference userCollection;
+    //private CollectionReference roleCollection;
 
    @Autowired
     public UserService(Firestore firestore) {
@@ -45,11 +53,13 @@ public class UserService {
         }
     }
 
-    // Get a single User by ID
+
+        // Get a single User by ID
     public User getUserById(String id) {
         ApiFuture<DocumentSnapshot> documentSnapshot = userCollection.document(id).get();
         try {
             return documentSnapshot.get().toObject(User.class);
+
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
             return null;
@@ -57,7 +67,8 @@ public class UserService {
     }
 
     // Update a User
-    public String updateUser(String id, User user) {
+        public String updateUser(String id, User user)
+        {
         ApiFuture<WriteResult> result = userCollection.document(id).set(user);
         try {
             return "User updated at: " + result.get().getUpdateTime();

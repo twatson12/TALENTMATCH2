@@ -1,5 +1,6 @@
 package com.talentmatch2.Models;
 
+import com.google.cloud.firestore.DocumentReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -10,5 +11,5 @@ import lombok.AllArgsConstructor;
 public class Review {
     private String Comment;    // Match Firebase field
     private String Rating;     // Match Firebase field
-    private String UserID;     // Match Firebase field, assuming it's a String reference path
+    private DocumentReference userID;     // Match Firebase field, assuming it's a String reference path
 }

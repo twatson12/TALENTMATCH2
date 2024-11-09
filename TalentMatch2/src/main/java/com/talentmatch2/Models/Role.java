@@ -1,5 +1,6 @@
 package com.talentmatch2.Models;
 
+import com.google.cloud.firestore.annotation.DocumentId;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -8,5 +9,7 @@ import lombok.AllArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Role {
-    private String roleName;
+    @DocumentId
+    private String id;
+    private String RoleName;
 }
