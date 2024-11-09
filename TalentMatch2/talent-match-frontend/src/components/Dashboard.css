@@ -60,3 +60,31 @@
 .dashboard-content {
     margin-top: 10px;
 }
+/* src/styles/Dashboard.css */
+.opportunities-list {
+    width: 100%;
+    max-width: 600px;
+    margin-top: 20px;
+    background-color: #f4f4f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.opportunity-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.opportunity-item:last-child {
+    border-bottom: none;
+}
+
+.opportunity-item h4 {
+    margin: 0;
+    color: #3b3b98;
+}
+
+.opportunity-item p {
+    margin: 5px 0;
+}

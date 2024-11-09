@@ -21,9 +21,10 @@
 }
 
 .welcome-title {
-    font-size: 36px;
-    font-weight: bold;
-    margin-bottom: 20px;
+    color: white; /* Change text color to white */
+    font-size: 36px; /* Adjust font size if needed */
+    font-weight: bold; /* Ensure the title stands out */
+    text-align: center; /* Align the text in the center */
 }
 
 .welcome-message {

@@ -1,25 +1,63 @@
-// src/components/Login.js
 import React, { useState } from 'react';
-
-//import { signInWithEmailAndPassword } from "firebase/auth";
-import { useNavigate } from 'react-router-dom';
+import { auth, db } from '../config/firebase';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from 'firebase/firestore';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [role, setRole] = useState('');
     const navigate = useNavigate();
+
+    // Fetch user details directly from the User document
+    const fetchUserDetails = async (userId) => {
+        try {
+            const userDoc = await getDoc(doc(db, 'User', userId)); // Fetch User document
+            if (userDoc.exists()) {
+                const userData = userDoc.data();
+                return {
+                    roleName: userData.RoleName, // Access RoleName directly
+                    subName: userData.SubscriptionName, // Access SubscriptionName directly
+                };
+            } else {
+                console.error("User document not found");
+                return null;
+            }
+        } catch (error) {
+            console.error("Error fetching user details:", error);
+            return null;
+        }
+    };
 
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            //const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            //const idToken = await userCredential.user.getIdToken();
+            // Authenticate user with Firebase Authentication
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
 
-            // Send the ID token to your backend or proceed with other actions
-            navigate('/dashboard');
+            // Fetch the user's role and subscription details
+            const userDetails = await fetchUserDetails(user.uid);
+
+            if (userDetails && userDetails.roleName.toLowerCase() === role.toLowerCase()) {
+                // Store role in local storage or global state
+                localStorage.setItem('userRole', userDetails.roleName); // Example: "admin"
+
+                console.log("Role:", userDetails.roleName);
+                console.log("Subscription Plan:", userDetails.subName);
+
+                if (role === 'admin') {
+                    navigate('/admin-dashboard'); // Redirect admin to admin dashboard
+                } else {
+                    navigate('/home'); // Redirect other roles to home page
+                }
+            } else {
+                alert("Invalid role selection. Please select the correct role.");
+            }
         } catch (error) {
             console.error("Error logging in:", error.message);
-            alert(error.message);
+            alert("Invalid login credentials. Please try again.");
         }
     };
 
@@ -45,7 +83,24 @@ const Login = () => {
                         required
                     />
                 </div>
-                <button type="submit">Log In</button>
+                <div className="input-group">
+                    <label>Role</label>
+                    <select
+                        value={role}
+                        onChange={(e) => setRole(e.target.value)}
+                        required
+                    >
+                        <option value="">Select Role</option>
+                        <option value="Entertainer">Entertainer</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Talent">Talent</option>
+                        <option value="Moderator">Moderator</option>
+                    </select>
+                </div>
+                <button type="submit" className="sign-in-button">Log In</button>
+                <p className="register-link">
+                    Don't have an account? <Link to="/register">Register here</Link>
+                </p>
             </form>
         </div>
     );
