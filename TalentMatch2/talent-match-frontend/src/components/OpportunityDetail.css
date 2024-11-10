@@ -1,0 +1,86 @@
+/* Container styling */
+.opportunity-details-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading */
+.opportunity-details-container h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Paragraphs for details */
+.opportunity-details-container p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #555;
+    margin: 10px 0;
+}
+
+/* Strong elements (labels) */
+.opportunity-details-container p strong {
+    color: #333;
+    font-weight: bold;
+}
+
+/* Additional styling for buttons or links */
+.opportunity-details-container a {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 15px;
+    text-decoration: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.opportunity-details-container a:hover {
+    background-color: #0056b3;
+}
+
+/* Add responsive design for mobile */
+@media (max-width: 768px) {
+    .opportunity-details-container {
+        padding: 15px;
+    }
+
+    .opportunity-details-container h1 {
+        font-size: 2rem;
+    }
+
+    .opportunity-details-container p {
+        font-size: 1rem;
+    }
+}
+.opportunity-details-container a:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.opportunity-details-container a {
+    transition: background-color 0.3s, transform 0.2s;
+}
+.opportunity-details-container .back-button {
+    margin-top: 20px;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #6c757d;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.opportunity-details-container .back-button:hover {
+    background-color: #5a6268;
+}
