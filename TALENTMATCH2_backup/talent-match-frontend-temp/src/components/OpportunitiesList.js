@@ -10,7 +10,7 @@ const OpportunitiesList = () => {
         // Fetch opportunities from the service
         const fetchOpportunities = async () => {
             try {
-                const data = await OpportunityService.getAllOpportunities();
+                const data = await OpportunityService.getOpportunities();
                 setOpportunities(data);
             } catch (error) {
                 console.error("Error fetching opportunities:", error);
@@ -27,10 +27,10 @@ const OpportunitiesList = () => {
                 <ul>
                     {opportunities.map(opportunity => (
                         <li key={opportunity.id} className="opportunity-item">
-                            <h4>{opportunity.title}</h4>
-                            <p>{opportunity.description}</p>
-                            <p><strong>Deadline:</strong> {opportunity.deadline}</p>
-                            <p><strong>Location:</strong> {opportunity.location}</p>
+                            <h4>{opportunity.Title}</h4>
+                            <p>{opportunity.Description}</p>
+                            <p><strong>Deadline:</strong> {new Date(opportunity.Deadline.toDate()).toLocaleString()}</p>
+                            <p><strong>MultiMedia:</strong> {opportunity.MultiMedia || "Not provided"}</p>
                         </li>
                     ))}
                 </ul>

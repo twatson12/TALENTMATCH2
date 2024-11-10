@@ -47,12 +47,22 @@ const Login = () => {
                 console.log("Role:", userDetails.roleName);
                 console.log("Subscription Plan:", userDetails.subName);
 
+                // Role-based redirection
                 if (role.toLowerCase() === 'admin') {
                     console.log("Navigating to Admin Dashboard");
                     navigate('/admin-dashboard'); // Redirect admin to admin dashboard
+                } else if (role.toLowerCase() === 'entertainer') {
+                    console.log("Navigating to Entertainer Dashboard");
+                    navigate('/entertainer-dashboard'); // Redirect entertainers to entertainer dashboard
+                } else if (role.toLowerCase() === 'talent') {
+                    console.log("Navigating to Talent Dashboard");
+                    navigate('/talent-dashboard'); // Redirect talent users to talent dashboard
+                } else if (role.toLowerCase() === 'moderator') {
+                    console.log("Navigating to Moderator Dashboard");
+                    navigate('/moderator-dashboard'); // Redirect moderators to moderator dashboard
                 } else {
-                    console.log("Navigating to Home");
-                    navigate('/dashboard'); // Redirect other roles to home/dashboard
+                    console.error("Role not recognized");
+                    alert("Role not recognized. Please contact support.");
                 }
             } else {
                 alert("Invalid role selection. Please select the correct role.");

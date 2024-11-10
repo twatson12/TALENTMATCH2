@@ -1,0 +1,82 @@
+/* EntertainerDashboard.css */
+.entertainer-dashboard {
+    margin: 20px auto;
+    max-width: 1200px;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background: #f4f4f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.dashboard-header h1 {
+    color: #3b3b98;
+    margin: 0;
+}
+
+.logout-button {
+    padding: 10px 15px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.logout-button:hover {
+    background-color: #d32f2f;
+}
+
+.dashboard-content {
+    text-align: center;
+}
+
+.post-opportunity-button {
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #3b3b98;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.post-opportunity-button:hover {
+    background-color: #2a287a;
+}
+
+.opportunities-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    text-align: left;
+}
+
+.opportunities-table th,
+.opportunities-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.opportunities-table th {
+    background-color: #3b3b98;
+    color: white;
+    font-weight: bold;
+}
+
+.opportunities-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.opportunities-table tr:hover {
+    background-color: #f1f1f1;
+}

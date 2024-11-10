@@ -1,0 +1,53 @@
+.post-opportunity-container {
+    margin: 20px auto;
+    max-width: 600px;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background: #f4f4f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.post-opportunity-container h1 {
+    text-align: center;
+    color: #3b3b98;
+    margin-bottom: 20px;
+}
+
+form div {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #3b3b98;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:disabled {
+    background-color: #b2b2d1;
+    cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+    background-color: #2a287a;
+}
