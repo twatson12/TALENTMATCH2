@@ -1,0 +1,69 @@
+.moderator-dashboard {
+    margin: 20px auto;
+    max-width: 800px;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background: #f4f4f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.moderator-dashboard h1 {
+    text-align: center;
+    color: #3b3b98;
+    margin-bottom: 20px;
+}
+
+/* Content List Styling */
+.content-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.content-card {
+    flex: 1 1 calc(48% - 20px);
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.content-card p {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.content-card button {
+    margin: 0 5px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.content-card .flag {
+    background: #ffcc00;
+    color: white;
+}
+
+.content-card .remove {
+    background: #f44336;
+    color: white;
+}
+
+.content-card button:hover {
+    opacity: 0.9;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .content-card {
+        flex: 1 1 100%;
+    }
+}

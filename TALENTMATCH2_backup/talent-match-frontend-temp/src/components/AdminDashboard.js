@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../config/firebase';
-import { collection, getDocs, doc, deleteDoc, updateDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
     const [users, setUsers] = useState([]);
+    const [moderatorRequests, setModeratorRequests] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [editUser, setEditUser] = useState(null);
 
     useEffect(() => {
-        const fetchUsers = async () => {
+        const fetchUsersAndRequests = async () => {
             try {
                 const usersRef = collection(db, 'User');
                 const usersSnapshot = await getDocs(usersRef);
@@ -17,45 +17,50 @@ const AdminDashboard = () => {
                     id: doc.id,
                     ...doc.data(),
                 }));
+
+                const requestsRef = collection(db, 'ModeratorRequests');
+                const requestsSnapshot = await getDocs(requestsRef);
+                const requestsData = requestsSnapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+
                 setUsers(usersData);
+                setModeratorRequests(requestsData);
                 setLoading(false);
             } catch (error) {
-                console.error('Error fetching users:', error);
+                console.error('Error fetching data:', error.message);
                 setLoading(false);
             }
         };
 
-        fetchUsers();
+        fetchUsersAndRequests();
     }, []);
 
-    const handleDelete = async (userId) => {
+    const handleApproveModerator = async (requestId, userId) => {
         try {
-            await deleteDoc(doc(db, 'User', userId));
-            setUsers(users.filter(user => user.id !== userId));
-            alert('User deleted successfully');
+            const userRef = doc(db, 'User', userId);
+            await updateDoc(userRef, { RoleId: 'Moderator' });
+
+            const requestRef = doc(db, 'ModeratorRequests', requestId);
+            await deleteDoc(requestRef);
+
+            setModeratorRequests(moderatorRequests.filter(req => req.id !== requestId));
+            alert('Moderator request approved successfully.');
         } catch (error) {
-            console.error('Error deleting user:', error);
-            alert('Failed to delete user');
+            console.error('Error approving moderator request:', error.message);
         }
     };
 
-    const handleEdit = async (e) => {
-        e.preventDefault();
+    const handleAssignModerator = async (userId) => {
         try {
-            const userRef = doc(db, 'User', editUser.id);
-            await updateDoc(userRef, {
-                Email: editUser.Email,
-                Fname: editUser.Fname,
-                Lname: editUser.Lname,
-                RoleId: editUser.RoleId,
-                SubscriptionPlanId: editUser.SubscriptionPlanId,
-            });
-            setUsers(users.map(user => user.id === editUser.id ? editUser : user));
-            setEditUser(null);
-            alert('User updated successfully');
+            const userRef = doc(db, 'User', userId);
+            await updateDoc(userRef, { RoleId: 'Moderator' });
+
+            setUsers(users.map(user => user.id === userId ? { ...user, RoleId: 'Moderator' } : user));
+            alert('User assigned as Moderator.');
         } catch (error) {
-            console.error('Error updating user:', error);
-            alert('Failed to update user');
+            console.error('Error assigning moderator:', error.message);
         }
     };
 
@@ -66,87 +71,51 @@ const AdminDashboard = () => {
     return (
         <div className="admin-dashboard">
             <h1>Admin Dashboard</h1>
-            <h2>All Users</h2>
-            <table className="user-table">
-                <thead>
-                <tr>
-                    <th>Email</th>
-                    <th>Name</th>
-                    <th>Role</th>
-                    <th>Subscription Plan</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                {users.map((user) => (
-                    <tr key={user.id}>
-                        <td>{user.Email}</td>
-                        <td>{`${user.Fname} ${user.Lname}`}</td>
-                        <td>{user.RoleId || 'Unknown'}</td>
-                        <td>{user.SubscriptionPlanId || 'Unknown'}</td>
-                        <td>
-                            <button onClick={() => setEditUser(user)}>Edit</button>
-                            <button onClick={() => handleDelete(user.id)}>Delete</button>
-                        </td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
 
-            {editUser && (
-                <div className="edit-modal">
-                    <h2>Edit User</h2>
-                    <form onSubmit={handleEdit}>
-                        <div>
-                            <label>Email:</label>
-                            <input
-                                type="email"
-                                value={editUser.Email}
-                                onChange={(e) => setEditUser({ ...editUser, Email: e.target.value })}
-                                required
-                            />
+            <div className="moderator-requests">
+                <h2>Moderator Requests</h2>
+                {moderatorRequests.length > 0 ? (
+                    moderatorRequests.map((request) => (
+                        <div key={request.id} className="request-card">
+                            <p><strong>Name:</strong> {request.name}</p>
+                            <p><strong>Email:</strong> {request.email}</p>
+                            <button onClick={() => handleApproveModerator(request.id, request.userId)}>Approve</button>
                         </div>
-                        <div>
-                            <label>First Name:</label>
-                            <input
-                                type="text"
-                                value={editUser.Fname}
-                                onChange={(e) => setEditUser({ ...editUser, Fname: e.target.value })}
-                                required
-                            />
-                        </div>
-                        <div>
-                            <label>Last Name:</label>
-                            <input
-                                type="text"
-                                value={editUser.Lname}
-                                onChange={(e) => setEditUser({ ...editUser, Lname: e.target.value })}
-                                required
-                            />
-                        </div>
-                        <div>
-                            <label>Role:</label>
-                            <input
-                                type="text"
-                                value={editUser.RoleId}
-                                onChange={(e) => setEditUser({ ...editUser, RoleId: e.target.value })}
-                                required
-                            />
-                        </div>
-                        <div>
-                            <label>Subscription Plan:</label>
-                            <input
-                                type="text"
-                                value={editUser.SubscriptionPlanId}
-                                onChange={(e) => setEditUser({ ...editUser, SubscriptionPlanId: e.target.value })}
-                                required
-                            />
-                        </div>
-                        <button type="submit">Save Changes</button>
-                        <button type="button" onClick={() => setEditUser(null)}>Cancel</button>
-                    </form>
-                </div>
-            )}
+                    ))
+                ) : (
+                    <p>No moderator requests found.</p>
+                )}
+            </div>
+
+            <div className="user-list">
+                <h2>All Users</h2>
+                <table className="user-table">
+                    <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Subscription Plan</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {users.map((user) => (
+                        <tr key={user.id}>
+                            <td>{user.Email}</td>
+                            <td>{`${user.Fname} ${user.Lname}`}</td>
+                            <td>{user.RoleId || 'Unknown'}</td>
+                            <td>{user.SubscriptionPlanId || 'Unknown'}</td>
+                            <td>
+                                {user.RoleId !== 'Moderator' && (
+                                    <button onClick={() => handleAssignModerator(user.id)}>Make Moderator</button>
+                                )}
+                            </td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };
