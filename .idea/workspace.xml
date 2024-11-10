@@ -5,51 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f2255911-23c9-470d-a0ba-daa06812a45c" name="Changes" comment="OpportunityDetails boiiii">
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/public/favicon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/public/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/public/logo192.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/public/logo512.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/public/manifest.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/public/robots.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/App.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/App.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/components/AdminDashboard.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/components/AdminDashboard.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/components/Dashboard.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/components/Dashboard.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/components/DashboardContent.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/components/EntertainerDashboard.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/components/Header.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/components/Home.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/components/Home.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/components/Login.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/components/NavBar.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/components/OpportunitiesList.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/components/OpportunityDetail.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/components/OpportunityDetails.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/components/ProtectedRoute.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/components/Register.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/components/Register.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/components/Sidebar.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/components/TalentDashboard.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/components/TalentSearch.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/components/TalentSearch.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/components/Welcome.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/components/Welcome.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/config/firebase.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/config/firebaseAdmin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/index.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/logo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/reportWebVitals.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/setupTests.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/styles/App.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/src/styles/Login.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/styles/App.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp/styles/Login.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend/src/components/Search.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/Search.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/Search.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/talent-match-frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/AdminDashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/AdminDashboard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/AdminDashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/AdminDashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/config/firebase.js" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/config/firebase.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend/package-lock.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,26 +30,26 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="CSS File" />
         <option value="JavaScript File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "jachellejohnson"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;jachellejohnson&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/twatson12/TALENTMATCH2.git",
-    "accountId": "e5ef9474-1e24-4ad6-aa2d-fd8aa1473dc5"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/twatson12/TALENTMATCH2.git&quot;,
+    &quot;accountId&quot;: &quot;e5ef9474-1e24-4ad6-aa2d-fd8aa1473dc5&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 2
@@ -93,27 +59,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Build TalentMatch2.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.TalentMatch2Application.executor": "Run",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/jachellejohnson/Documents/GitHub/TalentMatch/TALENTMATCH2/TALENTMATCH-2/TalentMatch2/talent-match-frontend-temp",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.0",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2024.2.3\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Build TalentMatch2.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.TalentMatch2Application.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/jachellejohnson/Documents/GitHub/TalentMatch/TALENTMATCH2/TALENTMATCH-2/TalentMatch2/talent-match-frontend-temp&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\IntelliJ IDEA 2024.2.3\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp" />

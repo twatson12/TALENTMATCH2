@@ -13,7 +13,7 @@ const Login = () => {
     // Fetch user details directly from the User document
     const fetchUserDetails = async (userId) => {
         try {
-            const userDoc = await getDoc(doc(db, 'User', userId)); // Fetch User document
+            const userDoc = await getDoc(doc(db, 'User', userId)); // Correct Firestore collection name
             if (userDoc.exists()) {
                 const userData = userDoc.data();
                 return {
@@ -47,10 +47,12 @@ const Login = () => {
                 console.log("Role:", userDetails.roleName);
                 console.log("Subscription Plan:", userDetails.subName);
 
-                if (role === 'admin') {
+                if (role.toLowerCase() === 'admin') {
+                    console.log("Navigating to Admin Dashboard");
                     navigate('/admin-dashboard'); // Redirect admin to admin dashboard
                 } else {
-                    navigate('/home'); // Redirect other roles to home page
+                    console.log("Navigating to Home");
+                    navigate('/dashboard'); // Redirect other roles to home/dashboard
                 }
             } else {
                 alert("Invalid role selection. Please select the correct role.");

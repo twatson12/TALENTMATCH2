@@ -1,8 +1,7 @@
 // src/config/firebase.js
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-// If you need analytics, uncomment the next line
-// import { getAnalytics } from "firebase/analytics";
+import { getFirestore } from "firebase/firestore"; // Import Firestore
 
 const firebaseConfig = {
     apiKey: "AIzaSyBmQZPAK4rSvy7R0-YmL4O4kcBC7GKX2SI",
@@ -18,11 +17,9 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Initialize Firebase Authentication
-const auth = getAuth(app);
+// Initialize Firebase Authentication and Firestore
+const auth = getAuth(app); // Initialize and assign the `auth` variable
+const db = getFirestore(app); // Initialize Firestore
 
-// Uncomment if you want to use analytics
-// const analytics = getAnalytics(app);
-
-// Export only `auth` if that’s what your components need
-export { auth };
+// Export both `auth` and `db` for use in other components
+export { auth, db };
