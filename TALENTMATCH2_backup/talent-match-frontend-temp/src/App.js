@@ -7,6 +7,7 @@ import AdminDashboard from './components/AdminDashboard';
 import Welcome from './components/Welcome';
 import Search from './components/Search';
 import './styles/App.css';
+import Settings from './components/Settings';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/admin-dashboard" element={<AdminDashboard />} />
                     <Route path="/search" element={<Search />} />
+                    <Route path="/settings" element={<Settings />} />
                 </Routes>
             </div>
         </Router>

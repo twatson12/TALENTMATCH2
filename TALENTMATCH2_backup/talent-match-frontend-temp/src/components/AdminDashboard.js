@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { db } from '../config/firebase';
-import { collection, getDocs, doc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom'; // For navigation
+import { db, auth } from '../config/firebase';
+import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
     const [users, setUsers] = useState([]);
-    const [moderatorRequests, setModeratorRequests] = useState([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchUsersAndRequests = async () => {
+        const fetchUsers = async () => {
             try {
                 const usersRef = collection(db, 'User');
                 const usersSnapshot = await getDocs(usersRef);
@@ -17,50 +18,42 @@ const AdminDashboard = () => {
                     id: doc.id,
                     ...doc.data(),
                 }));
-
-                const requestsRef = collection(db, 'ModeratorRequests');
-                const requestsSnapshot = await getDocs(requestsRef);
-                const requestsData = requestsSnapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }));
-
                 setUsers(usersData);
-                setModeratorRequests(requestsData);
                 setLoading(false);
             } catch (error) {
-                console.error('Error fetching data:', error.message);
+                console.error('Error fetching users:', error);
                 setLoading(false);
             }
         };
 
-        fetchUsersAndRequests();
+        fetchUsers();
     }, []);
 
-    const handleApproveModerator = async (requestId, userId) => {
+    const handleLogout = async () => {
         try {
-            const userRef = doc(db, 'User', userId);
-            await updateDoc(userRef, { RoleId: 'Moderator' });
-
-            const requestRef = doc(db, 'ModeratorRequests', requestId);
-            await deleteDoc(requestRef);
-
-            setModeratorRequests(moderatorRequests.filter(req => req.id !== requestId));
-            alert('Moderator request approved successfully.');
+            await auth.signOut();
+            localStorage.removeItem('userRole'); // Clear localStorage role
+            navigate('/login'); // Redirect to login page
+            alert('Successfully logged out!');
         } catch (error) {
-            console.error('Error approving moderator request:', error.message);
+            console.error('Error logging out:', error);
+            alert('Failed to log out.');
         }
     };
 
-    const handleAssignModerator = async (userId) => {
+    const handleStatusToggle = async (userId, currentStatus) => {
         try {
             const userRef = doc(db, 'User', userId);
-            await updateDoc(userRef, { RoleId: 'Moderator' });
+            const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
+            await updateDoc(userRef, { Status: newStatus });
 
-            setUsers(users.map(user => user.id === userId ? { ...user, RoleId: 'Moderator' } : user));
-            alert('User assigned as Moderator.');
+            setUsers(users.map(user =>
+                user.id === userId ? { ...user, Status: newStatus } : user
+            ));
+            alert(`User status updated to ${newStatus}.`);
         } catch (error) {
-            console.error('Error assigning moderator:', error.message);
+            console.error('Error updating user status:', error);
+            alert('Failed to update user status.');
         }
     };
 
@@ -70,51 +63,52 @@ const AdminDashboard = () => {
 
     return (
         <div className="admin-dashboard">
-            <h1>Admin Dashboard</h1>
-
-            <div className="moderator-requests">
-                <h2>Moderator Requests</h2>
-                {moderatorRequests.length > 0 ? (
-                    moderatorRequests.map((request) => (
-                        <div key={request.id} className="request-card">
-                            <p><strong>Name:</strong> {request.name}</p>
-                            <p><strong>Email:</strong> {request.email}</p>
-                            <button onClick={() => handleApproveModerator(request.id, request.userId)}>Approve</button>
-                        </div>
-                    ))
-                ) : (
-                    <p>No moderator requests found.</p>
-                )}
-            </div>
+            {/* Navigation Bar */}
+            <nav className="navbar">
+                <h1>Admin Dashboard</h1>
+                <ul>
+                    <li><button onClick={() => navigate('/settings')}>Settings</button></li>
+                    <li><button onClick={handleLogout}>Logout</button></li>
+                </ul>
+            </nav>
 
             <div className="user-list">
                 <h2>All Users</h2>
-                <table className="user-table">
-                    <thead>
-                    <tr>
-                        <th>Email</th>
-                        <th>Name</th>
-                        <th>Role</th>
-                        <th>Subscription Plan</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {users.map((user) => (
-                        <tr key={user.id}>
-                            <td>{user.Email}</td>
-                            <td>{`${user.Fname} ${user.Lname}`}</td>
-                            <td>{user.RoleId || 'Unknown'}</td>
-                            <td>{user.SubscriptionPlanId || 'Unknown'}</td>
-                            <td>
-                                {user.RoleId !== 'Moderator' && (
-                                    <button onClick={() => handleAssignModerator(user.id)}>Make Moderator</button>
-                                )}
-                            </td>
+                {users.length > 0 ? (
+                    <table className="user-table">
+                        <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Subscription Plan</th>
+                            <th>Status</th>
+                            <th>Actions</th>
                         </tr>
-                    ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        {users.map((user) => (
+                            <tr key={user.id}>
+                                <td>{user.Email}</td>
+                                <td>{`${user.Fname} ${user.Lname}`}</td>
+                                <td>{user.RoleId || 'Unknown'}</td>
+                                <td>{user.SubscriptionPlanId || 'Unknown'}</td>
+                                <td>{user.Status || 'active'}</td>
+                                <td>
+                                    <button
+                                        onClick={() => handleStatusToggle(user.id, user.Status)}
+                                        className={user.Status === 'active' ? 'deactivate-button' : 'activate-button'}
+                                    >
+                                        {user.Status === 'active' ? 'Deactivate' : 'Activate'}
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                ) : (
+                    <p>No users found.</p>
+                )}
             </div>
         </div>
     );
