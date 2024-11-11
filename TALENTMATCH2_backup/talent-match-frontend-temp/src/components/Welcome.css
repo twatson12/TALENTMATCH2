@@ -9,7 +9,86 @@
     font-family: 'Arial', sans-serif;
     color: #fff;
     text-align: center;
+    margin: 0; /* Reset margin */
+    padding: 0; /* Reset padding */
+}
+
+.welcome-content {
+    max-width: 600px;
+    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.2); /* Slightly transparent white */
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.welcome-title {
+    color: white; /* Ensure title text is white */
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.welcome-message {
+    color: white; /* Ensure message text is white */
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+.begin-button {
+    padding: 12px 24px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #3b3b98;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.begin-button:hover {
+    background-color: #6a1b9a;
+    color: #ffffff;
+}
+.testimonials {
+    margin-top: 40px;
     padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.testimonials h2 {
+    color: white;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.review-card {
+    margin: 10px auto;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    max-width: 500px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.review-card p {
+    color: white;
+    margin: 5px 0;
+}
+.welcome-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #3b3b98, #6a1b9a); /* Blue to purple gradient */
+    font-family: 'Arial', sans-serif;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    overflow-y: auto; /* Allows scrolling for smaller screens */
 }
 
 .welcome-content {
@@ -18,13 +97,14 @@
     background-color: rgba(255, 255, 255, 0.1); /* Transparent white background */
     border-radius: 10px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+    margin-bottom: 40px;
 }
 
 .welcome-title {
-    color: white; /* Change text color to white */
-    font-size: 36px; /* Adjust font size if needed */
-    font-weight: bold; /* Ensure the title stands out */
-    text-align: center; /* Align the text in the center */
+    color: white;
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
 }
 
 .welcome-message {
@@ -48,4 +128,70 @@
 .begin-button:hover {
     background-color: #6a1b9a;
     color: #ffffff;
+}
+
+/* Testimonials Section */
+.testimonials {
+    margin-top: 20px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    text-align: center;
+    width: 90%;
+    max-width: 700px;
+}
+
+.testimonials-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.review-card {
+    margin: 10px auto;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    max-width: 500px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.review-card p {
+    margin: 5px 0;
+    color: white;
+}
+
+.review-author {
+    font-style: italic;
+    font-size: 14px;
+    color: #ddd;
+}
+
+/* Features Section */
+.features {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    width: 90%;
+    max-width: 700px;
+}
+
+.features-title {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.features-list {
+    list-style-type: disc;
+    margin: 0;
+    padding: 0 20px;
+    text-align: left;
+}
+
+.features-list li {
+    margin: 10px 0;
+    line-height: 1.6;
 }

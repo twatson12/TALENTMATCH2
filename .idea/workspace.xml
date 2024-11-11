@@ -6,14 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="f2255911-23c9-470d-a0ba-daa06812a45c" name="Changes" comment="OpportunityDetails boiiii">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/AdminDashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/AdminDashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/ApplyOpportunity.js" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/ApplyOpportunity.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/EntertainerDashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/EntertainerDashboard.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/EntertainerDashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/EntertainerDashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/ModeratorDashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/ModeratorDashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/TalentDashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/TalentDashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/Welcome.css" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/Welcome.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/Welcome.js" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/Welcome.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +111,7 @@
       <workItem from="1731114024280" duration="11892000" />
       <workItem from="1731165424050" duration="45000" />
       <workItem from="1731211544734" duration="8819000" />
-      <workItem from="1731297088539" duration="11904000" />
+      <workItem from="1731297088539" duration="15929000" />
     </task>
     <task id="LOCAL-00001" summary="OpportunityDetails boiiii">
       <option name="closed" value="true" />
