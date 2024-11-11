@@ -6,6 +6,8 @@ import './AdminDashboard.css';
 
 const AdminDashboard = () => {
     const [users, setUsers] = useState([]);
+    const [filteredUsers, setFilteredUsers] = useState([]); // For search functionality
+    const [searchQuery, setSearchQuery] = useState(''); // Search query
     const [loading, setLoading] = useState(true);
     const [moderatorRequest, setModeratorRequest] = useState('');
     const navigate = useNavigate();
@@ -20,6 +22,7 @@ const AdminDashboard = () => {
                     ...doc.data(),
                 }));
                 setUsers(usersData);
+                setFilteredUsers(usersData); // Initialize filtered users
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching users:', error);
@@ -42,6 +45,23 @@ const AdminDashboard = () => {
         }
     };
 
+    const handleSearch = (e) => {
+        const query = e.target.value.toLowerCase();
+        setSearchQuery(query);
+
+        if (query) {
+            const filtered = users.filter(
+                (user) =>
+                    user.Email.toLowerCase().includes(query) ||
+                    user.Fname?.toLowerCase().includes(query) ||
+                    user.Lname?.toLowerCase().includes(query)
+            );
+            setFilteredUsers(filtered);
+        } else {
+            setFilteredUsers(users); // Reset to all users if query is empty
+        }
+    };
+
     const handleStatusToggle = async (userId, currentStatus) => {
         try {
             const userRef = doc(db, 'User', userId);
@@ -49,6 +69,9 @@ const AdminDashboard = () => {
             await updateDoc(userRef, { Status: newStatus });
 
             setUsers(users.map(user =>
+                user.id === userId ? { ...user, Status: newStatus } : user
+            ));
+            setFilteredUsers(filteredUsers.map(user =>
                 user.id === userId ? { ...user, Status: newStatus } : user
             ));
             alert(`User status updated to ${newStatus}.`);
@@ -103,9 +126,19 @@ const AdminDashboard = () => {
                 </ul>
             </nav>
 
+            <div className="search-section">
+                <input
+                    type="text"
+                    placeholder="Search by name or email..."
+                    value={searchQuery}
+                    onChange={handleSearch}
+                    className="search-bar"
+                />
+            </div>
+
             <div className="user-list">
                 <h2>All Users</h2>
-                {users.length > 0 ? (
+                {filteredUsers.length > 0 ? (
                     <table className="user-table">
                         <thead>
                         <tr>
@@ -118,10 +151,10 @@ const AdminDashboard = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        {users.map((user) => (
+                        {filteredUsers.map((user) => (
                             <tr key={user.id}>
                                 <td>{user.Email}</td>
-                                <td>{`${user.Fname} ${user.Lname}`}</td>
+                                <td>{`${user.Fname || ''} ${user.Lname || ''}`}</td>
                                 <td>{user.RoleId || 'Unknown'}</td>
                                 <td>{user.SubscriptionPlanId || 'Unknown'}</td>
                                 <td>{user.Status || 'active'}</td>

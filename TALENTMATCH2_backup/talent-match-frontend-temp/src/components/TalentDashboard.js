@@ -13,13 +13,12 @@ const TalentDashboard = () => {
     useEffect(() => {
         const fetchOpportunities = async () => {
             try {
-                // Fetch all opportunities
                 const snapshot = await getDocs(collection(db, 'Opportunities'));
                 const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 setOpportunities(data);
-                setLoading(false);
             } catch (error) {
                 console.error('Error fetching opportunities:', error);
+            } finally {
                 setLoading(false);
             }
         };
@@ -33,12 +32,12 @@ const TalentDashboard = () => {
                     const application = { id: docSnap.id, ...docSnap.data() };
 
                     // Fetch opportunity title using OpportunityID reference
-                    const opportunityDoc = await getDoc(doc(db, application.OpportunityID));
-                    if (opportunityDoc.exists()) {
-                        application.OpportunityTitle = opportunityDoc.data().Title;
-                    } else {
-                        application.OpportunityTitle = 'Unknown Opportunity'; // Fallback
-                    }
+                    const opportunityRef = application.OpportunityID.replace('/Opportunity/', '');
+                    const opportunityDoc = await getDoc(doc(db, 'Opportunities', opportunityRef));
+
+                    application.OpportunityTitle = opportunityDoc.exists()
+                        ? opportunityDoc.data().Title
+                        : 'Unknown Opportunity'; // Fallback if not found
 
                     applicationsData.push(application);
                 }

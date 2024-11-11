@@ -1,105 +1,85 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { db, auth } from '../config/firebase';
-import { collection, getDocs, doc, updateDoc, addDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, deleteDoc, updateDoc, addDoc } from 'firebase/firestore';
 import './ModeratorDashboard.css';
 
 const ModeratorDashboard = () => {
     const [moderatorRequests, setModeratorRequests] = useState([]);
     const [allContent, setAllContent] = useState([]);
     const [flaggedContent, setFlaggedContent] = useState([]);
+    const [users, setUsers] = useState([]);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchModeratorRequests = async () => {
+        const fetchData = async () => {
             try {
-                const requestsRef = collection(db, 'ModeratorRequests');
-                const snapshot = await getDocs(requestsRef);
-                const requests = snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }));
-                setModeratorRequests(requests);
+                const [requestsSnapshot, contentSnapshot, flaggedSnapshot, usersSnapshot] = await Promise.all([
+                    getDocs(collection(db, 'ModeratorRequests')),
+                    getDocs(collection(db, 'Opportunities')),
+                    getDocs(collection(db, 'FlaggedContent')),
+                    getDocs(collection(db, 'User')),
+                ]);
+
+                // Fetch moderator requests
+                setModeratorRequests(
+                    requestsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+                );
+
+                // Fetch all content
+                setAllContent(
+                    contentSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+                );
+
+                // Fetch flagged content
+                setFlaggedContent(
+                    flaggedSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+                );
+
+                // Fetch users
+                setUsers(
+                    usersSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+                );
+
+                setLoading(false);
             } catch (error) {
-                console.error('Error fetching moderator requests:', error);
+                console.error('Error fetching data:', error);
+                setLoading(false);
             }
         };
 
-        const fetchAllContent = async () => {
-            try {
-                const contentRef = collection(db, 'Opportunities'); // Replace with your content collection
-                const snapshot = await getDocs(contentRef);
-                const contentData = snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }));
-                setAllContent(contentData);
-            } catch (error) {
-                console.error('Error fetching content:', error);
-            }
-        };
-
-        const fetchFlaggedContent = async () => {
-            try {
-                const flaggedRef = collection(db, 'FlaggedContent');
-                const snapshot = await getDocs(flaggedRef);
-                const flaggedData = snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }));
-                setFlaggedContent(flaggedData);
-            } catch (error) {
-                console.error('Error fetching flagged content:', error);
-            }
-        };
-
-        fetchModeratorRequests();
-        fetchAllContent();
-        fetchFlaggedContent();
-        setLoading(false);
+        fetchData();
     }, []);
 
-    //const handleApproveRequest = async (requestId) => {
-        try {
-            const requestRef = doc(db, 'ModeratorRequests', requestId);
-            await updateDoc(requestRef, { Status: 'Approved' });
-            setModeratorRequests(
-                moderatorRequests.filter((request) => request.id !== requestId)
-            );
-            alert('Moderator request approved!');
-        } catch (error) {
-            console.error('Error approving request:', error);
-            alert('Failed to approve request.');
-        }
-    };
+    const handleRemoveUser = async (userId) => {
+        const confirmRemove = window.confirm(
+            'Are you sure you want to remove this user? This action cannot be undone.'
+        );
+        if (!confirmRemove) return;
 
-    //const handleRejectRequest = async (requestId) => {
         try {
-            const requestRef = doc(db, 'ModeratorRequests', requestId);
-            await updateDoc(requestRef, { Status: 'Rejected' });
-            setModeratorRequests(
-                moderatorRequests.filter((request) => request.id !== requestId)
-            );
-            alert('Moderator request rejected.');
+            await deleteDoc(doc(db, 'User', userId));
+            setUsers(users.filter((user) => user.id !== userId));
+            alert('User removed successfully.');
         } catch (error) {
-            console.error('Error rejecting request:', error);
-            alert('Failed to reject request.');
+            console.error('Error removing user:', error);
+            alert('Failed to remove user.');
         }
     };
 
     const handleFlagContent = async (contentId) => {
+        const reason = prompt('Enter the reason for flagging this content:');
+        if (!reason) return; // Exit if no reason provided
+
         try {
-            const reason = prompt('Enter the reason for flagging this content:');
-            if (reason) {
-                await addDoc(collection(db, 'FlaggedContent'), {
-                    ContentId: contentId,
-                    Reason: reason,
-                    Status: 'Pending',
-                    Timestamp: new Date(),
-                });
-                alert('Content flagged successfully.');
-            }
+            await addDoc(collection(db, 'FlaggedContent'), {
+                ContentId: contentId,
+                Reason: reason,
+                Status: 'Pending',
+                Timestamp: new Date(),
+            });
+            alert('Content flagged successfully.');
         } catch (error) {
             console.error('Error flagging content:', error);
             alert('Failed to flag content.');
@@ -148,6 +128,8 @@ const ModeratorDashboard = () => {
                     </button>
                 </div>
             </header>
+
+            {/* All Content Section */}
             <div className="dashboard-section">
                 <h2>All Content</h2>
                 {allContent.length > 0 ? (
@@ -166,7 +148,7 @@ const ModeratorDashboard = () => {
                                 <td>{content.Description}</td>
                                 <td>
                                     <button
-                                        className="resolve-button"
+                                        className="flag-button"
                                         onClick={() => handleFlagContent(content.id)}
                                     >
                                         Flag
@@ -180,6 +162,8 @@ const ModeratorDashboard = () => {
                     <p>No content available at the moment.</p>
                 )}
             </div>
+
+            {/* Flagged Content Section */}
             <div className="dashboard-section">
                 <h2>Flagged Content</h2>
                 {flaggedContent.length > 0 ? (
@@ -212,6 +196,40 @@ const ModeratorDashboard = () => {
                     </table>
                 ) : (
                     <p>No flagged content at the moment.</p>
+                )}
+            </div>
+
+            {/* User Management Section */}
+            <div className="dashboard-section">
+                <h2>Manage Users</h2>
+                {users.length > 0 ? (
+                    <table className="user-table">
+                        <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {users.map((user) => (
+                            <tr key={user.id}>
+                                <td>{user.id}</td>
+                                <td>{user.Email || 'No email provided'}</td>
+                                <td>
+                                    <button
+                                        className="remove-button"
+                                        onClick={() => handleRemoveUser(user.id)}
+                                    >
+                                        Remove
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                ) : (
+                    <p>No users found.</p>
                 )}
             </div>
         </div>

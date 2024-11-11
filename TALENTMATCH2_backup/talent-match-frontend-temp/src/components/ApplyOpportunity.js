@@ -1,4 +1,3 @@
-// src/components/ApplyOpportunity.js
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { db, auth } from '../config/firebase';
@@ -7,6 +6,8 @@ import './ApplyOpportunity.css';
 
 const ApplyOpportunity = () => {
     const { opportunityId } = useParams();
+    const [name, setName] = useState(''); // State for name
+    const [email, setEmail] = useState(''); // State for email
     const [message, setMessage] = useState('');
     const [file, setFile] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -31,6 +32,8 @@ const ApplyOpportunity = () => {
             await addDoc(collection(db, 'Applications'), {
                 OpportunityID: `/Opportunity/${opportunityId}`,
                 TalentID: `/User/${user.uid}`,
+                Name: name, // Save the name
+                Email: email, // Save the email
                 Status: 'Submitted',
                 SubmissionDate: Timestamp.now(),
                 Message: message,
@@ -51,6 +54,26 @@ const ApplyOpportunity = () => {
         <div className="apply-opportunity-container">
             <h1>Apply for Opportunity</h1>
             <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                    <label>Name:</label>
+                    <input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Your full name"
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label>Email:</label>
+                    <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Your email address"
+                        required
+                    />
+                </div>
                 <div className="form-group">
                     <label>Message:</label>
                     <textarea

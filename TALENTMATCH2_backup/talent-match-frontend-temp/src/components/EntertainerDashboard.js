@@ -1,4 +1,3 @@
-// src/components/EntertainerDashboard.js
 import React, { useEffect, useState } from 'react';
 import { auth, db } from '../config/firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
@@ -7,7 +6,11 @@ import './EntertainerDashboard.css';
 
 const EntertainerDashboard = () => {
     const [opportunities, setOpportunities] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [talents, setTalents] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filteredTalents, setFilteredTalents] = useState([]);
+    const [loadingOpportunities, setLoadingOpportunities] = useState(true);
+    const [loadingTalents, setLoadingTalents] = useState(true);
     const navigate = useNavigate();
 
     // Fetch opportunities created by the logged-in entertainer
@@ -30,14 +33,34 @@ const EntertainerDashboard = () => {
                 }));
 
                 setOpportunities(data);
-                setLoading(false);
+                setLoadingOpportunities(false);
             } catch (error) {
                 console.error('Error fetching opportunities:', error);
-                setLoading(false);
+                setLoadingOpportunities(false);
+            }
+        };
+
+        const fetchTalents = async () => {
+            try {
+                const talentsRef = collection(db, 'User');
+                const q = query(talentsRef, where('Role', '==', 'Talent')); // Assuming 'Role' field exists in the database
+                const snapshot = await getDocs(q);
+                const data = snapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+
+                setTalents(data);
+                setFilteredTalents(data);
+                setLoadingTalents(false);
+            } catch (error) {
+                console.error('Error fetching talents:', error);
+                setLoadingTalents(false);
             }
         };
 
         fetchOpportunities();
+        fetchTalents();
     }, [navigate]);
 
     const handleLogout = () => {
@@ -45,6 +68,23 @@ const EntertainerDashboard = () => {
             localStorage.removeItem('userRole');
             navigate('/login');
         });
+    };
+
+    const handleSearch = (e) => {
+        const query = e.target.value.toLowerCase();
+        setSearchQuery(query);
+
+        if (query) {
+            const filtered = talents.filter(
+                (talent) =>
+                    talent.Fname?.toLowerCase().includes(query) ||
+                    talent.Lname?.toLowerCase().includes(query) ||
+                    talent.Email?.toLowerCase().includes(query)
+            );
+            setFilteredTalents(filtered);
+        } else {
+            setFilteredTalents(talents); // Reset to all talents if query is empty
+        }
     };
 
     return (
@@ -60,6 +100,7 @@ const EntertainerDashboard = () => {
                     </button>
                 </div>
             </header>
+
             <div className="dashboard-content">
                 <button
                     onClick={() => navigate('/post-opportunity')}
@@ -67,9 +108,11 @@ const EntertainerDashboard = () => {
                 >
                     Post New Opportunity
                 </button>
+
+                {/* Section for Posted Opportunities */}
                 <h2>Your Posted Opportunities</h2>
-                {loading ? (
-                    <p>Loading...</p>
+                {loadingOpportunities ? (
+                    <p>Loading opportunities...</p>
                 ) : opportunities.length > 0 ? (
                     <table className="opportunities-table">
                         <thead>
@@ -97,6 +140,49 @@ const EntertainerDashboard = () => {
                     </table>
                 ) : (
                     <p>You have not posted any opportunities yet.</p>
+                )}
+
+                {/* Section for Browsing Talents */}
+                <h2>Search for Talent</h2>
+                <input
+                    type="text"
+                    placeholder="Search talents by name or email..."
+                    value={searchQuery}
+                    onChange={handleSearch}
+                    className="search-bar"
+                />
+                {loadingTalents ? (
+                    <p>Loading talents...</p>
+                ) : filteredTalents.length > 0 ? (
+                    <table className="talents-table">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Specialization</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {filteredTalents.map((talent) => (
+                            <tr key={talent.id}>
+                                <td>{`${talent.Fname || ''} ${talent.Lname || ''}`}</td>
+                                <td>{talent.Email}</td>
+                                <td>{talent.Specialization || 'Unknown'}</td>
+                                <td>
+                                    <button
+                                        onClick={() => alert(`Profile details for ${talent.Fname}`)}
+                                        className="view-profile-button"
+                                    >
+                                        View Profile
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                ) : (
+                    <p>No talents found matching your search.</p>
                 )}
             </div>
         </div>

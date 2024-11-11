@@ -118,4 +118,42 @@
 .logout-button:hover {
     background-color: #d32f2f;
 }
+.talents-table, .opportunities-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.talents-table th, .opportunities-table th, .talents-table td, .opportunities-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.talents-table th, .opportunities-table th {
+    background-color: #3e497a;
+    color: white;
+}
+
+.search-bar {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.view-profile-button {
+    background-color: #3e497a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.view-profile-button:hover {
+    background-color: #2a3456;
+}
 
