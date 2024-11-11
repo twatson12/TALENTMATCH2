@@ -206,3 +206,41 @@ h1, h2 {
 .deactivate-button:hover {
     background-color: #d32f2f;
 }
+.moderator-request-section {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.moderator-request-section h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #3e497a;
+}
+
+.moderator-request-section textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    resize: none;
+    font-size: 14px;
+}
+
+.moderator-request-section button {
+    background-color: #3e497a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.moderator-request-section button:hover {
+    background-color: #2a3456;
+}

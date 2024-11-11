@@ -1,60 +1,166 @@
-/* src/styles/TalentDashboard.css */
-
-.talent-dashboard {
-    font-family: Arial, sans-serif;
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #f4f4f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: #f4f4f9; /* Neutral background around the dashboard */
+    color: #333; /* Dark text for readability */
 }
 
-h1, h2 {
-    text-align: center;
-    color: #3b3b98;
-    margin-bottom: 20px;
+.talent-dashboard {
+    background-color: white; /* White background for the dashboard */
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 900px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.dashboard-header {
+    background-color: #3e497a; /* Deep blue header */
+    color: white;
+    padding: 10px 20px;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px 10px 0 0;
+}
+
+.dashboard-header .header-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.dashboard-header button {
+    background-color: #f05454; /* Red for buttons */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.dashboard-header button:hover {
+    background-color: #c70039; /* Slightly darker red hover */
 }
 
 .dashboard-section {
-    margin-bottom: 30px;
+    margin: 20px auto;
+    padding: 15px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-section h2 {
+    color: #3e497a; /* Header color */
+    margin-bottom: 15px;
 }
 
 .opportunities-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: 20px;
+    justify-content: center;
 }
 
 .opportunity-card {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 20px;
-    background: #fff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 15px;
+    width: 280px;
+    text-align: left;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .opportunity-card h3 {
-    color: #3b3b98;
+    font-size: 18px;
+    color: #3e497a;
     margin-bottom: 10px;
 }
 
 .opportunity-card p {
+    font-size: 14px;
+    color: #555;
     margin: 5px 0;
 }
 
 .opportunity-card button {
-    margin-top: 10px;
-    padding: 10px 15px;
-    font-size: 14px;
+    background-color: #3e497a;
     color: white;
-    background-color: #3b3b98;
     border: none;
     border-radius: 5px;
+    padding: 10px 15px;
     cursor: pointer;
+    font-size: 14px;
 }
 
 .opportunity-card button:hover {
-    background-color: #2a287a;
+    background-color: #2a3456;
+}
+
+.application-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.application-list li {
+    background: #fff;
+    margin: 10px auto;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: left;
+    max-width: 500px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.application-list li p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Scrollbar customization for Available Opportunities */
+.opportunities-grid {
+    max-height: 400px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #3e497a #f4f4f9;
+}
+
+.opportunities-grid::-webkit-scrollbar {
+    width: 8px;
+}
+
+.opportunities-grid::-webkit-scrollbar-thumb {
+    background-color: #3e497a;
+    border-radius: 5px;
+}
+
+.opportunities-grid::-webkit-scrollbar-track {
+    background: #f4f4f9;
+}
+
+.upcoming-deadlines {
+    margin: 15px auto;
+    background: #fffae3; /* Pale yellow for urgency */
+    border: 1px solid #ffd700;
+    border-radius: 10px;
+    padding: 10px;
+    max-width: 500px;
+    text-align: left;
+}
+
+.upcoming-deadlines p {
+    font-size: 14px;
+    color: #555;
+    margin: 5px 0;
+}
+
+.upcoming-deadlines strong {
+    color: #c70039;
 }

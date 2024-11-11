@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // For navigation
 import { db, auth } from '../config/firebase';
-import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
+import { collection, getDocs, addDoc, doc, updateDoc } from 'firebase/firestore';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [moderatorRequest, setModeratorRequest] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -54,6 +55,36 @@ const AdminDashboard = () => {
         } catch (error) {
             console.error('Error updating user status:', error);
             alert('Failed to update user status.');
+        }
+    };
+
+    const handleModeratorRequest = async (e) => {
+        e.preventDefault();
+        try {
+            if (!moderatorRequest) {
+                alert('Please enter a reason for applying as a moderator.');
+                return;
+            }
+
+            const currentUser = auth.currentUser;
+            if (!currentUser) {
+                alert('You must be logged in to apply.');
+                return;
+            }
+
+            await addDoc(collection(db, 'ModeratorRequests'), {
+                UserId: currentUser.uid,
+                Email: currentUser.email,
+                Reason: moderatorRequest,
+                Status: 'Pending', // Initial status
+                Timestamp: new Date(),
+            });
+
+            alert('Your request to become a moderator has been submitted.');
+            setModeratorRequest(''); // Reset the form
+        } catch (error) {
+            console.error('Error submitting moderator request:', error);
+            alert('Failed to submit the request. Please try again later.');
         }
     };
 
@@ -109,6 +140,21 @@ const AdminDashboard = () => {
                 ) : (
                     <p>No users found.</p>
                 )}
+            </div>
+
+            {/* Moderator Request Section */}
+            <div className="moderator-request-section">
+                <h2>Apply to Become a Moderator</h2>
+                <form onSubmit={handleModeratorRequest}>
+                    <textarea
+                        value={moderatorRequest}
+                        onChange={(e) => setModeratorRequest(e.target.value)}
+                        placeholder="Explain why you want to become a moderator..."
+                        rows="5"
+                        required
+                    ></textarea>
+                    <button type="submit">Submit Request</button>
+                </form>
             </div>
         </div>
     );

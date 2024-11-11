@@ -1,96 +1,104 @@
 import React, { useEffect, useState } from 'react';
-import { db } from '../config/firebase';
-import { collection, getDocs, deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { db, auth } from '../config/firebase';
+import { collection, getDocs, deleteDoc, doc, addDoc } from 'firebase/firestore';
 import './ModeratorDashboard.css';
 
 const ModeratorDashboard = () => {
-    const [flaggedContent, setFlaggedContent] = useState([]);
+    const [opportunities, setOpportunities] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchFlaggedContent = async () => {
+        const fetchOpportunities = async () => {
             try {
-                const flaggedRef = collection(db, 'FlaggedContent');
-                const flaggedSnapshot = await getDocs(flaggedRef);
-                const flaggedData = flaggedSnapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }));
-                setFlaggedContent(flaggedData);
+                // Fetch all opportunities
+                const snapshot = await getDocs(collection(db, 'Opportunities'));
+                const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                setOpportunities(data);
                 setLoading(false);
             } catch (error) {
-                console.error('Error fetching flagged content:', error);
+                console.error('Error fetching opportunities:', error);
                 setLoading(false);
             }
         };
 
-        fetchFlaggedContent();
+        fetchOpportunities();
     }, []);
 
-    const handleApproveContent = async (contentId) => {
-        try {
-            // Update the flagged content's status to "Approved"
-            const contentRef = doc(db, 'FlaggedContent', contentId);
-            await updateDoc(contentRef, { status: 'Approved' });
+    const handleFlagOpportunity = async (opportunityId, title) => {
+        const reason = prompt(`Why are you flagging "${title}" as inappropriate?`);
 
-            setFlaggedContent(flaggedContent.filter(content => content.id !== contentId));
-            alert('Content approved successfully.');
-        } catch (error) {
-            console.error('Error approving content:', error);
-            alert('Failed to approve content.');
+        if (reason) {
+            try {
+                const user = auth.currentUser;
+                if (!user) {
+                    alert('You must be logged in as a moderator to flag content.');
+                    return;
+                }
+
+                await addDoc(collection(db, 'ModeratorRequests'), {
+                    OpportunityID: `/Opportunities/${opportunityId}`,
+                    ModeratorID: `/User/${user.uid}`,
+                    Reason: reason,
+                    Status: 'Pending',
+                    Timestamp: new Date(),
+                });
+
+                alert('Content flagged successfully. Admin will review it.');
+            } catch (error) {
+                console.error('Error flagging content:', error);
+                alert('Failed to flag content.');
+            }
         }
     };
 
-    const handleRemoveContent = async (contentId) => {
-        try {
-            // Delete the flagged content from the database
-            const contentRef = doc(db, 'FlaggedContent', contentId);
-            await deleteDoc(contentRef);
-
-            setFlaggedContent(flaggedContent.filter(content => content.id !== contentId));
-            alert('Content removed successfully.');
-        } catch (error) {
-            console.error('Error removing content:', error);
-            alert('Failed to remove content.');
+    const handleRemoveOpportunity = async (opportunityId) => {
+        const confirmDelete = window.confirm('Are you sure you want to delete this opportunity?');
+        if (confirmDelete) {
+            try {
+                await deleteDoc(doc(db, 'Opportunities', opportunityId));
+                setOpportunities(opportunities.filter(opportunity => opportunity.id !== opportunityId));
+                alert('Opportunity removed successfully.');
+            } catch (error) {
+                console.error('Error removing opportunity:', error);
+                alert('Failed to remove opportunity.');
+            }
         }
     };
-
-    if (loading) {
-        return <p>Loading...</p>;
-    }
 
     return (
         <div className="moderator-dashboard">
             <h1>Moderator Dashboard</h1>
-
-            <div className="flagged-content">
-                <h2>Flagged Content</h2>
-                {flaggedContent.length > 0 ? (
-                    <table className="content-table">
-                        <thead>
-                        <tr>
-                            <th>Content</th>
-                            <th>Flagged By</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {flaggedContent.map((content) => (
-                            <tr key={content.id}>
-                                <td>{content.text || 'Unknown content'}</td>
-                                <td>{content.flaggedBy || 'Anonymous'}</td>
-                                <td>{content.status || 'Pending'}</td>
-                                <td>
-                                    <button onClick={() => handleApproveContent(content.id)}>Approve</button>
-                                    <button onClick={() => handleRemoveContent(content.id)}>Remove</button>
-                                </td>
-                            </tr>
+            <div className="dashboard-content">
+                <h2>Opportunities</h2>
+                {loading ? (
+                    <p>Loading opportunities...</p>
+                ) : opportunities.length > 0 ? (
+                    <div className="opportunities-list">
+                        {opportunities.map(opportunity => (
+                            <div key={opportunity.id} className="opportunity-card">
+                                <h3>{opportunity.Title}</h3>
+                                <p>{opportunity.Description}</p>
+                                <p>
+                                    <strong>Deadline:</strong>{' '}
+                                    {new Date(opportunity.Deadline.seconds * 1000).toLocaleDateString()}
+                                </p>
+                                <button
+                                    onClick={() => handleFlagOpportunity(opportunity.id, opportunity.Title)}
+                                    className="flag-button"
+                                >
+                                    Flag as Inappropriate
+                                </button>
+                                <button
+                                    onClick={() => handleRemoveOpportunity(opportunity.id)}
+                                    className="delete-button"
+                                >
+                                    Remove Content
+                                </button>
+                            </div>
                         ))}
-                        </tbody>
-                    </table>
+                    </div>
                 ) : (
-                    <p>No flagged content found.</p>
+                    <p>No opportunities available.</p>
                 )}
             </div>
         </div>
