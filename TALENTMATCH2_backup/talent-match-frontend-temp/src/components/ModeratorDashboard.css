@@ -1,78 +1,73 @@
 body {
     margin: 0;
     font-family: 'Arial', sans-serif;
-    background: #3e497a; /* Match the header background */
-    color: #333;
-    overflow-x: hidden; /* Remove horizontal scroll */
+    background: #f4f4f9;
 }
 
 .moderator-dashboard {
-    max-width: 1200px;
-    margin: 0 auto; /* Center the dashboard */
+    max-width: 1000px;
+    margin: 20px auto;
     padding: 20px;
     background: white;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #3e497a; /* Header background */
-    color: white;
-    padding: 10px 20px;
-    border-radius: 10px 10px 0 0;
+/* Dashboard Header */
+.dashboard-header h1 {
+    color: white; /* Sets the title color to white */
+    margin: 0; /* Ensures no extra margin around the title */
+    font-size: 24px; /* Adjust the size as needed */
 }
 
-.navbar ul {
-    list-style: none;
-    display: flex;
-    gap: 10px;
-    margin: 0;
-    padding: 0;
-}
 
-.navbar li button {
+/* Header Buttons */
+.header-actions button {
     background-color: #f05454;
     border: none;
-    border-radius: 5px;
-    padding: 10px 15px;
     color: white;
-    font-size: 14px;
+    padding: 10px 15px;
+    border-radius: 5px;
     cursor: pointer;
 }
 
-.navbar li button:hover {
+.header-actions button:hover {
     background-color: #c70039;
 }
 
-.moderator-requests {
+/* Sections */
+.dashboard-section {
     margin-top: 20px;
-    padding: 20px;
+    padding: 15px;
     border: 1px solid #ddd;
     border-radius: 10px;
+    background: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.requests-table {
+/* Tables */
+.moderator-table,
+.flagged-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
 }
 
-.requests-table th,
-.requests-table td {
+.moderator-table th,
+.flagged-table th,
+.moderator-table td,
+.flagged-table td {
     border: 1px solid #ddd;
     padding: 10px;
     text-align: left;
 }
 
-.requests-table th {
-    background-color: #3e497a; /* Header matches navbar */
+.moderator-table th,
+.flagged-table th {
+    background-color: #3e497a;
     color: white;
 }
 
+/* Buttons */
 .approve-button {
     background-color: #28a745;
     color: white;
@@ -97,4 +92,23 @@ body {
 
 .reject-button:hover {
     background-color: #c82333;
+}
+
+.resolve-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.resolve-button:hover {
+    background-color: #0056b3;
+}
+
+p {
+    font-size: 14px;
+    color: #555;
+    margin: 5px 0;
 }

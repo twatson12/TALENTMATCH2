@@ -1,104 +1,217 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { db, auth } from '../config/firebase';
-import { collection, getDocs, deleteDoc, doc, addDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, updateDoc, addDoc } from 'firebase/firestore';
 import './ModeratorDashboard.css';
 
 const ModeratorDashboard = () => {
-    const [opportunities, setOpportunities] = useState([]);
+    const [moderatorRequests, setModeratorRequests] = useState([]);
+    const [allContent, setAllContent] = useState([]);
+    const [flaggedContent, setFlaggedContent] = useState([]);
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchOpportunities = async () => {
+        const fetchModeratorRequests = async () => {
             try {
-                // Fetch all opportunities
-                const snapshot = await getDocs(collection(db, 'Opportunities'));
-                const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                setOpportunities(data);
-                setLoading(false);
+                const requestsRef = collection(db, 'ModeratorRequests');
+                const snapshot = await getDocs(requestsRef);
+                const requests = snapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+                setModeratorRequests(requests);
             } catch (error) {
-                console.error('Error fetching opportunities:', error);
-                setLoading(false);
+                console.error('Error fetching moderator requests:', error);
             }
         };
 
-        fetchOpportunities();
+        const fetchAllContent = async () => {
+            try {
+                const contentRef = collection(db, 'Opportunities'); // Replace with your content collection
+                const snapshot = await getDocs(contentRef);
+                const contentData = snapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+                setAllContent(contentData);
+            } catch (error) {
+                console.error('Error fetching content:', error);
+            }
+        };
+
+        const fetchFlaggedContent = async () => {
+            try {
+                const flaggedRef = collection(db, 'FlaggedContent');
+                const snapshot = await getDocs(flaggedRef);
+                const flaggedData = snapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+                setFlaggedContent(flaggedData);
+            } catch (error) {
+                console.error('Error fetching flagged content:', error);
+            }
+        };
+
+        fetchModeratorRequests();
+        fetchAllContent();
+        fetchFlaggedContent();
+        setLoading(false);
     }, []);
 
-    const handleFlagOpportunity = async (opportunityId, title) => {
-        const reason = prompt(`Why are you flagging "${title}" as inappropriate?`);
+    //const handleApproveRequest = async (requestId) => {
+        try {
+            const requestRef = doc(db, 'ModeratorRequests', requestId);
+            await updateDoc(requestRef, { Status: 'Approved' });
+            setModeratorRequests(
+                moderatorRequests.filter((request) => request.id !== requestId)
+            );
+            alert('Moderator request approved!');
+        } catch (error) {
+            console.error('Error approving request:', error);
+            alert('Failed to approve request.');
+        }
+    };
 
-        if (reason) {
-            try {
-                const user = auth.currentUser;
-                if (!user) {
-                    alert('You must be logged in as a moderator to flag content.');
-                    return;
-                }
+    //const handleRejectRequest = async (requestId) => {
+        try {
+            const requestRef = doc(db, 'ModeratorRequests', requestId);
+            await updateDoc(requestRef, { Status: 'Rejected' });
+            setModeratorRequests(
+                moderatorRequests.filter((request) => request.id !== requestId)
+            );
+            alert('Moderator request rejected.');
+        } catch (error) {
+            console.error('Error rejecting request:', error);
+            alert('Failed to reject request.');
+        }
+    };
 
-                await addDoc(collection(db, 'ModeratorRequests'), {
-                    OpportunityID: `/Opportunities/${opportunityId}`,
-                    ModeratorID: `/User/${user.uid}`,
+    const handleFlagContent = async (contentId) => {
+        try {
+            const reason = prompt('Enter the reason for flagging this content:');
+            if (reason) {
+                await addDoc(collection(db, 'FlaggedContent'), {
+                    ContentId: contentId,
                     Reason: reason,
                     Status: 'Pending',
                     Timestamp: new Date(),
                 });
-
-                alert('Content flagged successfully. Admin will review it.');
-            } catch (error) {
-                console.error('Error flagging content:', error);
-                alert('Failed to flag content.');
+                alert('Content flagged successfully.');
             }
+        } catch (error) {
+            console.error('Error flagging content:', error);
+            alert('Failed to flag content.');
         }
     };
 
-    const handleRemoveOpportunity = async (opportunityId) => {
-        const confirmDelete = window.confirm('Are you sure you want to delete this opportunity?');
-        if (confirmDelete) {
-            try {
-                await deleteDoc(doc(db, 'Opportunities', opportunityId));
-                setOpportunities(opportunities.filter(opportunity => opportunity.id !== opportunityId));
-                alert('Opportunity removed successfully.');
-            } catch (error) {
-                console.error('Error removing opportunity:', error);
-                alert('Failed to remove opportunity.');
-            }
+    const handleResolveFlag = async (contentId) => {
+        try {
+            const contentRef = doc(db, 'FlaggedContent', contentId);
+            await updateDoc(contentRef, { Status: 'Resolved' });
+            setFlaggedContent(
+                flaggedContent.filter((content) => content.id !== contentId)
+            );
+            alert('Flag resolved successfully!');
+        } catch (error) {
+            console.error('Error resolving flag:', error);
+            alert('Failed to resolve flagged content.');
         }
     };
+
+    const handleLogout = async () => {
+        try {
+            await auth.signOut();
+            navigate('/login');
+            alert('Logged out successfully.');
+        } catch (error) {
+            console.error('Error logging out:', error);
+            alert('Failed to log out.');
+        }
+    };
+
+    if (loading) {
+        return <p>Loading...</p>;
+    }
 
     return (
         <div className="moderator-dashboard">
-            <h1>Moderator Dashboard</h1>
-            <div className="dashboard-content">
-                <h2>Opportunities</h2>
-                {loading ? (
-                    <p>Loading opportunities...</p>
-                ) : opportunities.length > 0 ? (
-                    <div className="opportunities-list">
-                        {opportunities.map(opportunity => (
-                            <div key={opportunity.id} className="opportunity-card">
-                                <h3>{opportunity.Title}</h3>
-                                <p>{opportunity.Description}</p>
-                                <p>
-                                    <strong>Deadline:</strong>{' '}
-                                    {new Date(opportunity.Deadline.seconds * 1000).toLocaleDateString()}
-                                </p>
-                                <button
-                                    onClick={() => handleFlagOpportunity(opportunity.id, opportunity.Title)}
-                                    className="flag-button"
-                                >
-                                    Flag as Inappropriate
-                                </button>
-                                <button
-                                    onClick={() => handleRemoveOpportunity(opportunity.id)}
-                                    className="delete-button"
-                                >
-                                    Remove Content
-                                </button>
-                            </div>
+            <header className="dashboard-header">
+                <h1>Moderator Dashboard</h1>
+                <div className="header-actions">
+                    <button onClick={() => navigate('/settings')} className="settings-button">
+                        Settings
+                    </button>
+                    <button onClick={handleLogout} className="logout-button">
+                        Logout
+                    </button>
+                </div>
+            </header>
+            <div className="dashboard-section">
+                <h2>All Content</h2>
+                {allContent.length > 0 ? (
+                    <table className="moderator-table">
+                        <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {allContent.map((content) => (
+                            <tr key={content.id}>
+                                <td>{content.Title}</td>
+                                <td>{content.Description}</td>
+                                <td>
+                                    <button
+                                        className="resolve-button"
+                                        onClick={() => handleFlagContent(content.id)}
+                                    >
+                                        Flag
+                                    </button>
+                                </td>
+                            </tr>
                         ))}
-                    </div>
+                        </tbody>
+                    </table>
                 ) : (
-                    <p>No opportunities available.</p>
+                    <p>No content available at the moment.</p>
+                )}
+            </div>
+            <div className="dashboard-section">
+                <h2>Flagged Content</h2>
+                {flaggedContent.length > 0 ? (
+                    <table className="flagged-table">
+                        <thead>
+                        <tr>
+                            <th>Content ID</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {flaggedContent.map((content) => (
+                            <tr key={content.id}>
+                                <td>{content.ContentId}</td>
+                                <td>{content.Reason || 'No reason provided'}</td>
+                                <td>{content.Status || 'Pending'}</td>
+                                <td>
+                                    <button
+                                        className="resolve-button"
+                                        onClick={() => handleResolveFlag(content.id)}
+                                    >
+                                        Resolve
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                ) : (
+                    <p>No flagged content at the moment.</p>
                 )}
             </div>
         </div>
