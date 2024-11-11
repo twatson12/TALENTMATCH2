@@ -6,14 +6,14 @@ import AdminDashboard from './components/AdminDashboard';
 import Welcome from './components/Welcome';
 import Search from './components/Search';
 import EntertainerDashboard from './components/EntertainerDashboard';
-import './styles/App.css';
 import Settings from './components/Settings';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import PostOpportunity from './components/PostOpportunity';
-import TalentDashboard from './components/TalentDashboard'; // Add this line
-import ModeratorDashboard from './components/ModeratorDashboard'; // Add this line
-
-
+import TalentDashboard from './components/TalentDashboard';
+import ModeratorDashboard from './components/ModeratorDashboard';
+import RegisterTalent from './components/RegisterTalent';
+import ApplyOpportunity from './components/ApplyOpportunity';
+import './styles/App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
     return (
@@ -30,6 +30,11 @@ function App() {
                     <Route path="/search" element={<Search />} />
                     <Route path="/settings" element={<Settings />} />
                     <Route path="/post-opportunity" element={<PostOpportunity />} />
+                    {/* Talent Registration */}
+                    <Route path="/register-talent" element={<RegisterTalent />} />
+                    {/* Talent Applies for Opportunity */}
+                    <Route path="/apply/:opportunityId" element={<ApplyOpportunity />} />
+
                 </Routes>
             </div>
         </Router>

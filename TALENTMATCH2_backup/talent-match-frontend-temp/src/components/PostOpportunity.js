@@ -34,7 +34,7 @@ const PostOpportunity = () => {
             });
 
             alert('Opportunity posted successfully!');
-            navigate('/dashboard'); // Redirect after successful post
+            navigate('/entertainer-dashboard'); // Use the correct route here
         } catch (error) {
             console.error('Error posting opportunity:', error.message);
             alert('Failed to post opportunity. Please try again.');

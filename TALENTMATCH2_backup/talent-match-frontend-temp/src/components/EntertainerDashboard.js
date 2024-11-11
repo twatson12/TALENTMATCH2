@@ -42,6 +42,7 @@ const EntertainerDashboard = () => {
 
     const handleLogout = () => {
         auth.signOut().then(() => {
+            localStorage.removeItem('userRole');
             navigate('/login');
         });
     };
@@ -50,9 +51,14 @@ const EntertainerDashboard = () => {
         <div className="entertainer-dashboard">
             <header className="dashboard-header">
                 <h1>Entertainer Dashboard</h1>
-                <button onClick={handleLogout} className="logout-button">
-                    Logout
-                </button>
+                <div className="header-actions">
+                    <button onClick={() => navigate('/settings')} className="settings-button">
+                        Settings
+                    </button>
+                    <button onClick={handleLogout} className="logout-button">
+                        Logout
+                    </button>
+                </div>
             </header>
             <div className="dashboard-content">
                 <button

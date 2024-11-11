@@ -1,22 +1,24 @@
-// src/services/OpportunityServices.js
-import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../config/firebase';
+import { collection, getDocs } from 'firebase/firestore';
 
-// Function to fetch opportunities from Firestore
-const getOpportunities = async () => {
+const getAllOpportunities = async () => {
     try {
-        const opportunitiesRef = collection(db, 'Opportunity');
+        const opportunitiesRef = collection(db, 'Opportunities');
         const snapshot = await getDocs(opportunitiesRef);
-        return snapshot.docs.map(doc => ({
+        const opportunities = snapshot.docs.map(doc => ({
             id: doc.id,
             ...doc.data(),
         }));
+        return opportunities;
     } catch (error) {
-        console.error("Error fetching opportunities:", error);
+        console.error('Error fetching opportunities:', error);
         throw error;
     }
 };
 
-export default {
-    getOpportunities,
+// Export as named functions
+const OpportunityService = {
+    getAllOpportunities,
 };
+
+export default OpportunityService; // Exporting object assigned to a variable

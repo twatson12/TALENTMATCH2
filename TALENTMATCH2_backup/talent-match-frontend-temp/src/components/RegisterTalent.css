@@ -1,0 +1,38 @@
+.register-talent-container {
+    margin: 20px auto;
+    max-width: 600px;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background: #f4f4f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.register-talent-container h1 {
+    text-align: center;
+    color: #3b3b98;
+}
+
+.register-talent-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.register-talent-container input,
+.register-talent-container button {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.register-talent-container button {
+    background-color: #3b3b98;
+    color: white;
+    cursor: pointer;
+}
+
+.register-talent-container button:hover {
+    background-color: #2a287a;
+}

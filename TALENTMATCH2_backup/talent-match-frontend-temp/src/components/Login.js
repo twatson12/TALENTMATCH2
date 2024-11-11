@@ -10,22 +10,17 @@ const Login = () => {
     const [role, setRole] = useState('');
     const navigate = useNavigate();
 
-    // Fetch user details directly from the User document
     const fetchUserDetails = async (userId) => {
         try {
-            const userDoc = await getDoc(doc(db, 'User', userId)); // Correct Firestore collection name
+            const userDoc = await getDoc(doc(db, 'User', userId));
             if (userDoc.exists()) {
-                const userData = userDoc.data();
-                return {
-                    roleName: userData.RoleName, // Access RoleName directly
-                    subName: userData.SubscriptionName, // Access SubscriptionName directly
-                };
+                return userDoc.data();
             } else {
-                console.error("User document not found");
+                console.error("User document not found in Firestore.");
                 return null;
             }
         } catch (error) {
-            console.error("Error fetching user details:", error);
+            console.error("Error fetching user details from Firestore:", error);
             return null;
         }
     };
@@ -33,42 +28,42 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            // Authenticate user with Firebase Authentication
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
 
-            // Fetch the user's role and subscription details
             const userDetails = await fetchUserDetails(user.uid);
 
-            if (userDetails && userDetails.roleName.toLowerCase() === role.toLowerCase()) {
-                // Store role in local storage or global state
-                localStorage.setItem('userRole', userDetails.roleName); // Example: "admin"
+            if (userDetails) {
+                // Check if the role matches the Firestore user's role
+                if (userDetails.RoleName && userDetails.RoleName.toLowerCase() === role.toLowerCase()) {
+                    // Save role in local storage for session persistence
+                    localStorage.setItem('userRole', userDetails.RoleName);
 
-                console.log("Role:", userDetails.roleName);
-                console.log("Subscription Plan:", userDetails.subName);
-
-                // Role-based redirection
-                if (role.toLowerCase() === 'admin') {
-                    console.log("Navigating to Admin Dashboard");
-                    navigate('/admin-dashboard'); // Redirect admin to admin dashboard
-                } else if (role.toLowerCase() === 'entertainer') {
-                    console.log("Navigating to Entertainer Dashboard");
-                    navigate('/entertainer-dashboard'); // Redirect entertainers to entertainer dashboard
-                } else if (role.toLowerCase() === 'talent') {
-                    console.log("Navigating to Talent Dashboard");
-                    navigate('/talent-dashboard'); // Redirect talent users to talent dashboard
-                } else if (role.toLowerCase() === 'moderator') {
-                    console.log("Navigating to Moderator Dashboard");
-                    navigate('/moderator-dashboard'); // Redirect moderators to moderator dashboard
+                    // Navigate based on user role
+                    switch (role.toLowerCase()) {
+                        case 'admin':
+                            navigate('/admin-dashboard');
+                            break;
+                        case 'entertainer':
+                            navigate('/entertainer-dashboard');
+                            break;
+                        case 'talent':
+                            navigate('/talent-dashboard');
+                            break;
+                        case 'moderator':
+                            navigate('/moderator-dashboard');
+                            break;
+                        default:
+                            alert("Role not recognized. Please contact support.");
+                    }
                 } else {
-                    console.error("Role not recognized");
-                    alert("Role not recognized. Please contact support.");
+                    alert("Invalid role selection. Please select the correct role.");
                 }
             } else {
-                alert("Invalid role selection. Please select the correct role.");
+                alert("User details could not be found. Ensure your account exists.");
             }
         } catch (error) {
-            console.error("Error logging in:", error.message);
+            console.error("Error during login:", error.message);
             alert("Invalid login credentials. Please try again.");
         }
     };
@@ -103,8 +98,8 @@ const Login = () => {
                         required
                     >
                         <option value="">Select Role</option>
-                        <option value="Entertainer">Entertainer</option>
                         <option value="Admin">Admin</option>
+                        <option value="Entertainer">Entertainer</option>
                         <option value="Talent">Talent</option>
                         <option value="Moderator">Moderator</option>
                     </select>
