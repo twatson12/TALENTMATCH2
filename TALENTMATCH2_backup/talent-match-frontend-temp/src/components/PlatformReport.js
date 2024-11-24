@@ -2,14 +2,12 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../config/firebase';
-import Chart from 'chart.js/auto'; // Import the Chart.js library
 import './PlatformReport.css';
 
 const PlatformReport = () => {
     const [platformStats, setPlatformStats] = useState(null);
     const navigate = useNavigate();
-    const chartRef = useRef(null); // Reference for the chart canvas
-    let chartInstance = useRef(null); // To store the Chart.js instance
+    const canvasRef = useRef(null); // Reference for the canvas element
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -45,31 +43,44 @@ const PlatformReport = () => {
     };
 
     useEffect(() => {
-        if (platformStats && chartRef.current) {
-            // Destroy the previous chart instance if it exists
-            if (chartInstance.current) {
-                chartInstance.current.destroy();
-            }
-
-            // Create a new chart
-            chartInstance.current = new Chart(chartRef.current, {
-                type: 'pie',
-                data: {
-                    labels: Object.keys(platformStats.roleStats),
-                    datasets: [
-                        {
-                            data: Object.values(platformStats.roleStats),
-                            backgroundColor: ['#3b3b98', '#6a1b9a', '#ff6384', '#36a2eb', '#cc65fe'],
-                            hoverBackgroundColor: ['#2a297a', '#4d106e', '#ff4b5c', '#2288c5', '#a14fdc'],
-                        },
-                    ],
-                },
-                options: {
-                    responsive: true,
-                },
-            });
+        if (platformStats) {
+            drawChart(platformStats.roleStats); // Draw chart when stats are available
         }
     }, [platformStats]);
+
+    const drawChart = (roleStats) => {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+
+        const data = Object.values(roleStats);
+        const labels = Object.keys(roleStats);
+
+        const colors = ['#3b3b98', '#6a1b9a', '#ff6384', '#36a2eb', '#cc65fe'];
+        const total = data.reduce((sum, value) => sum + value, 0);
+        let startAngle = 0;
+
+        data.forEach((value, index) => {
+            const sliceAngle = (value / total) * 2 * Math.PI;
+
+            // Draw slice
+            ctx.beginPath();
+            ctx.moveTo(150, 150); // Center of the pie chart
+            ctx.arc(150, 150, 100, startAngle, startAngle + sliceAngle);
+            ctx.closePath();
+            ctx.fillStyle = colors[index % colors.length];
+            ctx.fill();
+
+            // Add labels
+            const middleAngle = startAngle + sliceAngle / 2;
+            const labelX = 150 + Math.cos(middleAngle) * 120; // Position labels outside the chart
+            const labelY = 150 + Math.sin(middleAngle) * 120;
+            ctx.fillStyle = '#000';
+            ctx.font = '12px Arial';
+            ctx.fillText(labels[index], labelX - 20, labelY);
+
+            startAngle += sliceAngle;
+        });
+    };
 
     return (
         <div className="platform-report-page">
@@ -82,8 +93,7 @@ const PlatformReport = () => {
 
                     <div className="chart-container">
                         <h2>Users by Role</h2>
-                        {/* Chart.js canvas element */}
-                        <canvas ref={chartRef}></canvas>
+                        <canvas ref={canvasRef} width="300" height="300"></canvas>
                     </div>
 
                     <button onClick={() => navigate('/admin-dashboard')} className="back-button">

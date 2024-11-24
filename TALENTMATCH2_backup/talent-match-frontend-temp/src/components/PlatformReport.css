@@ -1,45 +1,30 @@
-/* General Styling for the Platform Report Page */
 .platform-report-page {
     margin: 20px auto;
     max-width: 800px;
     font-family: Arial, sans-serif;
     padding: 20px;
-    background: #ffffff;
+    background: #f4f4f9;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     text-align: center;
 }
 
-/* Page Header Styling */
 .platform-report-page h1 {
     color: #3b3b98;
     margin-bottom: 20px;
 }
 
-/* Paragraph Styling */
 .platform-report-page p {
     font-size: 18px;
     margin: 10px 0;
 }
 
-/* Chart Container Styling */
 .chart-container {
-    max-width: 600px;
     margin: 20px auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    width: 300px;
+    height: 300px;
 }
 
-/* Chart Title Styling */
-.chart-container h2 {
-    color: #3b3b98;
-    margin-bottom: 15px;
-}
-
-/* Button Styling */
 .back-button {
     margin-top: 20px;
     padding: 10px 20px;
@@ -49,12 +34,12 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
 .back-button:hover {
     background-color: #2a297a;
 }
+
 
 /* Responsive Design */
 @media (max-width: 768px) {

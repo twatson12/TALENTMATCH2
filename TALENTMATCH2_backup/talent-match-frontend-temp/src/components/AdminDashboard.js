@@ -126,6 +126,16 @@ const AdminDashboard = () => {
                 </ul>
             </nav>
 
+            {/* View Platform Usage Button */}
+            <div className="view-platform-section">
+                <button
+                    onClick={() => navigate('/platform-report')}
+                    className="view-platform-button"
+                >
+                    View Platform Usage
+                </button>
+            </div>
+
             <div className="search-section">
                 <input
                     type="text"

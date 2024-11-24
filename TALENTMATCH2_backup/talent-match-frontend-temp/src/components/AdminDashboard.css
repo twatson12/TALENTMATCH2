@@ -244,3 +244,17 @@ h1, h2 {
 .moderator-request-section button:hover {
     background-color: #2a3456;
 }
+.view-platform-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #3b3b98;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.view-platform-button:hover {
+    background-color: #2a297a;
+}

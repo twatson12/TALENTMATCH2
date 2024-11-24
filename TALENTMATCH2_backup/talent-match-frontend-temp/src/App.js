@@ -12,6 +12,7 @@ import TalentDashboard from './components/TalentDashboard';
 import ModeratorDashboard from './components/ModeratorDashboard';
 import RegisterTalent from './components/RegisterTalent';
 import ApplyOpportunity from './components/ApplyOpportunity';
+import PlatformReport from './components/PlatformReport'; // Import PlatformReport
 import './styles/App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -30,11 +31,11 @@ function App() {
                     <Route path="/search" element={<Search />} />
                     <Route path="/settings" element={<Settings />} />
                     <Route path="/post-opportunity" element={<PostOpportunity />} />
-                    {/* Talent Registration */}
                     <Route path="/register-talent" element={<RegisterTalent />} />
-                    {/* Talent Applies for Opportunity */}
                     <Route path="/apply/:opportunityId" element={<ApplyOpportunity />} />
 
+                    {/* Add the Platform Report route */}
+                    <Route path="/platform-report" element={<PlatformReport />} />
                 </Routes>
             </div>
         </Router>
