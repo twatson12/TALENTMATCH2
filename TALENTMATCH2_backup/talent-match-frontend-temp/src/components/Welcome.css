@@ -1,16 +1,16 @@
 /* src/styles/Welcome.css */
 
 .welcome-container {
-    display: flex;
-    justify-content: center;
+    display: block;
     align-items: center;
-    height: 100vh;
+    max-height: 100vh;
     background: linear-gradient(135deg, #3b3b98, #6a1b9a); /* Blue to purple gradient */
     font-family: 'Arial', sans-serif;
     color: #fff;
     text-align: center;
-    margin: 0; /* Reset margin */
+    margin: 0 auto; /* Reset margin */
     padding: 0; /* Reset padding */
+    overflow-y: scroll;
 }
 
 .welcome-content {

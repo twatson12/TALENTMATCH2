@@ -5,7 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f2255911-23c9-470d-a0ba-daa06812a45c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/DisplayRating.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/DisplayRating.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/RateAndReview.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/RateAndReview.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/EntertainerDashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/EntertainerDashboard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/EntertainerDashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/EntertainerDashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/TalentDashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/TalentDashboard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/Welcome.css" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/Welcome.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +28,18 @@
     <projectState path="$PROJECT_DIR$/TalentMatch2">
       <ProjectState />
     </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -35,12 +59,12 @@
     &quot;assignee&quot;: &quot;jachellejohnson&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/twatson12/TALENTMATCH2.git",
-    "accountId": "8052ffe6-bb82-4ea2-a35b-00759bedb8cc"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/twatson12/TALENTMATCH2.git&quot;,
+    &quot;accountId&quot;: &quot;8052ffe6-bb82-4ea2-a35b-00759bedb8cc&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 2
@@ -57,7 +81,7 @@
     "Spring Boot.TalentMatch2Application.executor": "Run",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/jachellejohnson/Documents/GitHub/TalentMatch/TALENTMATCH2/TALENTMATCH-2/TalentMatch2/talent-match-frontend-temp",
+    "last_opened_file_path": "C:/Users/keish/IdeaProjects/TALENTMATCH2/TALENTMATCH2_backup/talent-match-frontend-temp/src/components",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -74,6 +98,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\keish\IdeaProjects\TALENTMATCH2\TALENTMATCH2_backup\talent-match-frontend-temp\src\components" />
       <recent name="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp" />
       <recent name="C:\Users\keish\OneDrive\Documents\GitHub\TALENTMATCH2\TalentMatch2\src\main\resources" />
     </key>
@@ -94,8 +119,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.21565.193" />
-        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-IU-243.21565.193" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
       </set>
     </attachedChunks>
   </component>
@@ -114,6 +139,7 @@
       <workItem from="1732422956447" duration="1860000" />
       <workItem from="1732425596600" duration="3277000" />
       <workItem from="1732467417719" duration="3355000" />
+      <workItem from="1732488304416" duration="3122000" />
     </task>
     <task id="LOCAL-00001" summary="OpportunityDetails boiiii">
       <option name="closed" value="true" />

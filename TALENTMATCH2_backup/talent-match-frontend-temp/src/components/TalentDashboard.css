@@ -1,17 +1,24 @@
-body {
+/*body {
     margin: 0;
     font-family: 'Arial', sans-serif;
     background: #f4f4f9; /* Neutral background around the dashboard */
-    color: #333; /* Dark text for readability */
-}
+/*  color: #333;  Dark text for readability */
+
 
 .talent-dashboard {
-    background-color: white; /* White background for the dashboard */
-    margin: 20px auto;
+    margin: 0 auto;
     padding: 20px;
-    max-width: 900px;
+    max-width: 1200px;
+    max-height: 100vh;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background: #f4f4f9;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
 }
 
 .dashboard-header {

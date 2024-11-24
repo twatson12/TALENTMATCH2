@@ -1,0 +1,42 @@
+.reviews-rating-container {
+    margin: 20px auto;
+    max-width: 600px;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background: #f4f4f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    text-align: center;
+    color: #3b3b98;
+    margin-bottom: 20px;
+}
+
+.average-rating {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #3b3b98;
+    margin-bottom: 20px;
+}
+
+.reviews-list {
+    margin-top: 20px;
+}
+
+.review-item {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+}
+
+.review-item p {
+    margin: 5px 0;
+}
+
+.review-item strong {
+    color: #333;
+}

@@ -1,11 +1,13 @@
 .admin-dashboard {
-    margin: 20px auto;
-    max-width: 1200px;
+    margin: 0 auto;
+    max-width: 1000px;
+    max-height: 100vh;
     font-family: Arial, sans-serif;
     padding: 20px;
     background: #f4f4f9;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
 }
 
 /* Title styling */

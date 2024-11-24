@@ -43,7 +43,7 @@ const EntertainerDashboard = () => {
         const fetchTalents = async () => {
             try {
                 const talentsRef = collection(db, 'User');
-                const q = query(talentsRef, where('Role', '==', 'Talent')); // Assuming 'Role' field exists in the database
+                const q = query(talentsRef, where('RoleId', '==', 'Talent')); // Assuming 'Role' field exists in the database
                 const snapshot = await getDocs(q);
                 const data = snapshot.docs.map((doc) => ({
                     id: doc.id,
@@ -175,6 +175,12 @@ const EntertainerDashboard = () => {
                                         className="view-profile-button"
                                     >
                                         View Profile
+                                    </button>
+                                    <button
+                                        onClick={() => navigate('/RateAndReview')}
+                                        className="Rate-and-Review-Talent"
+                                    >
+                                        Review A Talent
                                     </button>
                                 </td>
                             </tr>

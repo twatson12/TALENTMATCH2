@@ -1,12 +1,17 @@
 /* EntertainerDashboard.css */
 .entertainer-dashboard {
-    margin: 20px auto;
-    max-width: 1200px;
+    margin: 0 auto; /* Center horizontally without extra top/bottom margin */
+    height: 100vh; /* Fit exactly within the viewport */
+    max-width: 1000px; /* Limit the width for better readability */
     font-family: Arial, sans-serif;
     padding: 20px;
     background: #f4f4f9;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box; /* Include padding in height calculations */
+    display: flex;
+    flex-direction: column;
+    overflow: scroll ; /* Prevent content overflow */
 }
 
 .dashboard-header {
@@ -144,7 +149,15 @@
     border-radius: 5px;
 }
 
-.view-profile-button {
+.Rate-and-Review-Talent {
+    background-color: #3e497a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.view-profile-button{
     background-color: #3e497a;
     color: white;
     border: none;
@@ -157,3 +170,6 @@
     background-color: #2a3456;
 }
 
+.Rate-and-Review-Talent:hover {
+    background-color: #2a3456;
+}
