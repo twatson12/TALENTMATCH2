@@ -1,0 +1,72 @@
+.profile-container {
+    max-width: 80%; /* Adjust the width to take up 80% of the screen */
+    width: 1200px; /* Ensure a consistent width */
+    margin: 20px auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent white */
+    border-radius: 5px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    font-family: Arial, sans-serif;
+    text-align: left;
+}
+
+.profile-container h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #3b3b98; /* Blue header color */
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.profile-content p {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.profile-content a {
+    color: #6a1b9a; /* Purple link color */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.profile-content a:hover {
+    text-decoration: underline;
+}
+
+.profile-content ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    font-size: 16px;
+}
+
+.profile-content li {
+    margin-bottom: 5px;
+}
+
+.input-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+    resize: vertical;
+}
+
+.edit-profile-button {
+    background-color: #3b3b98;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.edit-profile-button:hover {
+    background-color: #2a287a;
+}
+
+
+
+

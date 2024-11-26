@@ -5,13 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c3e0afca-2e66-4e8a-b8a8-dd8ef1a0488c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/EditProfile.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/EditProfile.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/ProfilePage.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/ProfilePage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/Settings.css" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/Settings.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/Settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/Settings.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/TalentDashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/TalentDashboard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/EditProfile.css" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/ProfileEditPage.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/EditProfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/ProfileEditPage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/TalentDashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/TalentDashboard.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -49,8 +48,8 @@
       <list>
         <option value="Record" />
         <option value="Class" />
-        <option value="CSS File" />
         <option value="JavaScript File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -172,7 +171,7 @@
       <workItem from="1730822983986" duration="8694000" />
       <workItem from="1730993355116" duration="8240000" />
       <workItem from="1732545520763" duration="13686000" />
-      <workItem from="1732588578126" duration="3730000" />
+      <workItem from="1732588578126" duration="10363000" />
     </task>
     <servers />
   </component>
