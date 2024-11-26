@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { auth, db } from '../config/firebase';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { updatePassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import './Settings.css';
 
@@ -9,6 +10,8 @@ const Settings = () => {
     const [loading, setLoading] = useState(true);
     const [editing, setEditing] = useState(false);
     const [updatedDetails, setUpdatedDetails] = useState({});
+    const [newPassword, setNewPassword] = useState('');
+    const [isSubmittingPassword, setIsSubmittingPassword] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -49,6 +52,34 @@ const Settings = () => {
         }
     };
 
+    const handlePasswordChange = async (e) => {
+        e.preventDefault();
+        setIsSubmittingPassword(true);
+
+        try {
+            const currentUser = auth.currentUser;
+            if (!currentUser) {
+                alert('User not logged in.');
+                return;
+            }
+
+            if (!newPassword || newPassword.length < 6) {
+                alert('Password must be at least 6 characters long.');
+                setIsSubmittingPassword(false);
+                return;
+            }
+
+            await updatePassword(currentUser, newPassword);
+            alert('Password updated successfully!');
+            setNewPassword('');
+        } catch (error) {
+            console.error('Error updating password:', error.message);
+            alert('Failed to update password. Please try again.');
+        } finally {
+            setIsSubmittingPassword(false);
+        }
+    };
+
     const handleLogout = async () => {
         try {
             await auth.signOut();
@@ -76,29 +107,37 @@ const Settings = () => {
                                 <label>First Name:</label>
                                 <input
                                     type="text"
-                                    value={updatedDetails.Fname}
-                                    onChange={(e) => setUpdatedDetails({ ...updatedDetails, Fname: e.target.value })}
+                                    value={updatedDetails.Fname || ''}
+                                    onChange={(e) => setUpdatedDetails({...updatedDetails, Fname: e.target.value})}
                                 />
                             </div>
                             <div className="input-group">
                                 <label>Last Name:</label>
                                 <input
                                     type="text"
-                                    value={updatedDetails.Lname}
-                                    onChange={(e) => setUpdatedDetails({ ...updatedDetails, Lname: e.target.value })}
+                                    value={updatedDetails.Lname || ''}
+                                    onChange={(e) => setUpdatedDetails({...updatedDetails, Lname: e.target.value})}
                                 />
                             </div>
                             <div className="input-group">
                                 <label>Email:</label>
                                 <input
                                     type="email"
-                                    value={updatedDetails.Email}
-                                    onChange={(e) => setUpdatedDetails({ ...updatedDetails, Email: e.target.value })}
+                                    value={updatedDetails.Email || ''}
+                                    onChange={(e) => setUpdatedDetails({...updatedDetails, Email: e.target.value})}
+                                />
+                            </div>
+                            <div className="input-group">
+                                <label>Password:</label>
+                                <input
+                                    type="password"
+                                    value={updatedDetails.Password || ''}
+                                    onChange={(e) => setUpdatedDetails({...updatedDetails, Password: e.target.value})}
                                 />
                             </div>
                             <div className="input-group">
                                 <label>Role:</label>
-                                <input type="text" value={userDetails.RoleId} disabled />
+                                <input type="text" value={userDetails.RoleId || ''} disabled/>
                             </div>
                             <button type="submit" className="save-button">Save Changes</button>
                             <button
@@ -121,9 +160,8 @@ const Settings = () => {
                             <button className="edit-button" onClick={() => setEditing(true)}>Edit Account</button>
                         </div>
                     )}
-                    <button className="back-button" onClick={() => navigate('/admin-dashboard')}>
-                        Back to Dashboard
-                    </button>
+
+
                     <button className="logout-button" onClick={handleLogout}>
                         Log Out
                     </button>
@@ -134,3 +172,4 @@ const Settings = () => {
 };
 
 export default Settings;
+

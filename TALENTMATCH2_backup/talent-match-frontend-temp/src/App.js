@@ -18,6 +18,8 @@ import './styles/App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import RateAndReview from "./components/RateAndReview";
 import DisplayRating from "./components/DisplayRating";
+import EditProfile from "./components/EditProfile";
+import TalentMatchUserProfilePage from "./components/TalentMatchUserProfilePage";
 
 function App() {
     return (
@@ -42,6 +44,7 @@ function App() {
                     <Route path="/platform-report" element={<PlatformReport />} />
                     {/* Add the Ban User route */}
                     <Route path="/ban-user" element={<BanUser />} />
+                    <Route path="/Profile" element={<TalentMatchUserProfilePage />} />
                 </Routes>
             </div>
         </Router>

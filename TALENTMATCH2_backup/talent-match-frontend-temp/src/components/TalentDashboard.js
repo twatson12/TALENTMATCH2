@@ -73,6 +73,7 @@ const TalentDashboard = () => {
                     <button className="logout-button" onClick={handleLogout}>
                         Logout
                     </button>
+
                 </div>
             </header>
             <div className="dashboard-content">
