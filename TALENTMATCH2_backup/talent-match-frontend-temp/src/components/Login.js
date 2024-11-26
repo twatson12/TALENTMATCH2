@@ -8,6 +8,7 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('');
+    const [error, setError] = useState('');
     const navigate = useNavigate();
 
     const fetchUserDetails = async (userId) => {
@@ -27,13 +28,24 @@ const Login = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
+        setError(''); // Clear any previous errors
+
         try {
+            // Sign in the user with Firebase Auth
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
 
+            // Fetch user details from Firestore
             const userDetails = await fetchUserDetails(user.uid);
 
             if (userDetails) {
+                // Check if the user is banned
+                if (userDetails.Status && userDetails.Status.toLowerCase() === 'banned') {
+                    await auth.signOut(); // Immediately sign out the user
+                    setError('Your account has been banned. Please contact support.');
+                    return;
+                }
+
                 // Check if the role matches the Firestore user's role
                 if (userDetails.RoleName && userDetails.RoleName.toLowerCase() === role.toLowerCase()) {
                     // Save role in local storage for session persistence
@@ -54,17 +66,17 @@ const Login = () => {
                             navigate('/moderator-dashboard');
                             break;
                         default:
-                            alert("Role not recognized. Please contact support.");
+                            setError("Role not recognized. Please contact support.");
                     }
                 } else {
-                    alert("Invalid role selection. Please select the correct role.");
+                    setError("Invalid role selection. Please select the correct role.");
                 }
             } else {
-                alert("User details could not be found. Ensure your account exists.");
+                setError("User details could not be found. Ensure your account exists.");
             }
         } catch (error) {
             console.error("Error during login:", error.message);
-            alert("Invalid login credentials. Please try again.");
+            setError("Invalid login credentials. Please try again.");
         }
     };
 
@@ -72,6 +84,7 @@ const Login = () => {
         <div className="login-container">
             <form className="login-form" onSubmit={handleLogin}>
                 <h1>Login</h1>
+                {error && <p className="error-message">{error}</p>}
                 <div className="input-group">
                     <label>Email</label>
                     <input

@@ -14,14 +14,20 @@ body {
 }
 
 /* Dashboard Header */
-.dashboard-header h1 {
-    color: white; /* Sets the title color to white */
-    margin: 0; /* Ensures no extra margin around the title */
-    font-size: 24px; /* Adjust the size as needed */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #3e497a;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
 }
 
+.dashboard-header h1 {
+    margin: 0;
+}
 
-/* Header Buttons */
 .header-actions button {
     background-color: #f05454;
     border: none;
@@ -41,74 +47,47 @@ body {
     padding: 15px;
     border: 1px solid #ddd;
     border-radius: 10px;
-    background: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Tables */
-.moderator-table,
-.flagged-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.moderator-table th,
-.flagged-table th,
-.moderator-table td,
-.flagged-table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
-}
-
-.moderator-table th,
-.flagged-table th {
-    background-color: #3e497a;
-    color: white;
-}
-
-/* Buttons */
-.approve-button {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.approve-button:hover {
-    background-color: #218838;
-}
-
-.reject-button {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.reject-button:hover {
-    background-color: #c82333;
-}
-
+/* Resolve Button */
 .resolve-button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
+    background-color: #007bff; /* Blue color for the button */
+    color: white; /* White text */
+    border: none; /* No border */
+    padding: 5px 10px; /* Padding for the button */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 14px; /* Font size */
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
 }
 
 .resolve-button:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Darker blue on hover */
 }
 
-p {
-    font-size: 14px;
-    color: #555;
+/* General Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th, td {
+    text-align: left;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+th {
+    background: #3e497a;
+    color: white;
+    font-weight: bold;
+}
+
+td {
+    background: #f9f9f9;
+}
+
+button {
     margin: 5px 0;
 }

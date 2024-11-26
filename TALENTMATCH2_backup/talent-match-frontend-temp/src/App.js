@@ -13,6 +13,7 @@ import ModeratorDashboard from './components/ModeratorDashboard';
 import RegisterTalent from './components/RegisterTalent';
 import ApplyOpportunity from './components/ApplyOpportunity';
 import PlatformReport from './components/PlatformReport'; // Import PlatformReport
+import BanUser from './components/BanUser'; // Import BanUser
 import './styles/App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import RateAndReview from "./components/RateAndReview";
@@ -36,9 +37,11 @@ function App() {
                     <Route path="/register-talent" element={<RegisterTalent />} />
                     <Route path="/apply/:opportunityId" element={<ApplyOpportunity />} />
                     <Route path="/RateAndReview" element={<RateAndReview />} />
-                    <Route path="/DisplayRating" element={<DisplayRating/>} />
+                    <Route path="/DisplayRating" element={<DisplayRating />} />
                     {/* Add the Platform Report route */}
                     <Route path="/platform-report" element={<PlatformReport />} />
+                    {/* Add the Ban User route */}
+                    <Route path="/ban-user" element={<BanUser />} />
                 </Routes>
             </div>
         </Router>

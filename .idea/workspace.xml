@@ -4,25 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f2255911-23c9-470d-a0ba-daa06812a45c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/DisplayRating.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/DisplayRating.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/RateAndReview.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/RateAndReview.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/EntertainerDashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/EntertainerDashboard.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/EntertainerDashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/EntertainerDashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/TalentDashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/TalentDashboard.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/Welcome.css" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/Welcome.css" afterDir="false" />
-    </list>
+    <list default="true" id="c3e0afca-2e66-4e8a-b8a8-dd8ef1a0488c" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExportToHTMLSettings">
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/../TALENTMATCH2\exportToHTML" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$/TalentMatch2">
@@ -34,7 +23,12 @@
       <state>
         <projects_view>
           <tree_state>
-            <expand />
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="TalentMatch2" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
             <select />
           </tree_state>
         </projects_view>
@@ -44,9 +38,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="TypeScript File" />
-        <option value="CSS File" />
+        <option value="Record" />
+        <option value="Class" />
         <option value="JavaScript File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -56,20 +51,22 @@
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
     &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;jachellejohnson&quot;
+    &quot;assignee&quot;: &quot;twatson12&quot;
   }
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/twatson12/TALENTMATCH2.git&quot;,
-    &quot;accountId&quot;: &quot;8052ffe6-bb82-4ea2-a35b-00759bedb8cc&quot;
+    &quot;accountId&quot;: &quot;d4c1054f-c4be-4309-a2c7-33faad0b5bc4&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+  </component>
   <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 2
 }</component>
-  <component name="ProjectId" id="2oaiJjGs0XjVzM8mC2AjME5Sw7j" />
+  <component name="ProjectId" id="2oPW76d3Q581NYZNuI17X1jQ8jz" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -77,44 +74,72 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Gradle.Build TalentMatch2.executor": "Run",
+    "Gradle.C:/Users/keish/OneDrive/Documents/GitHub/TALENTMATCH2/TalentMatch2.executor": "Run",
+    "Gradle.TalentMatch2.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.TalentMatch2Application.executor": "Run",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/keish/IdeaProjects/TALENTMATCH2/TALENTMATCH2_backup/talent-match-frontend-temp/src/components",
+    "last_opened_file_path": "C:/Users/STUDENT/Documents/GitHub/TALENTMATCHREVISED/TALENTMATCH2/TalentMatch2/build.gradle",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
+    "project.structure.last.edited": "Artifacts",
     "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "advanced.settings",
-    "ts.external.directory.path": "/private/var/folders/tg/4x9nc1h17n1ct_ybp8nwxknr0000gn/T/AppTranslocation/B53575AA-45FD-463D-B6EB-6A1E6AA59E12/d/IntelliJ IDEA.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.fileTypes",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\keish\IdeaProjects\TALENTMATCH2\TALENTMATCH2_backup\talent-match-frontend-temp\src\components" />
-      <recent name="$PROJECT_DIR$/TalentMatch2/talent-match-frontend-temp" />
-      <recent name="C:\Users\keish\OneDrive\Documents\GitHub\TALENTMATCH2\TalentMatch2\src\main\resources" />
+      <recent name="C:\Users\STUDENT\Documents\GitHub\TALENTMATCHREVISED\TALENTMATCH2\TalentMatch2\src\main\resources" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/context" />
-      <recent name="$PROJECT_DIR$/TalentMatch2" />
+      <recent name="C:\Users\STUDENT\Documents\GitHub\TALENTMATCHREVISED\TALENTMATCH2\TalentMatch2\src\main\resources" />
+      <recent name="C:\Users\keish\OneDrive\Documents\GitHub\TALENTMATCH2\TalentMatch2\src\main\resources" />
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="TalentMatch2Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <module name="TalentMatch2.main" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.talentmatch2.TalentMatch2Application" />
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="TALENTMATCH2" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="TALENTMATCH2" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TalentMatch2Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="TalentMatch2.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.talentmatch2.TalentMatch2Application" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.talentmatch2.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.TalentMatch2Application" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -127,29 +152,18 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="f2255911-23c9-470d-a0ba-daa06812a45c" name="Changes" comment="" />
-      <created>1731114022800</created>
+      <changelist id="c3e0afca-2e66-4e8a-b8a8-dd8ef1a0488c" name="Changes" comment="" />
+      <created>1730771523893</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1731114022800</updated>
-      <workItem from="1731114024280" duration="11892000" />
-      <workItem from="1731165424050" duration="45000" />
-      <workItem from="1731211544734" duration="8819000" />
-      <workItem from="1731297088539" duration="15929000" />
-      <workItem from="1732422956447" duration="1860000" />
-      <workItem from="1732425596600" duration="3277000" />
-      <workItem from="1732467417719" duration="3355000" />
-      <workItem from="1732488304416" duration="3122000" />
+      <updated>1730771523893</updated>
+      <workItem from="1730771525714" duration="82000" />
+      <workItem from="1730771618043" duration="8297000" />
+      <workItem from="1730820027980" duration="2924000" />
+      <workItem from="1730822983986" duration="8694000" />
+      <workItem from="1730993355116" duration="8240000" />
+      <workItem from="1732545520763" duration="13686000" />
     </task>
-    <task id="LOCAL-00001" summary="OpportunityDetails boiiii">
-      <option name="closed" value="true" />
-      <created>1731212941993</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1731212941993</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -165,9 +179,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="OpportunityDetails boiiii" />
-    <option name="LAST_COMMIT_MESSAGE" value="OpportunityDetails boiiii" />
   </component>
 </project>

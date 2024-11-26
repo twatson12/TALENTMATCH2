@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.talentmatch2.TalentMatch2ApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-11-07T16:56:58" hostname="DESKTOP-HQ7ET17" time="2.551">
+  <properties/>
+  <testcase name="contextLoads()" classname="com.talentmatch2.TalentMatch2ApplicationTests" time="2.551"/>
+  <system-out><![CDATA[Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
+11:56:50.989 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.talentmatch2.TalentMatch2ApplicationTests]: TalentMatch2ApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+11:56:51.311 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.talentmatch2.TalentMatch2Application for test class com.talentmatch2.TalentMatch2ApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.5)
+
+2024-11-07T11:56:52.428-05:00  INFO 7124 --- [TalentMatch2] [    Test worker] c.t.TalentMatch2ApplicationTests         : Starting TalentMatch2ApplicationTests using Java 17.0.12 with PID 7124 (started by STUDENT in C:\Users\STUDENT\Documents\GitHub\TALENTMATCHREVISED\TALENTMATCH2\TalentMatch2)
+2024-11-07T11:56:52.437-05:00  INFO 7124 --- [TalentMatch2] [    Test worker] c.t.TalentMatch2ApplicationTests         : No active profile set, falling back to 1 default profile: "default"
+2024-11-07T11:56:58.073-05:00  INFO 7124 --- [TalentMatch2] [    Test worker] c.t.TalentMatch2ApplicationTests         : Started TalentMatch2ApplicationTests in 6.339 seconds (process running for 9.508)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

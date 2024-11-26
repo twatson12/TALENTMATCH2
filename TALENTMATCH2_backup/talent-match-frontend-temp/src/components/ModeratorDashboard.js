@@ -22,22 +22,18 @@ const ModeratorDashboard = () => {
                     getDocs(collection(db, 'User')),
                 ]);
 
-                // Fetch moderator requests
                 setModeratorRequests(
                     requestsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
                 );
 
-                // Fetch all content
                 setAllContent(
                     contentSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
                 );
 
-                // Fetch flagged content
                 setFlaggedContent(
                     flaggedSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
                 );
 
-                // Fetch users
                 setUsers(
                     usersSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
                 );
@@ -68,9 +64,25 @@ const ModeratorDashboard = () => {
         }
     };
 
+    const handleBanUser = async (userId) => {
+        const confirmBan = window.confirm(
+            'Are you sure you want to ban this user? This action cannot be undone.'
+        );
+        if (!confirmBan) return;
+
+        try {
+            await updateDoc(doc(db, 'User', userId), { Status: 'Banned' });
+            setUsers(users.map((user) => (user.id === userId ? { ...user, Status: 'Banned' } : user)));
+            alert('User banned successfully.');
+        } catch (error) {
+            console.error('Error banning user:', error);
+            alert('Failed to ban user. Please try again.');
+        }
+    };
+
     const handleFlagContent = async (contentId) => {
         const reason = prompt('Enter the reason for flagging this content:');
-        if (!reason) return; // Exit if no reason provided
+        if (!reason) return;
 
         try {
             await addDoc(collection(db, 'FlaggedContent'), {
@@ -208,6 +220,7 @@ const ModeratorDashboard = () => {
                         <tr>
                             <th>User ID</th>
                             <th>Email</th>
+                            <th>Status</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
@@ -216,7 +229,14 @@ const ModeratorDashboard = () => {
                             <tr key={user.id}>
                                 <td>{user.id}</td>
                                 <td>{user.Email || 'No email provided'}</td>
+                                <td>{user.Status || 'Active'}</td>
                                 <td>
+                                    <button
+                                        className="ban-button"
+                                        onClick={() => handleBanUser(user.id)}
+                                    >
+                                        Ban
+                                    </button>
                                     <button
                                         className="remove-button"
                                         onClick={() => handleRemoveUser(user.id)}
