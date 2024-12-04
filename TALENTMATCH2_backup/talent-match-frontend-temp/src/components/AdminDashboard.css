@@ -48,91 +48,88 @@ h1, h2 {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-}
-
-.request-card button:hover {
-    opacity: 0.9;
+    transition: background-color 0.3s;
 }
 
 .request-card button:first-child {
     background-color: #4caf50; /* Approve button */
 }
 
-.request-card button:first-child:hover {
-    background-color: #45a049;
-}
-
 .request-card button:last-child {
     background-color: #f44336; /* Reject button */
 }
 
-.request-card button:last-child:hover {
-    background-color: #d32f2f;
+.request-card button:hover {
+    opacity: 0.9;
 }
 
-/* Table styling for future user actions */
-.user-table {
+/* Table styling for user and opportunity management */
+.user-table, .moderator-requests-table, .opportunities-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
 .user-table th,
-.user-table td {
+.user-table td,
+.moderator-requests-table th,
+.moderator-requests-table td,
+.opportunities-table th,
+.opportunities-table td {
     border: 1px solid #ccc;
     padding: 10px;
     text-align: center;
     font-size: 16px;
 }
 
-.user-table th {
+.user-table th,
+.moderator-requests-table th,
+.opportunities-table th {
     background-color: #3b3b98;
     color: white;
     font-weight: bold;
 }
 
-.user-table tr:nth-child(even) {
+.user-table tr:nth-child(even),
+.moderator-requests-table tr:nth-child(even),
+.opportunities-table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-.user-table tr:hover {
+.user-table tr:hover,
+.moderator-requests-table tr:hover,
+.opportunities-table tr:hover {
     background-color: #f1f1f1;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .admin-dashboard {
-        padding: 15px;
-    }
-
-    .search-bar {
-        font-size: 14px;
-    }
-
-    .request-card button {
-        padding: 8px 10px;
-        font-size: 12px;
-    }
-
-    .user-table th,
-    .user-table td {
-        font-size: 14px;
-        padding: 8px;
-    }
-}
-.user-table button {
-    margin: 5px;
+/* Buttons for Activate and Deactivate */
+.activate-button, .deactivate-button {
     padding: 5px 10px;
     font-size: 14px;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.user-table button:hover {
-    opacity: 0.9;
+.activate-button {
+    background-color: #4caf50; /* Green */
 }
+
+.activate-button:hover {
+    background-color: #45a049;
+}
+
+.deactivate-button {
+    background-color: #f44336; /* Red */
+}
+
+.deactivate-button:hover {
+    background-color: #d32f2f;
+}
+
+/* Navbar styling */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -156,10 +153,6 @@ h1, h2 {
     margin: 0;
 }
 
-.navbar li {
-    display: inline;
-}
-
 .navbar button {
     padding: 10px 15px;
     font-size: 14px;
@@ -168,46 +161,17 @@ h1, h2 {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.navbar button:hover {
-    background-color: #45a049;
 }
 
 .navbar button:last-child {
     background-color: #f44336;
 }
 
-.navbar button:last-child:hover {
-    background-color: #d32f2f;
-}
-/* Button styles for activate and deactivate actions */
-.activate-button {
-    background-color: #4caf50; /* Green */
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.navbar button:hover {
+    opacity: 0.9;
 }
 
-.activate-button:hover {
-    background-color: #45a049;
-}
-
-.deactivate-button {
-    background-color: #f44336; /* Red */
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.deactivate-button:hover {
-    background-color: #d32f2f;
-}
+/* Moderator Requests Section */
 .moderator-request-section {
     margin: 20px 0;
     padding: 15px;
@@ -215,12 +179,6 @@ h1, h2 {
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.moderator-request-section h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
-    color: #3e497a;
 }
 
 .moderator-request-section textarea {
@@ -246,6 +204,8 @@ h1, h2 {
 .moderator-request-section button:hover {
     background-color: #2a3456;
 }
+
+/* View Platform Button */
 .view-platform-button {
     padding: 10px 20px;
     font-size: 16px;
@@ -259,4 +219,34 @@ h1, h2 {
 
 .view-platform-button:hover {
     background-color: #2a297a;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .admin-dashboard {
+        padding: 15px;
+    }
+
+    .search-bar {
+        font-size: 14px;
+    }
+
+    .request-card button {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+
+    .user-table th,
+    .user-table td {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .navbar h1 {
+        font-size: 1.2rem;
+    }
+
+    .navbar button {
+        font-size: 12px;
+    }
 }

@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // For navigation
+import { useNavigate } from 'react-router-dom';
 import { db, auth } from '../config/firebase';
 import { collection, getDocs, addDoc, doc, updateDoc } from 'firebase/firestore';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
     const [users, setUsers] = useState([]);
-    const [filteredUsers, setFilteredUsers] = useState([]); // For search functionality
-    const [searchQuery, setSearchQuery] = useState(''); // Search query
+    const [filteredUsers, setFilteredUsers] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
-    const [moderatorRequest, setModeratorRequest] = useState('');
     const navigate = useNavigate();
 
+    // Fetch users from Firestore
     useEffect(() => {
         const fetchUsers = async () => {
             try {
@@ -22,7 +22,7 @@ const AdminDashboard = () => {
                     ...doc.data(),
                 }));
                 setUsers(usersData);
-                setFilteredUsers(usersData); // Initialize filtered users
+                setFilteredUsers(usersData);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching users:', error);
@@ -33,11 +33,12 @@ const AdminDashboard = () => {
         fetchUsers();
     }, []);
 
+    // Logout
     const handleLogout = async () => {
         try {
             await auth.signOut();
-            localStorage.removeItem('userRole'); // Clear localStorage role
-            navigate('/login'); // Redirect to login page
+            localStorage.removeItem('userRole');
+            navigate('/login');
             alert('Successfully logged out!');
         } catch (error) {
             console.error('Error logging out:', error);
@@ -45,6 +46,7 @@ const AdminDashboard = () => {
         }
     };
 
+    // Search Filter
     const handleSearch = (e) => {
         const query = e.target.value.toLowerCase();
         setSearchQuery(query);
@@ -58,22 +60,19 @@ const AdminDashboard = () => {
             );
             setFilteredUsers(filtered);
         } else {
-            setFilteredUsers(users); // Reset to all users if query is empty
+            setFilteredUsers(users);
         }
     };
 
+    // Status Toggle for Users
     const handleStatusToggle = async (userId, currentStatus) => {
         try {
             const userRef = doc(db, 'User', userId);
             const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
             await updateDoc(userRef, { Status: newStatus });
 
-            setUsers(users.map(user =>
-                user.id === userId ? { ...user, Status: newStatus } : user
-            ));
-            setFilteredUsers(filteredUsers.map(user =>
-                user.id === userId ? { ...user, Status: newStatus } : user
-            ));
+            setUsers(users.map(user => (user.id === userId ? { ...user, Status: newStatus } : user)));
+            setFilteredUsers(filteredUsers.map(user => (user.id === userId ? { ...user, Status: newStatus } : user)));
             alert(`User status updated to ${newStatus}.`);
         } catch (error) {
             console.error('Error updating user status:', error);
@@ -81,33 +80,20 @@ const AdminDashboard = () => {
         }
     };
 
-    const handleModeratorRequest = async (e) => {
-        e.preventDefault();
+    // Approve or Reject Moderator Requests
+    const handleModeratorApproval = async (userId, action) => {
         try {
-            if (!moderatorRequest) {
-                alert('Please enter a reason for applying as a moderator.');
-                return;
-            }
+            const userRef = doc(db, 'User', userId);
+            const updatedRole = action === 'Approve' ? 'Moderator' : 'User';
 
-            const currentUser = auth.currentUser;
-            if (!currentUser) {
-                alert('You must be logged in to apply.');
-                return;
-            }
+            await updateDoc(userRef, { RoleId: updatedRole });
 
-            await addDoc(collection(db, 'ModeratorRequests'), {
-                UserId: currentUser.uid,
-                Email: currentUser.email,
-                Reason: moderatorRequest,
-                Status: 'Pending', // Initial status
-                Timestamp: new Date(),
-            });
-
-            alert('Your request to become a moderator has been submitted.');
-            setModeratorRequest(''); // Reset the form
+            setUsers(users.map(user => (user.id === userId ? { ...user, RoleId: updatedRole } : user)));
+            setFilteredUsers(filteredUsers.map(user => (user.id === userId ? { ...user, RoleId: updatedRole } : user)));
+            alert(`Moderator request ${action.toLowerCase()}ed successfully.`);
         } catch (error) {
-            console.error('Error submitting moderator request:', error);
-            alert('Failed to submit the request. Please try again later.');
+            console.error(`Error ${action.toLowerCase()}ing moderator request:`, error);
+            alert(`Failed to ${action.toLowerCase()} the request.`);
         }
     };
 
@@ -117,7 +103,6 @@ const AdminDashboard = () => {
 
     return (
         <div className="admin-dashboard">
-            {/* Navigation Bar */}
             <nav className="navbar">
                 <h1>Admin Dashboard</h1>
                 <ul>
@@ -126,7 +111,6 @@ const AdminDashboard = () => {
                 </ul>
             </nav>
 
-            {/* View Platform Usage Button */}
             <div className="view-platform-section">
                 <button
                     onClick={() => navigate('/platform-report')}
@@ -185,19 +169,45 @@ const AdminDashboard = () => {
                 )}
             </div>
 
-            {/* Moderator Request Section */}
-            <div className="moderator-request-section">
-                <h2>Apply to Become a Moderator</h2>
-                <form onSubmit={handleModeratorRequest}>
-                    <textarea
-                        value={moderatorRequest}
-                        onChange={(e) => setModeratorRequest(e.target.value)}
-                        placeholder="Explain why you want to become a moderator..."
-                        rows="5"
-                        required
-                    ></textarea>
-                    <button type="submit">Submit Request</button>
-                </form>
+            <div className="moderator-requests-section">
+                <h2>Moderator Requests</h2>
+                {users.filter((user) => user.RoleId === 'ModeratorRequest').length > 0 ? (
+                    <table className="moderator-requests-table">
+                        <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {users.filter((user) => user.RoleId === 'ModeratorRequest').map((user) => (
+                            <tr key={user.id}>
+                                <td>{user.Email}</td>
+                                <td>{user.Reason || 'No reason provided'}</td>
+                                <td>{user.Status || 'Pending'}</td>
+                                <td>
+                                    <button
+                                        onClick={() => handleModeratorApproval(user.id, 'Approve')}
+                                        className="approve-button"
+                                    >
+                                        Approve
+                                    </button>
+                                    <button
+                                        onClick={() => handleModeratorApproval(user.id, 'Reject')}
+                                        className="reject-button"
+                                    >
+                                        Reject
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                ) : (
+                    <p>No pending moderator requests.</p>
+                )}
             </div>
         </div>
     );

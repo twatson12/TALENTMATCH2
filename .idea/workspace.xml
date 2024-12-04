@@ -5,13 +5,70 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c3e0afca-2e66-4e8a-b8a8-dd8ef1a0488c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/ProfilePage.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/ProfilePage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/MessageTalent.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/ScheduleAudition.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/EditProfile.css" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/ProfileEditPage.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/EditProfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/ProfileEditPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/TalentDashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/TalentDashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Controllers/ApplicationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Controllers/ApplicationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Controllers/MessageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Controllers/MessageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Controllers/OpportunityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Controllers/OpportunityController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Controllers/ProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Controllers/ProfileController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Controllers/ReviewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Controllers/ReviewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Controllers/RoleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Controllers/RoleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Controllers/SubscriptionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Controllers/SubscriptionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Controllers/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Models/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Models/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Models/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Models/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Models/Opportunity.java" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Models/Opportunity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Models/Profile.java" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Models/Profile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Models/Review.java" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Models/Review.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Models/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Models/Role.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Models/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Services/ApplicationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Services/ApplicationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Services/MessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Services/MessageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Services/OpportunityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Services/OpportunityService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Services/ProfileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Services/ProfileService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Services/ReviewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Services/ReviewService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Services/RoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Services/RoleService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Services/SubscriptionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Services/SubscriptionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/Services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/TalentMatch2Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/src/main/java/com/talentmatch2/TalentMatch2Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/src/test/java/com/talentmatch2/TalentMatch2ApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/src/test/java/com/talentmatch2/TalentMatch2ApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/AdminDashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/AdminDashboard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/AdminDashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/AdminDashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/Welcome.css" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/Welcome.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Config/FirebaseConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Config/FirebaseConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Controllers/ApplicationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Controllers/ApplicationController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Controllers/AuthController.class" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Controllers/AuthController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Controllers/MessageController.class" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Controllers/MessageController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Controllers/OpportunityController.class" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Controllers/OpportunityController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Controllers/ReviewController.class" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Controllers/ReviewController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Controllers/RoleController.class" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Controllers/RoleController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Controllers/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Controllers/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Models/Application.class" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Models/Application.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Models/LoginRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Models/LoginRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Models/Message.class" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Models/Message.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Models/Profile.class" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Models/Profile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Models/Review.class" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Models/Review.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Models/Role.class" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Models/Role.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Models/Subscription.class" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Models/Subscription.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Models/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Models/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Repositories/UserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/Repositories/UserRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/TalentMatch2Application.class" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/TalentMatch2Application.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/services/ApplicationService.class" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/services/ApplicationService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/services/MessageService.class" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/services/MessageService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/services/OpportunityService.class" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/services/OpportunityService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/services/ProfileService.class" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/services/ProfileService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/services/ReviewService.class" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/services/ReviewService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/services/SubscriptionService.class" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/services/SubscriptionService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/services/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/classes/java/main/com/talentmatch2/services/UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build/classes/java/test/com/talentmatch2/TalentMatch2ApplicationTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/classes/java/test/com/talentmatch2/TalentMatch2ApplicationTests.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build/reports/tests/test/classes/com.talentmatch2.TalentMatch2ApplicationTests.html" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/reports/tests/test/classes/com.talentmatch2.TalentMatch2ApplicationTests.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build/reports/tests/test/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/reports/tests/test/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build/reports/tests/test/js/report.js" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/reports/tests/test/js/report.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TalentMatch2/build/reports/tests/test/packages/com.talentmatch2.html" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/reports/tests/test/packages/com.talentmatch2.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,8 +105,8 @@
       <list>
         <option value="Record" />
         <option value="Class" />
-        <option value="JavaScript File" />
         <option value="CSS File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -65,7 +122,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/twatson12/TALENTMATCH2.git&quot;,
-    &quot;accountId&quot;: &quot;d4c1054f-c4be-4309-a2c7-33faad0b5bc4&quot;
+    &quot;accountId&quot;: &quot;8052ffe6-bb82-4ea2-a35b-00759bedb8cc&quot;
   }
 }</component>
   <component name="ProblemsViewState">
@@ -89,6 +146,7 @@
     &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
     &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;Spring Boot.TalentMatch2Application.executor&quot;: &quot;Run&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
@@ -152,8 +210,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.21565.193" />
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-IU-243.21565.193" />
       </set>
     </attachedChunks>
   </component>
@@ -172,6 +230,11 @@
       <workItem from="1730993355116" duration="8240000" />
       <workItem from="1732545520763" duration="13686000" />
       <workItem from="1732588578126" duration="10363000" />
+      <workItem from="1732639135609" duration="7046000" />
+      <workItem from="1733247078531" duration="76000" />
+      <workItem from="1733247235033" duration="4809000" />
+      <workItem from="1733267431040" duration="166000" />
+      <workItem from="1733268676500" duration="1824000" />
     </task>
     <servers />
   </component>
