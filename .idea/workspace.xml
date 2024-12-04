@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c3e0afca-2e66-4e8a-b8a8-dd8ef1a0488c" name="Changes" comment="">
+<<<<<<< Updated upstream
       <change afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/MessageTalent.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/ScheduleAudition.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
@@ -69,6 +70,15 @@
       <change beforePath="$PROJECT_DIR$/TalentMatch2/build/reports/tests/test/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/reports/tests/test/css/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TalentMatch2/build/reports/tests/test/js/report.js" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/reports/tests/test/js/report.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TalentMatch2/build/reports/tests/test/packages/com.talentmatch2.html" beforeDir="false" afterPath="$PROJECT_DIR$/TalentMatch2/build/reports/tests/test/packages/com.talentmatch2.html" afterDir="false" />
+=======
+      <change afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/CreateProfile.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/CreateProfile.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/ProfileRegistar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/EntertainerDashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/EntertainerDashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/Login.js" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -229,12 +239,17 @@
       <workItem from="1730822983986" duration="8694000" />
       <workItem from="1730993355116" duration="8240000" />
       <workItem from="1732545520763" duration="13686000" />
+<<<<<<< Updated upstream
       <workItem from="1732588578126" duration="10363000" />
       <workItem from="1732639135609" duration="7046000" />
       <workItem from="1733247078531" duration="76000" />
       <workItem from="1733247235033" duration="4809000" />
       <workItem from="1733267431040" duration="166000" />
       <workItem from="1733268676500" duration="1824000" />
+=======
+      <workItem from="1732588578126" duration="10704000" />
+      <workItem from="1733249240679" duration="5134000" />
+>>>>>>> Stashed changes
     </task>
     <servers />
   </component>
@@ -251,5 +266,17 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/TALENTMATCH2_backup/talent-match-frontend-temp/src/components/ProfilePage.js</url>
+          <line>82</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
