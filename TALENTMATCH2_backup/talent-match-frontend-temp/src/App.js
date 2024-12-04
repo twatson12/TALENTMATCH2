@@ -21,6 +21,8 @@ import DisplayRating from "./components/DisplayRating";
 import ProfileEditPage from "./components/ProfileEditPage";
 import TalentMatchUserProfilePage from "./components/TalentMatchUserProfilePage";
 import ProfilePage from "./components/ProfilePage";
+import ProfileRegistar from "./components/ProfileRegistar";
+import CreateProfile from "./components/CreateProfile";
 
 function App() {
     return (
@@ -40,13 +42,15 @@ function App() {
                     <Route path="/register-talent" element={<RegisterTalent />} />
                     <Route path="/apply/:opportunityId" element={<ApplyOpportunity />} />
                     <Route path="/RateAndReview" element={<RateAndReview />} />
-                    <Route path="/DisplayRating" element={<DisplayRating />} />
                     {/* Add the Platform Report route */}
                     <Route path="/platform-report" element={<PlatformReport />} />
                     {/* Add the Ban User route */}
                     <Route path="/ban-user" element={<BanUser />} />
                     <Route path="/Profile" element={<ProfilePage />} />
                     <Route path="/profile/edit/:profileId" element={<ProfileEditPage />} />
+                    <Route path="/createprofile" element={<CreateProfile />} />
+                    <Route path="/registar" element={<Register />} />
+                    <Route path="/DisplayRating" element={<DisplayRating/>} />
                 </Routes>
             </div>
         </Router>

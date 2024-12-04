@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { db, auth } from '../config/firebase';
-import { collection, getDocs, addDoc } from 'firebase/firestore';
+
 import './RateAndReview.css';
+import React, { useState, useEffect } from 'react';
+import { collection, getDocs, addDoc, query, where } from 'firebase/firestore';
+import { auth, db } from '../config/firebase'
+import {useNavigate} from "react-router-dom"; // Update with your actual Firebase config
 
 const RateAndReview = () => {
     const [rating, setRating] = useState(0);
@@ -9,21 +11,48 @@ const RateAndReview = () => {
     const [talents, setTalents] = useState([]);
     const [selectedTalent, setSelectedTalent] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [entertainerName, setEntertainerName] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
+        // Fetch talents with the RoleName "Talent"
         const fetchTalents = async () => {
             try {
                 const talentsSnapshot = await getDocs(collection(db, 'User'));
                 const talentsData = talentsSnapshot.docs
                     .map((doc) => ({ id: doc.id, ...doc.data() }))
-                    .filter((talent) => talent.RoleId === 'Talent'); // Filter for talents if RoleId is defined
+                    .filter((talent) => talent.RoleName === 'Talent');
                 setTalents(talentsData);
             } catch (error) {
                 console.error('Error fetching talents:', error.message);
             }
         };
 
+        // Fetch entertainer's full name
+        const fetchEntertainerDetails = async () => {
+            try {
+                const user = auth.currentUser;
+                if (user) {
+                    const entertainerQuery = query(
+                        collection(db, 'User'),
+                        where('uid', '==', user.uid)
+                    );
+                    const entertainerSnapshot = await getDocs(entertainerQuery);
+
+                    if (!entertainerSnapshot.empty) {
+                        const entertainerData = entertainerSnapshot.docs[0].data();
+                        setEntertainerName(
+                            `${entertainerData.Fname} ${entertainerData.Lname}`
+                        );
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching entertainer details:', error.message);
+            }
+        };
+
         fetchTalents();
+        fetchEntertainerDetails();
     }, []);
 
     const handleSubmitReview = async (e) => {
@@ -43,6 +72,7 @@ const RateAndReview = () => {
                 Rating: parseInt(rating, 10),
                 Comment: review,
                 EntertainerID: `/User/${user.uid}`,
+                EntertainerEmail:`/User/${user.email}`
             });
 
             alert('Review submitted successfully!');
@@ -58,7 +88,15 @@ const RateAndReview = () => {
     };
 
     return (
+
         <div className="rate-review-container">
+            {/* Back Button */}
+            <button
+                onClick={() => navigate('/entertainer-dashboard')}
+                className="back-link"
+            >
+                Back
+            </button>
             <h1>Rate and Review Talent</h1>
             <form onSubmit={handleSubmitReview}>
                 <div>

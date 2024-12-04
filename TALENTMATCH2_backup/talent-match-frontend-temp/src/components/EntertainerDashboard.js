@@ -43,7 +43,7 @@ const EntertainerDashboard = () => {
         const fetchTalents = async () => {
             try {
                 const talentsRef = collection(db, 'User');
-                const q = query(talentsRef, where('RoleId', '==', 'Talent')); // Assuming 'Role' field exists in the database
+                const q = query(talentsRef, where('RoleName', '==', 'Talent')); // Assuming 'Role' field exists in the database
                 const snapshot = await getDocs(q);
                 const data = snapshot.docs.map((doc) => ({
                     id: doc.id,
@@ -107,6 +107,13 @@ const EntertainerDashboard = () => {
                     className="post-opportunity-button"
                 >
                     Post New Opportunity
+                </button>
+
+                <button
+                    onClick={() => navigate('/DisplayRating')}
+                    className="post-opportunity-button"
+                >
+                    Talent Reviews
                 </button>
 
                 {/* Section for Posted Opportunities */}

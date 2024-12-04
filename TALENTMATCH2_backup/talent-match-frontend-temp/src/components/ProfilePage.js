@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { auth, db } from '../config/firebase';
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import './ProfilePage.css';
 
 const ProfilePage = () => {
     const [profile, setProfile] = useState(null);
+    const [userDetails, setUserDetails] = useState(null);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
@@ -18,7 +19,16 @@ const ProfilePage = () => {
                     return;
                 }
 
-                // Query the `Profile` collection where `UserID` matches the user's UID
+                // Fetch user details from the User collection
+                const userDocRef = doc(db, 'User', currentUser.uid);
+                const userDoc = await getDoc(userDocRef);
+                if (userDoc.exists()) {
+                    setUserDetails(userDoc.data());
+                } else {
+                    console.error('No user details found.');
+                }
+
+                // Query the Profile collection where UserID matches the user's UID
                 const profileQuery = query(
                     collection(db, 'Profile'),
                     where('UserID', '==', currentUser.uid)
@@ -52,8 +62,27 @@ const ProfilePage = () => {
 
     return (
         <div className="profile-container">
-            <h1>Profile</h1>
+            {/* Back Button */}
+            <button
+                onClick={() => navigate('/talent-dashboard')}
+                className="back-link"
+            >
+                Back
+            </button>
+            {/* Profile Picture */}
+            <img
+                src="/img.png"
+                alt="ProfilePic"
+                className="profile-picture"
+            />
+
+
             <div className="profile-content">
+                {userDetails && (
+                    <h1>
+                        <strong></strong> {userDetails.Fname} {userDetails.Lname}
+                    </h1>
+                )}
                 {profile.Bio && (
                     <p>
                         <strong>Bio:</strong> {profile.Bio}
@@ -89,4 +118,5 @@ const ProfilePage = () => {
 };
 
 export default ProfilePage;
+
 

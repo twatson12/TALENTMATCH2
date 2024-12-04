@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { auth, db } from '../config/firebase';
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useNavigate, Link } from 'react-router-dom';
 
 const Login = () => {
@@ -51,22 +51,27 @@ const Login = () => {
                     // Save role in local storage for session persistence
                     localStorage.setItem('userRole', userDetails.RoleName);
 
-                    // Navigate based on user role
-                    switch (role.toLowerCase()) {
-                        case 'admin':
-                            navigate('/admin-dashboard');
-                            break;
-                        case 'entertainer':
-                            navigate('/entertainer-dashboard');
-                            break;
-                        case 'talent':
-                            navigate('/talent-dashboard');
-                            break;
-                        case 'moderator':
-                            navigate('/moderator-dashboard');
-                            break;
-                        default:
-                            setError("Role not recognized. Please contact support.");
+                    // Redirect based on role and profile status
+                    if ((role.toLowerCase() === 'talent') && !userDetails.isProfileCreated) {
+                        navigate('/createprofile'); // Redirect to "Create Profile" screen
+                    } else {
+                        // Navigate to the appropriate dashboard
+                        switch (role.toLowerCase()) {
+                            case 'admin':
+                                navigate('/admin-dashboard');
+                                break;
+                            case 'entertainer':
+                                navigate('/entertainer-dashboard');
+                                break;
+                            case 'talent':
+                                navigate('/talent-dashboard');
+                                break;
+                            case 'moderator':
+                                navigate('/moderator-dashboard');
+                                break;
+                            default:
+                                setError("Role not recognized. Please contact support.");
+                        }
                     }
                 } else {
                     setError("Invalid role selection. Please select the correct role.");
@@ -119,7 +124,7 @@ const Login = () => {
                 </div>
                 <button type="submit" className="sign-in-button">Log In</button>
                 <p className="register-link">
-                    Don't have an account? <Link to="/register">Register here</Link>
+                    Don't have an account? <Link to="/registar">Register here</Link>
                 </p>
             </form>
         </div>

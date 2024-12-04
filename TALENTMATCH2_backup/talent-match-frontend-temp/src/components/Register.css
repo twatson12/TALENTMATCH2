@@ -1,7 +1,6 @@
-/* Full-Screen Background Styling */
+/* Full-Screen Background Styling*/
 body, html {
-    background: linear-gradient(135deg, #3b3b98, #6a1b9a); /* Blue to purple gradient */
-    height: 100%;
+    background: linear-gradient(135deg, #3b3b98, #6a1b9a); /* Blue to purple gradient*/
     margin: 0;
     display: flex;
     justify-content: center;
@@ -11,19 +10,28 @@ body, html {
 
 /* Register Container */
 .register-container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    max-width: 450px; /* Adjusted width */
-    width: 90%; /* Responsive adjustment */
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
-    border-radius: 10px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
-    color: #333;
-    box-sizing: border-box;
+    margin-top:100px ;
+    width: 800px;
+    height: 650px ;/* Slightly wider for better readability */
+    font-family: Arial, sans-serif;
+    padding: 25px;
+    background: #e0e0e0; /* White container for contrast */
+    border-radius: 12px; /* Softer border radius for modern design */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for a clean look */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    /* position: relative;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+   /* max-width: 800px; Adjusted width
+     height: 700px;
+     padding: 20px;
+     background-color: rgba(255, 255, 255, 0.9);
+     border-radius: 10px;
+     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+     color: #333;
+     box-sizing: border-box;*/
 }
 
 /* Header Styling */
@@ -66,10 +74,10 @@ body, html {
 }
 
 /* Button Styling */
-.btn {
+.button {
     width: 100%;
     padding: 10px;
-    background-color: #6a1b9a; /* Purple background */
+    background-color: #5a6268; /* Purple background */
     border: none;
     border-radius: 5px;
     color: white;
@@ -88,11 +96,11 @@ body, html {
     margin-top: 15px;
     font-size: 14px;
     text-align: center;
-    color: #333;
+    color: whitesmoke;
 }
 
 .existing-user a {
-    color: #6a1b9a; /* Purple for links */
+    color: whitesmoke; /* Purple for links */
     text-decoration: none;
     font-weight: bold;
 }

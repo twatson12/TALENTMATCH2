@@ -3,15 +3,17 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../config/firebase"; // Ensure this path is correct
 import { useNavigate } from "react-router-dom";
-import "./Register.css";
 
-const Register = () => {
+const ProfileRegister = () => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [roleName, setRoleName] = useState("");
     const [subscriptionName, setSubscriptionName] = useState("");
+    const [bio, setBio] = useState(""); // Profile-specific field
+    const [portfolio, setPortfolio] = useState(""); // Profile-specific field
+    const [skills, setSkills] = useState([]); // Profile-specific field
     const [error, setError] = useState(null);
     const navigate = useNavigate();
     const auth = getAuth();
@@ -23,19 +25,27 @@ const Register = () => {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
 
-            // Save additional user data in Firestore
+            // Save the user data in the "User" Firestore collection
             await setDoc(doc(db, "User", user.uid), {
                 Email: email,
                 Fname: firstName,
                 Lname: lastName,
                 Password: password,
                 RegistrationDate: new Date(),
-                RoleName: roleName, // Save the role name
-                SubscriptionName: subscriptionName, // Save the subscription name
+                RoleName: roleName,
+                SubscriptionName: subscriptionName,
             });
 
-            alert("Account created successfully!");
-            navigate("/login"); // Redirect to log in after successful registration
+            // Save the profile data in the "Profile" Firestore collection
+            await setDoc(doc(db, "Profile", user.uid), {
+                UserID: user.uid,
+                Bio: bio,
+                Portfolio: portfolio,
+                Skills: skills,
+            });
+
+            alert("Account and profile created successfully!");
+            navigate("/login"); // Redirect to login page after successful registration
         } catch (error) {
             console.error("Error during registration:", error.message);
             setError(error.message);
@@ -44,7 +54,7 @@ const Register = () => {
 
     return (
         <div className="register-container">
-            <h1>Register</h1>
+            <h1>Register and Create Profile</h1>
             <form className="register-form" onSubmit={handleRegister}>
                 {error && <p className="error">{error}</p>}
                 <div className="input-group">
@@ -116,13 +126,37 @@ const Register = () => {
                         <option value="Enterprise">Enterprise</option>
                     </select>
                 </div>
-                <button type="submit" className="button">Register</button>
-                <p className="existing-user">
-                    Already have an account? <a href="/login">Login here</a>
-                </p>
+                {/* Profile-specific fields */}
+                <div className="input-group">
+                    <label htmlFor="bio">Bio</label>
+                    <textarea
+                        id="bio"
+                        value={bio}
+                        onChange={(e) => setBio(e.target.value)}
+                    />
+                </div>
+                <div className="input-group">
+                    <label htmlFor="portfolio">Portfolio (URL)</label>
+                    <input
+                        type="url"
+                        id="portfolio"
+                        value={portfolio}
+                        onChange={(e) => setPortfolio(e.target.value)}
+                    />
+                </div>
+                <div className="input-group">
+                    <label htmlFor="skills">Skills (comma-separated)</label>
+                    <input
+                        type="text"
+                        id="skills"
+                        value={skills.join(",")}
+                        onChange={(e) => setSkills(e.target.value.split(","))}
+                    />
+                </div>
+                <button type="submit" className="btn">Register</button>
             </form>
         </div>
     );
 };
 
-export default Register;
+export default ProfileRegister;

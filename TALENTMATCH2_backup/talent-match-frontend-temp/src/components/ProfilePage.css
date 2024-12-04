@@ -1,20 +1,36 @@
 .profile-container {
-    max-width: 80%; /* Adjust the width to take up 80% of the screen */
-    width: 1200px; /* Ensure a consistent width */
+    /*  max-width: 80%; Adjust the width to take up 80% of the screen
+    width: 1200px;
     margin: 20px auto;
     padding: 20px;
-    background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent white */
+    background-color: rgba(255, 255, 255, 0.95);
     border-radius: 5px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
     font-family: Arial, sans-serif;
-    text-align: left;
+    text-align: left;*/
+    margin-top:100px ;
+    width: 800px;
+    height: 650px ;/* Slightly wider for better readability */
+    font-family: Arial, sans-serif;
+    padding: 25px;
+    background: #e0e0e0; /* White container for contrast */
+    border-radius: 12px; /* Softer border radius for modern design */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for a clean look */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .profile-container h1 {
-    font-size: 24px;
+    font-size: 32px;
     font-weight: bold;
     color: #3b3b98; /* Blue header color */
     margin-bottom: 20px;
+    text-align: left;
+    font-family: Helvetica, serif;
+}
+
+.profile-content h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
     text-align: center;
 }
 
@@ -68,5 +84,13 @@
 }
 
 
-
+.profile-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%; /* Circular image */
+    margin: 0 auto 20px auto; /* Centered with spacing below */
+    display: block;
+    object-fit: cover; /* Ensure the image fits within the circle */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional shadow for depth */
+}
 
