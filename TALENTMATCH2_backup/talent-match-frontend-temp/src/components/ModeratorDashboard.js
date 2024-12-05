@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { db, auth } from '../config/firebase';
 import { collection, getDocs, doc, deleteDoc, updateDoc, addDoc } from 'firebase/firestore';
 import './ModeratorDashboard.css';
+import AdminDashboard from "./AdminDashboard";
 
 const ModeratorDashboard = () => {
     const [moderatorRequests, setModeratorRequests] = useState([]);
@@ -61,6 +62,24 @@ const ModeratorDashboard = () => {
         } catch (error) {
             console.error('Error removing user:', error);
             alert('Failed to remove user.');
+        }
+    };
+
+
+
+    const handleUnbanUser = async (userId) => {
+        const confirmUnban = window.confirm(
+            'Are you sure you want to unban this user?'
+        );
+        if (!confirmUnban) return;
+
+        try {
+            await updateDoc(doc(db, 'User', userId), { Status: 'Active' });
+            setUsers(users.map((user) => (user.id === userId ? { ...user, Status: 'Active' } : user)));
+            alert('User has been unbanned successfully.');
+        } catch (error) {
+            console.error('Error unbanning user:', error);
+            alert('Failed to unban user. Please try again.');
         }
     };
 
@@ -231,12 +250,21 @@ const ModeratorDashboard = () => {
                                 <td>{user.Email || 'No email provided'}</td>
                                 <td>{user.Status || 'Active'}</td>
                                 <td>
-                                    <button
-                                        className="ban-button"
-                                        onClick={() => handleBanUser(user.id)}
-                                    >
-                                        Ban
-                                    </button>
+                                    {user.Status === 'Banned' ? (
+                                        <button
+                                            className="unban-button"
+                                            onClick={() => handleUnbanUser(user.id)}
+                                        >
+                                            Unban
+                                        </button>
+                                    ) : (
+                                        <button
+                                            className="ban-button"
+                                            onClick={() => handleBanUser(user.id)}
+                                        >
+                                            Ban
+                                        </button>
+                                    )}
                                     <button
                                         className="remove-button"
                                         onClick={() => handleRemoveUser(user.id)}

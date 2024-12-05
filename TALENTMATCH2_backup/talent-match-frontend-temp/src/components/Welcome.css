@@ -1,20 +1,21 @@
-/* src/styles/Welcome.css */
+/* src/styles/Welcome.css*/
 
 body {
-    margin: 0;
+    margin: 20px auto;
     font-family: 'Poppins', Arial, sans-serif;
-    background: linear-gradient(135deg, #3b3b98, #6a1b9a); /* Blue to purple gradient */
+    background: linear-gradient(135deg, #3b3b98, #6a1b9a);
     color: white;
-    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 /* Welcome Container */
 .welcome-container {
+    height: 700px;
+    max-width: 1200px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
     text-align: center;
     padding: 20px;
 }

@@ -23,9 +23,6 @@ import TalentMatchUserProfilePage from "./components/TalentMatchUserProfilePage"
 import ProfilePage from "./components/ProfilePage";
 import ProfileRegistar from "./components/ProfileRegistar";
 import CreateProfile from "./components/CreateProfile";
-import Conversation from "./components/Conversation";
-import ViewMessage from './components/ViewMessage';
-import ViewTalentProfile from "./components/ViewTalentProfile";
 
 function App() {
     return (
@@ -54,10 +51,6 @@ function App() {
                     <Route path="/createprofile" element={<CreateProfile />} />
                     <Route path="/registar" element={<Register />} />
                     <Route path="/DisplayRating" element={<DisplayRating/>} />
-                    <Route path="/conversation/:conversationId" component={Conversation} />
-                    <Route path="/view-message/:messageId" element={<ViewMessage />} />
-                    <Route path="/view-talent-profile/:talentId" element={<ViewTalentProfile />} />
-
                 </Routes>
             </div>
         </Router>

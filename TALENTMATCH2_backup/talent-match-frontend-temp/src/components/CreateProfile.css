@@ -1,19 +1,10 @@
 .create-profile-container {
-    /*display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 700px;
-    background-color: #f4f4f4;
-    font-family: 'Arial', sans-serif;*/
-    margin-top:100px ;
-    width: 600px;
-    height: 650px ;/* Slightly wider for better readability */
-    font-family: Arial, sans-serif;
-    padding: 25px;
-    /* background: #e0e0e0; White container for contrast */
-    border-radius: 12px; /* Softer border radius for modern design */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for a clean look */
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    max-width: 800px; /* Center the form and limit its width */
+    margin: 40px auto; /* Add spacing from the top and center it horizontally */
+    padding: 30px; /* Add inner spacing */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    font-family: 'Arial', sans-serif;
 }
 
 .create-profile-form {
