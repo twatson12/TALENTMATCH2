@@ -1,44 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import { auth, db } from '../config/firebase';
-import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
-import { useNavigate } from 'react-router-dom';
+import { db } from '../config/firebase';
+import { collection, doc, getDoc } from 'firebase/firestore';
+import { useNavigate, useParams } from 'react-router-dom';
 import './ProfilePage.css';
 
-const ProfilePage = () => {
+const ViewProfilePage = () => {
     const [profile, setProfile] = useState(null);
     const [userDetails, setUserDetails] = useState(null);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const { id } = useParams(); // Get the user ID from the route
 
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const currentUser = auth.currentUser;
-                if (!currentUser) {
-                    console.error('No authenticated user found.');
+                if (!id) {
+                    console.error('No user ID provided in the URL.');
                     return;
                 }
 
                 // Fetch user details from the User collection
-                const userDocRef = doc(db, 'User', currentUser.uid);
+                const userDocRef = doc(db, 'User', id);
                 const userDoc = await getDoc(userDocRef);
                 if (userDoc.exists()) {
                     setUserDetails(userDoc.data());
                 } else {
-                    console.error('No user details found.');
+                    console.error('No user details found for the provided ID.');
                 }
 
-                // Query the Profile collection where UserID matches the user's UID
-                const profileQuery = query(
-                    collection(db, 'Profile'),
-                    where('UserID', '==', currentUser.uid)
-                );
-                const querySnapshot = await getDocs(profileQuery);
+                // Fetch profile data from the Profile collection
+                const profileDocRef = doc(db, 'Profile', id); // Assuming profile document ID matches the user ID
+                const profileDoc = await getDoc(profileDocRef);
 
-                if (!querySnapshot.empty) {
-                    // Assume there's only one document per UserID
-                    const profileData = querySnapshot.docs[0];
-                    setProfile({ id: profileData.id, ...profileData.data() });
+                if (profileDoc.exists()) {
+                    setProfile({ id: profileDoc.id, ...profileDoc.data() });
                 } else {
                     console.error('No profile found for this user.');
                 }
@@ -50,7 +45,7 @@ const ProfilePage = () => {
         };
 
         fetchProfile();
-    }, []);
+    }, [id]);
 
     if (loading) {
         return <p>Loading profile...</p>;
@@ -63,19 +58,11 @@ const ProfilePage = () => {
     return (
         <div className="profile-container">
             {/* Back Button */}
-            <button
-                onClick={() => navigate('/talent-dashboard')}
-                className="back-link"
-            >
+            <button onClick={() => navigate(-1)} className="back-link">
                 Back
             </button>
             {/* Profile Picture */}
-            <img
-                src="/img.png"
-                alt="ProfilePic"
-                className="profile-picture"
-            />
-
+            <img src="/img.png" alt="ProfilePic" className="profile-picture" />
 
             <div className="profile-content">
                 {userDetails && (
@@ -117,4 +104,7 @@ const ProfilePage = () => {
     );
 };
 
-export default ProfilePage;
+export default ViewProfilePage;
+
+
+

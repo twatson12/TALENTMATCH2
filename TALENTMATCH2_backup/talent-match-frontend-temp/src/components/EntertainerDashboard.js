@@ -178,7 +178,7 @@ const EntertainerDashboard = () => {
                                 <td>{talent.Specialization || 'Unknown'}</td>
                                 <td>
                                     <button
-                                        onClick={() => alert(`Profile details for ${talent.Fname}`)}
+                                        onClick={() => navigate(`/Profile/${talent.id}`)}
                                         className="view-profile-button"
                                     >
                                         View Profile
@@ -203,3 +203,4 @@ const EntertainerDashboard = () => {
 };
 
 export default EntertainerDashboard;
+

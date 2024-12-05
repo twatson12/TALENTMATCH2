@@ -5,6 +5,7 @@ body {
 }
 
 .moderator-dashboard {
+    height: 700px;
     max-width: 1000px;
     margin: 20px auto;
     padding: 20px;
@@ -90,4 +91,16 @@ td {
 
 button {
     margin: 5px 0;
+}
+.unban-button{
+    background: #4CAF50;
+    color: white;
+    boder:none;
+    padding:5px 10px;
+    border-right: 3px;
+    cursor: pointer;
+    margin-left:5px ;
+}
+.unban-button:hover{
+    background: #4CAF50;
 }

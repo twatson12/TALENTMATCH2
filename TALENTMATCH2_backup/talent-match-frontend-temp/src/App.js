@@ -20,9 +20,11 @@ import RateAndReview from "./components/RateAndReview";
 import DisplayRating from "./components/DisplayRating";
 import ProfileEditPage from "./components/ProfileEditPage";
 import TalentMatchUserProfilePage from "./components/TalentMatchUserProfilePage";
-import ProfilePage from "./components/ProfilePage";
+import ViewProfilePage from "./components/ViewProfilePage";
 import ProfileRegistar from "./components/ProfileRegistar";
 import CreateProfile from "./components/CreateProfile";
+import ProfilePage from "./components/ProfilePage";
+import UnbanUser from "./components/UnbanUser";
 
 function App() {
     return (
@@ -51,6 +53,9 @@ function App() {
                     <Route path="/createprofile" element={<CreateProfile />} />
                     <Route path="/registar" element={<Register />} />
                     <Route path="/DisplayRating" element={<DisplayRating/>} />
+                    <Route path="/Profile/:id" element={<ViewProfilePage />} />
+                    <Route path="/unban-user" element={<UnbanUser />} />
+
                 </Routes>
             </div>
         </Router>
