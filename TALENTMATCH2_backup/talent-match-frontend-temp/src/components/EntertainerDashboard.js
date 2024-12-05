@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { auth, db } from '../config/firebase';
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import { collection, query, where, getDocs, addDoc, serverTimestamp } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import './EntertainerDashboard.css';
 
@@ -9,11 +9,14 @@ const EntertainerDashboard = () => {
     const [talents, setTalents] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredTalents, setFilteredTalents] = useState([]);
+    const [selectedTalent, setSelectedTalent] = useState(null); // For selected talent
+    const [message, setMessage] = useState(''); // Message text
+    const [auditionDate, setAuditionDate] = useState(''); // Audition date
     const [loadingOpportunities, setLoadingOpportunities] = useState(true);
     const [loadingTalents, setLoadingTalents] = useState(true);
     const navigate = useNavigate();
 
-    // Fetch opportunities created by the logged-in entertainer
+    // Fetch opportunities and talents
     useEffect(() => {
         const fetchOpportunities = async () => {
             try {
@@ -43,7 +46,7 @@ const EntertainerDashboard = () => {
         const fetchTalents = async () => {
             try {
                 const talentsRef = collection(db, 'User');
-                const q = query(talentsRef, where('RoleName', '==', 'Talent')); // Assuming 'Role' field exists in the database
+                const q = query(talentsRef, where('RoleName', '==', 'Talent'));
                 const snapshot = await getDocs(q);
                 const data = snapshot.docs.map((doc) => ({
                     id: doc.id,
@@ -63,13 +66,6 @@ const EntertainerDashboard = () => {
         fetchTalents();
     }, [navigate]);
 
-    const handleLogout = () => {
-        auth.signOut().then(() => {
-            localStorage.removeItem('userRole');
-            navigate('/login');
-        });
-    };
-
     const handleSearch = (e) => {
         const query = e.target.value.toLowerCase();
         setSearchQuery(query);
@@ -83,7 +79,61 @@ const EntertainerDashboard = () => {
             );
             setFilteredTalents(filtered);
         } else {
-            setFilteredTalents(talents); // Reset to all talents if query is empty
+            setFilteredTalents(talents);
+        }
+    };
+
+    const handleSendMessage = async () => {
+        if (!message.trim()) {
+            alert('Message cannot be empty.');
+            return;
+        }
+
+        try {
+            const user = auth.currentUser;
+            if (!user) {
+                alert('You must be logged in.');
+                return;
+            }
+
+            await addDoc(collection(db, 'Messages'), {
+                SenderID: `/User/${user.uid}`,
+                ReceiverID: `/User/${selectedTalent.id}`,
+                Message: message,
+                Timestamp: serverTimestamp(),
+            });
+
+            alert('Message sent successfully!');
+            setMessage('');
+        } catch (error) {
+            console.error('Error sending message:', error);
+        }
+    };
+
+    const handleScheduleAudition = async () => {
+        if (!auditionDate.trim()) {
+            alert('Please select a date and time for the audition.');
+            return;
+        }
+
+        try {
+            const user = auth.currentUser;
+            if (!user) {
+                alert('You must be logged in.');
+                return;
+            }
+
+            await addDoc(collection(db, 'Auditions'), {
+                OrganizerID: `/User/${user.uid}`,
+                TalentID: `/User/${selectedTalent.id}`,
+                DateTime: new Date(auditionDate),
+                Status: 'Pending Confirmation',
+            });
+
+            alert('Audition scheduled successfully!');
+            setAuditionDate('');
+        } catch (error) {
+            console.error('Error scheduling audition:', error);
         }
     };
 
@@ -95,24 +145,18 @@ const EntertainerDashboard = () => {
                     <button onClick={() => navigate('/settings')} className="settings-button">
                         Settings
                     </button>
-                    <button onClick={handleLogout} className="logout-button">
+                    <button onClick={() => auth.signOut()} className="logout-button">
                         Logout
                     </button>
                 </div>
             </header>
 
             <div className="dashboard-content">
-                <button
-                    onClick={() => navigate('/post-opportunity')}
-                    className="post-opportunity-button"
-                >
+                <button onClick={() => navigate('/post-opportunity')} className="post-opportunity-button">
                     Post New Opportunity
                 </button>
 
-                <button
-                    onClick={() => navigate('/DisplayRating')}
-                    className="post-opportunity-button"
-                >
+                <button onClick={() => navigate('/DisplayRating')} className="post-opportunity-button">
                     Talent Reviews
                 </button>
 
@@ -120,7 +164,7 @@ const EntertainerDashboard = () => {
                 <h2>Your Posted Opportunities</h2>
                 {loadingOpportunities ? (
                     <p>Loading opportunities...</p>
-                ) : opportunities.length > 0 ? (
+                ) : (
                     <table className="opportunities-table">
                         <thead>
                         <tr>
@@ -135,18 +179,12 @@ const EntertainerDashboard = () => {
                             <tr key={opportunity.id}>
                                 <td>{opportunity.Title}</td>
                                 <td>{opportunity.Description}</td>
-                                <td>
-                                    {new Date(opportunity.Deadline.seconds * 1000).toLocaleDateString()}
-                                </td>
-                                <td>
-                                    {new Date(opportunity.PostDate.seconds * 1000).toLocaleDateString()}
-                                </td>
+                                <td>{new Date(opportunity.Deadline.seconds * 1000).toLocaleDateString()}</td>
+                                <td>{new Date(opportunity.PostDate.seconds * 1000).toLocaleDateString()}</td>
                             </tr>
                         ))}
                         </tbody>
                     </table>
-                ) : (
-                    <p>You have not posted any opportunities yet.</p>
                 )}
 
                 {/* Section for Browsing Talents */}
@@ -166,7 +204,6 @@ const EntertainerDashboard = () => {
                         <tr>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Specialization</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
@@ -175,19 +212,24 @@ const EntertainerDashboard = () => {
                             <tr key={talent.id}>
                                 <td>{`${talent.Fname || ''} ${talent.Lname || ''}`}</td>
                                 <td>{talent.Email}</td>
-                                <td>{talent.Specialization || 'Unknown'}</td>
                                 <td>
                                     <button
-                                        onClick={() => alert(`Profile details for ${talent.Fname}`)}
+                                        onClick={() => navigate(`/view-profile/${talent.id}`)}
                                         className="view-profile-button"
                                     >
                                         View Profile
                                     </button>
                                     <button
                                         onClick={() => navigate('/RateAndReview')}
-                                        className="Rate-and-Review-Talent"
+                                        className="rate-talent-button"
                                     >
-                                        Review A Talent
+                                        Review Talent
+                                    </button>
+                                    <button
+                                        onClick={() => setSelectedTalent(talent)}
+                                        className="schedule-audition-btn"
+                                    >
+                                        Schedule Audition
                                     </button>
                                 </td>
                             </tr>
@@ -197,6 +239,48 @@ const EntertainerDashboard = () => {
                 ) : (
                     <p>No talents found matching your search.</p>
                 )}
+
+                {/* Section for Messaging Talent */}
+                <div className="dashboard-section">
+                    <h2>Send Message</h2>
+                    {selectedTalent ? (
+                        <div>
+                            <h3>Send a message to {selectedTalent.Fname} {selectedTalent.Lname}</h3>
+                            <textarea
+                                value={message}
+                                onChange={(e) => setMessage(e.target.value)}
+                                placeholder="Type your message..."
+                                className="message-textarea"
+                            ></textarea>
+                            <button onClick={handleSendMessage} className="send-message-button">
+                                Send Message
+                            </button>
+                        </div>
+                    ) : (
+                        <p>Select a talent to send a message.</p>
+                    )}
+                </div>
+
+                {/* Section for Scheduling Auditions */}
+                <div className="dashboard-section">
+                    <h2>Schedule Audition</h2>
+                    {selectedTalent ? (
+                        <div>
+                            <h3>Schedule an audition for {selectedTalent.Fname} {selectedTalent.Lname}</h3>
+                            <input
+                                type="datetime-local"
+                                value={auditionDate}
+                                onChange={(e) => setAuditionDate(e.target.value)}
+                                className="audition-date-input"
+                            />
+                            <button onClick={handleScheduleAudition} className="schedule-audition-button">
+                                Schedule Audition
+                            </button>
+                        </div>
+                    ) : (
+                        <p>Select a talent to schedule an audition.</p>
+                    )}
+                </div>
             </div>
         </div>
     );
