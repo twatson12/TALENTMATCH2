@@ -2,18 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { auth, db } from '../config/firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
+import ScheduleAudition from './ScheduleAudition';
 import './EntertainerDashboard.css';
+import MessageTalent from "./MessageTalent";
 
 const EntertainerDashboard = () => {
     const [opportunities, setOpportunities] = useState([]);
     const [talents, setTalents] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredTalents, setFilteredTalents] = useState([]);
+    const [messages, setMessages] = useState([]);
+    const [auditions, setAuditions] = useState([]); // New state for auditions
     const [loadingOpportunities, setLoadingOpportunities] = useState(true);
     const [loadingTalents, setLoadingTalents] = useState(true);
+    const [selectedTalent, setSelectedTalent] = useState(null); // Talent selected for messaging or auditions
+    const [isScheduling, setIsScheduling] = useState(false); // Show schedule audition form
     const navigate = useNavigate();
 
-    // Fetch opportunities created by the logged-in entertainer
+    // Fetch data for opportunities, talents, messages, and auditions
     useEffect(() => {
         const fetchOpportunities = async () => {
             try {
@@ -43,7 +49,7 @@ const EntertainerDashboard = () => {
         const fetchTalents = async () => {
             try {
                 const talentsRef = collection(db, 'User');
-                const q = query(talentsRef, where('RoleName', '==', 'Talent')); // Assuming 'Role' field exists in the database
+                const q = query(talentsRef, where('RoleName', '==', 'Talent')); // Assuming 'RoleName' identifies talents
                 const snapshot = await getDocs(q);
                 const data = snapshot.docs.map((doc) => ({
                     id: doc.id,
@@ -59,16 +65,55 @@ const EntertainerDashboard = () => {
             }
         };
 
+        const fetchMessages = async () => {
+            try {
+                const user = auth.currentUser;
+                if (!user) {
+                    alert('You must be logged in.');
+                    return;
+                }
+
+                const messagesRef = collection(db, 'Messages');
+                const q = query(messagesRef, where('SenderID', '==', `/User/${user.uid}`));
+                const snapshot = await getDocs(q);
+                const data = snapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+
+                setMessages(data);
+            } catch (error) {
+                console.error('Error fetching messages:', error);
+            }
+        };
+
+        const fetchAuditions = async () => {
+            try {
+                const user = auth.currentUser;
+                if (!user) {
+                    alert('You must be logged in.');
+                    return;
+                }
+
+                const auditionsRef = collection(db, 'Auditions');
+                const q = query(auditionsRef, where('OrganizerID', '==', `/User/${user.uid}`));
+                const snapshot = await getDocs(q);
+                const data = snapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+
+                setAuditions(data);
+            } catch (error) {
+                console.error('Error fetching auditions:', error);
+            }
+        };
+
         fetchOpportunities();
         fetchTalents();
+        fetchMessages();
+        fetchAuditions(); // Fetch auditions data
     }, [navigate]);
-
-    const handleLogout = () => {
-        auth.signOut().then(() => {
-            localStorage.removeItem('userRole');
-            navigate('/login');
-        });
-    };
 
     const handleSearch = (e) => {
         const query = e.target.value.toLowerCase();
@@ -85,6 +130,18 @@ const EntertainerDashboard = () => {
         } else {
             setFilteredTalents(talents); // Reset to all talents if query is empty
         }
+    };
+
+    const handleScheduleAudition = (talent) => {
+        setSelectedTalent(talent);
+        setIsScheduling(true);
+    };
+
+    const handleLogout = () => {
+        auth.signOut().then(() => {
+            localStorage.removeItem('userRole');
+            navigate('/login');
+        });
     };
 
     return (
@@ -107,13 +164,6 @@ const EntertainerDashboard = () => {
                     className="post-opportunity-button"
                 >
                     Post New Opportunity
-                </button>
-
-                <button
-                    onClick={() => navigate('/DisplayRating')}
-                    className="post-opportunity-button"
-                >
-                    Talent Reviews
                 </button>
 
                 {/* Section for Posted Opportunities */}
@@ -166,7 +216,6 @@ const EntertainerDashboard = () => {
                         <tr>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Specialization</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
@@ -175,7 +224,6 @@ const EntertainerDashboard = () => {
                             <tr key={talent.id}>
                                 <td>{`${talent.Fname || ''} ${talent.Lname || ''}`}</td>
                                 <td>{talent.Email}</td>
-                                <td>{talent.Specialization || 'Unknown'}</td>
                                 <td>
                                     <button
                                         onClick={() => alert(`Profile details for ${talent.Fname}`)}
@@ -184,10 +232,10 @@ const EntertainerDashboard = () => {
                                         View Profile
                                     </button>
                                     <button
-                                        onClick={() => navigate('/RateAndReview')}
-                                        className="Rate-and-Review-Talent"
+                                        onClick={() => handleScheduleAudition(talent)}
+                                        className="schedule-audition-btn"
                                     >
-                                        Review A Talent
+                                        Schedule Audition
                                     </button>
                                 </td>
                             </tr>
@@ -196,6 +244,61 @@ const EntertainerDashboard = () => {
                     </table>
                 ) : (
                     <p>No talents found matching your search.</p>
+                )}
+
+                {/* Section for Messaging Talent */}
+                <h2>Message Talent</h2>
+                {selectedTalent ? (
+                    <div className="message-talent-section">
+                        <h3>Send a Message to {`${selectedTalent.Fname || ''} ${selectedTalent.Lname || ''}`}</h3>
+                        <MessageTalent talentID={selectedTalent.id} />
+                        <button
+                            onClick={() => setSelectedTalent(null)}
+                            className="close-messaging-btn"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                ) : (
+                    <p>Select a talent to message them.</p>
+                )}
+
+
+                {/* Section for Scheduling Auditions */}
+                <h2>Upcoming Auditions</h2>
+                {auditions.length > 0 ? (
+                    <table className="auditions-table">
+                        <thead>
+                        <tr>
+                            <th>Talent ID</th>
+                            <th>Date & Time</th>
+                            <th>Location</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {auditions.map((audition) => (
+                            <tr key={audition.id}>
+                                <td>{audition.TalentID}</td>
+                                <td>{new Date(audition.DateTime).toLocaleString()}</td>
+                                <td>{audition.Location}</td>
+                                <td>{audition.Status}</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                ) : (
+                    <p>No upcoming auditions scheduled.</p>
+                )}
+
+                {/* Schedule Audition Section */}
+                {isScheduling && selectedTalent && (
+                    <div className="scheduling-section">
+                        <ScheduleAudition talentID={selectedTalent.id} />
+                        <button onClick={() => setIsScheduling(false)} className="close-scheduling-btn">
+                            Cancel
+                        </button>
+                    </div>
                 )}
             </div>
         </div>
