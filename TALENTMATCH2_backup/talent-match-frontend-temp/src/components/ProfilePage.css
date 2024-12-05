@@ -93,4 +93,47 @@
     object-fit: cover; /* Ensure the image fits within the circle */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional shadow for depth */
 }
+.profile-container {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto 20px auto;
+}
+
+.profile-content {
+    text-align: left;
+}
+
+.profile-content h1 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.profile-content p,
+.profile-content li {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
 

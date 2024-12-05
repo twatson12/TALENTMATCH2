@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import ScheduleAudition from './ScheduleAudition';
 import './EntertainerDashboard.css';
 import MessageTalent from "./MessageTalent";
+import ViewTalentProfile from "./ViewTalentProfile";
 
 const EntertainerDashboard = () => {
     const [opportunities, setOpportunities] = useState([]);
@@ -225,12 +226,15 @@ const EntertainerDashboard = () => {
                                 <td>{`${talent.Fname || ''} ${talent.Lname || ''}`}</td>
                                 <td>{talent.Email}</td>
                                 <td>
+                                    {/* View Profile Button */}
                                     <button
-                                        onClick={() => alert(`Profile details for ${talent.Fname}`)}
+                                        onClick={() => navigate(`/view-talent-profile/${talent.id}`)}
                                         className="view-profile-button"
                                     >
                                         View Profile
                                     </button>
+
+                                    {/* Schedule Audition Button */}
                                     <button
                                         onClick={() => handleScheduleAudition(talent)}
                                         className="schedule-audition-btn"
@@ -241,6 +245,7 @@ const EntertainerDashboard = () => {
                             </tr>
                         ))}
                         </tbody>
+
                     </table>
                 ) : (
                     <p>No talents found matching your search.</p>
@@ -251,7 +256,7 @@ const EntertainerDashboard = () => {
                 {selectedTalent ? (
                     <div className="message-talent-section">
                         <h3>Send a Message to {`${selectedTalent.Fname || ''} ${selectedTalent.Lname || ''}`}</h3>
-                        <MessageTalent talentID={selectedTalent.id} />
+                        <MessageTalent talentID={selectedTalent.id}/>
                         <button
                             onClick={() => setSelectedTalent(null)}
                             className="close-messaging-btn"
