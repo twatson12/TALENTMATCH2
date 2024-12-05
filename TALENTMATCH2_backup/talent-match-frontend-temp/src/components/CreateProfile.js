@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { db, auth } from '../config/firebase';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
-
+import "./CreateProfile.css";
 const CreateProfile = () => {
     const [bio, setBio] = useState('');
     const [portfolio, setPortfolio] = useState('');
