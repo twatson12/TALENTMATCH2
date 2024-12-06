@@ -65,25 +65,38 @@ const TalentDashboard = () => {
                     return;
                 }
 
+                // Fetch messages where the current user is the receiver
                 const messagesRef = collection(db, 'Messages');
                 const snapshot = await getDocs(messagesRef);
 
                 const userMessages = snapshot.docs
                     .map((doc) => ({ id: doc.id, ...doc.data() }))
-                    .filter((msg) => msg.ReceiverID === `/Users/${user.uid}`);
+                    .filter((msg) => msg.ReceiverID === `/User/${user.uid}`);
 
                 setMessages(userMessages);
 
+                // Debugging log: Check if messages are fetched
+                if (userMessages.length === 0) {
+                    console.warn('No messages found for the current user.');
+                } else {
+                    console.log('Fetched messages:', userMessages);
+                }
+
+                // Fetch names for all unique senders
                 const senderIds = [...new Set(userMessages.map((msg) => msg.SenderID))];
                 const userMapTemp = {};
                 for (const senderId of senderIds) {
-                    const senderDocId = senderId.replace('/Users/', '');
+                    const senderDocId = senderId.replace('/User/', ''); // Adjust the path to match Firestore structure
                     const senderDoc = await getDoc(doc(db, 'User', senderDocId));
                     userMapTemp[senderId] = senderDoc.exists()
                         ? `${senderDoc.data().Fname} ${senderDoc.data().Lname}`
                         : 'Unknown Sender';
                 }
+
                 setUserMap(userMapTemp);
+
+                // Debugging log: Verify userMap
+                console.log('User Map:', userMapTemp);
             } catch (error) {
                 console.error('Error fetching messages:', error);
             } finally {
@@ -214,12 +227,6 @@ const TalentDashboard = () => {
                                     <strong>Sent:</strong>{' '}
                                     {new Date(msg.Timestamp.seconds * 1000).toLocaleString()}
                                 </p>
-                                <button
-                                    className="view-message-button"
-                                    onClick={() => navigate(`/view-message/${msg.id}`)}
-                                >
-                                    View Message
-                                </button>
                             </div>
                         ))
                     ) : (
