@@ -1,0 +1,112 @@
+.manage-subscriptions-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f4f4f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    font-family: Arial, sans-serif;
+}
+
+.manage-subscriptions-container h1 {
+    text-align: center;
+    font-size: 24px;
+    color: #3b3b98; /* Dark blue for the header */
+    margin-bottom: 20px;
+}
+
+.subscription-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.subscription-table th, .subscription-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+    font-size: 14px;
+}
+
+.subscription-table th {
+    background-color: #3b3b98;
+    color: white;
+    font-weight: bold;
+}
+
+.subscription-table td {
+    color: #333;
+}
+
+.subscription-table td ul {
+    padding-left: 20px;
+    list-style-type: disc;
+}
+
+.subscription-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.subscription-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.edit-plan-form {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.edit-plan-form div {
+    margin-bottom: 15px;
+}
+
+.edit-plan-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.edit-plan-form input, .edit-plan-form textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.edit-plan-form textarea {
+    resize: vertical;
+}
+
+.edit-plan-form button {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    background-color: #3b3b98;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+}
+
+.edit-plan-form button:hover {
+    background-color: #2a287a;
+}
+
+.edit-plan-form button:last-child {
+    background-color: #f05454; /* Red for cancel button */
+}
+
+.edit-plan-form button:last-child:hover {
+    background-color: #c70039; /* Darker red on hover */
+}

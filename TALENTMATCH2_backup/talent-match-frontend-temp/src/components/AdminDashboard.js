@@ -1,39 +1,50 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { db, auth } from '../config/firebase';
-import { collection, getDocs, addDoc, doc, updateDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
     const [users, setUsers] = useState([]);
     const [filteredUsers, setFilteredUsers] = useState([]);
-    const [searchQuery, setSearchQuery] = useState('');
+    const [subscriptions, setSubscriptions] = useState([]);
+    const [editingPlan, setEditingPlan] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
 
-    // Fetch users from Firestore
+    // Fetch users and subscriptions from Firestore
     useEffect(() => {
-        const fetchUsers = async () => {
+        const fetchData = async () => {
             try {
-                const usersRef = collection(db, 'User');
-                const usersSnapshot = await getDocs(usersRef);
+                const [usersSnapshot, subscriptionsSnapshot] = await Promise.all([
+                    getDocs(collection(db, 'User')),
+                    getDocs(collection(db, 'SubscriptionPlans')),
+                ]);
+
                 const usersData = usersSnapshot.docs.map((doc) => ({
                     id: doc.id,
                     ...doc.data(),
                 }));
+
+                const subscriptionData = subscriptionsSnapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+
                 setUsers(usersData);
                 setFilteredUsers(usersData);
+                setSubscriptions(subscriptionData);
                 setLoading(false);
             } catch (error) {
-                console.error('Error fetching users:', error);
+                console.error('Error fetching data:', error);
                 setLoading(false);
             }
         };
 
-        fetchUsers();
+        fetchData();
     }, []);
 
-    // Logout
     const handleLogout = async () => {
         try {
             await auth.signOut();
@@ -46,7 +57,6 @@ const AdminDashboard = () => {
         }
     };
 
-    // Search Filter
     const handleSearch = (e) => {
         const query = e.target.value.toLowerCase();
         setSearchQuery(query);
@@ -64,36 +74,25 @@ const AdminDashboard = () => {
         }
     };
 
-    // Status Toggle for Users
-    const handleStatusToggle = async (userId, currentStatus) => {
-        try {
-            const userRef = doc(db, 'User', userId);
-            const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
-            await updateDoc(userRef, { Status: newStatus });
-
-            setUsers(users.map(user => (user.id === userId ? { ...user, Status: newStatus } : user)));
-            setFilteredUsers(filteredUsers.map(user => (user.id === userId ? { ...user, Status: newStatus } : user)));
-            alert(`User status updated to ${newStatus}.`);
-        } catch (error) {
-            console.error('Error updating user status:', error);
-            alert('Failed to update user status.');
-        }
+    const handleEditPlan = (plan) => {
+        setEditingPlan(plan);
     };
 
-    // Approve or Reject Moderator Requests
-    const handleModeratorApproval = async (userId, action) => {
+    const handleUpdatePlan = async (e) => {
+        e.preventDefault();
         try {
-            const userRef = doc(db, 'User', userId);
-            const updatedRole = action === 'Approve' ? 'Moderator' : 'User';
+            const planRef = doc(db, 'SubscriptionPlans', editingPlan.id);
+            await updateDoc(planRef, {
+                Name: editingPlan.Name,
+                Price: editingPlan.Price,
+                Features: editingPlan.Features,
+            });
 
-            await updateDoc(userRef, { RoleId: updatedRole });
-
-            setUsers(users.map(user => (user.id === userId ? { ...user, RoleId: updatedRole } : user)));
-            setFilteredUsers(filteredUsers.map(user => (user.id === userId ? { ...user, RoleId: updatedRole } : user)));
-            alert(`Moderator request ${action.toLowerCase()}ed successfully.`);
+            alert('Subscription plan updated successfully!');
+            setEditingPlan(null);
         } catch (error) {
-            console.error(`Error ${action.toLowerCase()}ing moderator request:`, error);
-            alert(`Failed to ${action.toLowerCase()} the request.`);
+            console.error('Error updating subscription plan:', error);
+            alert('Failed to update subscription plan.');
         }
     };
 
@@ -118,6 +117,12 @@ const AdminDashboard = () => {
                 >
                     View Platform Usage
                 </button>
+                <button
+                    onClick={() => navigate('/subscriptions')}
+                    className="view-platform-button"
+                >
+                    Edit Subscriptions
+                </button>
             </div>
 
             <div className="search-section">
@@ -128,6 +133,79 @@ const AdminDashboard = () => {
                     onChange={handleSearch}
                     className="search-bar"
                 />
+            </div>
+
+            <div className="subscription-plans-section">
+                <h2>Manage Subscription Plans</h2>
+                {editingPlan ? (
+                    <form onSubmit={handleUpdatePlan} className="edit-plan-form">
+                        <div>
+                            <label>Plan Name:</label>
+                            <input
+                                type="text"
+                                value={editingPlan.Name}
+                                onChange={(e) =>
+                                    setEditingPlan({ ...editingPlan, Name: e.target.value })
+                                }
+                            />
+                        </div>
+                        <div>
+                            <label>Price:</label>
+                            <input
+                                type="number"
+                                value={editingPlan.Price}
+                                onChange={(e) =>
+                                    setEditingPlan({ ...editingPlan, Price: e.target.value })
+                                }
+                            />
+                        </div>
+                        <div>
+                            <label>Features (comma-separated):</label>
+                            <textarea
+                                value={editingPlan.Features.join(', ')}
+                                onChange={(e) =>
+                                    setEditingPlan({
+                                        ...editingPlan,
+                                        Features: e.target.value.split(',').map((feature) => feature.trim()),
+                                    })
+                                }
+                            />
+                        </div>
+                        <button type="submit">Update Plan</button>
+                        <button type="button" onClick={() => setEditingPlan(null)}>
+                            Cancel
+                        </button>
+                    </form>
+                ) : (
+                    <table className="subscription-table">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Features</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {subscriptions.map((plan) => (
+                            <tr key={plan.id}>
+                                <td>{plan.Name}</td>
+                                <td>${plan.Price}</td>
+                                <td>
+                                    <ul>
+                                        {plan.Features.map((feature, index) => (
+                                            <li key={index}>{feature}</li>
+                                        ))}
+                                    </ul>
+                                </td>
+                                <td>
+                                    <button onClick={() => handleEditPlan(plan)}>Edit</button>
+                                </td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                )}
             </div>
 
             <div className="user-list">
@@ -141,7 +219,6 @@ const AdminDashboard = () => {
                             <th>Role</th>
                             <th>Subscription Plan</th>
                             <th>Status</th>
-                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -152,14 +229,6 @@ const AdminDashboard = () => {
                                 <td>{user.RoleId || 'Unknown'}</td>
                                 <td>{user.SubscriptionPlanId || 'Unknown'}</td>
                                 <td>{user.Status || 'active'}</td>
-                                <td>
-                                    <button
-                                        onClick={() => handleStatusToggle(user.id, user.Status)}
-                                        className={user.Status === 'active' ? 'deactivate-button' : 'activate-button'}
-                                    >
-                                        {user.Status === 'active' ? 'Deactivate' : 'Activate'}
-                                    </button>
-                                </td>
                             </tr>
                         ))}
                         </tbody>
@@ -168,49 +237,9 @@ const AdminDashboard = () => {
                     <p>No users found.</p>
                 )}
             </div>
-
-            <div className="moderator-requests-section">
-                <h2>Moderator Requests</h2>
-                {users.filter((user) => user.RoleId === 'ModeratorRequest').length > 0 ? (
-                    <table className="moderator-requests-table">
-                        <thead>
-                        <tr>
-                            <th>Email</th>
-                            <th>Reason</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {users.filter((user) => user.RoleId === 'ModeratorRequest').map((user) => (
-                            <tr key={user.id}>
-                                <td>{user.Email}</td>
-                                <td>{user.Reason || 'No reason provided'}</td>
-                                <td>{user.Status || 'Pending'}</td>
-                                <td>
-                                    <button
-                                        onClick={() => handleModeratorApproval(user.id, 'Approve')}
-                                        className="approve-button"
-                                    >
-                                        Approve
-                                    </button>
-                                    <button
-                                        onClick={() => handleModeratorApproval(user.id, 'Reject')}
-                                        className="reject-button"
-                                    >
-                                        Reject
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
-                ) : (
-                    <p>No pending moderator requests.</p>
-                )}
-            </div>
         </div>
     );
 };
 
 export default AdminDashboard;
+

@@ -23,6 +23,8 @@ import TalentMatchUserProfilePage from "./components/TalentMatchUserProfilePage"
 import ProfilePage from "./components/ProfilePage";
 import ProfileRegistar from "./components/ProfileRegistar";
 import CreateProfile from "./components/CreateProfile";
+import ManageSubscriptions from "./components/ManageSubscription";
+import ManageSubscription from "./components/ManageSubscription";
 
 function App() {
     return (
@@ -51,6 +53,7 @@ function App() {
                     <Route path="/createprofile" element={<CreateProfile />} />
                     <Route path="/registar" element={<Register />} />
                     <Route path="/DisplayRating" element={<DisplayRating/>} />
+                    <Route path="/subscriptions" element={<ManageSubscription />} />
                 </Routes>
             </div>
         </Router>
