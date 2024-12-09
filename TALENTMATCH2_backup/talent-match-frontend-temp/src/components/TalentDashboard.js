@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { auth, db } from '../config/firebase';
-import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import './TalentDashboard.css';
 
@@ -10,6 +10,7 @@ const TalentDashboard = () => {
     const [messages, setMessages] = useState([]);
     const [auditions, setAuditions] = useState([]);
     const [userMap, setUserMap] = useState({});
+    const [bookmarkedOpportunities, setBookmarkedOpportunities] = useState([]); // New state to track bookmarked opportunities
     const [loadingOpportunities, setLoadingOpportunities] = useState(true);
     const [loadingApplications, setLoadingApplications] = useState(true);
     const [loadingMessages, setLoadingMessages] = useState(true);
@@ -17,7 +18,6 @@ const TalentDashboard = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Fetch all data
         const fetchOpportunities = async () => {
             try {
                 const snapshot = await getDocs(collection(db, 'Opportunities'));
@@ -65,7 +65,6 @@ const TalentDashboard = () => {
                     return;
                 }
 
-                // Fetch messages where the current user is the receiver
                 const messagesRef = collection(db, 'Messages');
                 const snapshot = await getDocs(messagesRef);
 
@@ -75,18 +74,10 @@ const TalentDashboard = () => {
 
                 setMessages(userMessages);
 
-                // Debugging log: Check if messages are fetched
-                if (userMessages.length === 0) {
-                    console.warn('No messages found for the current user.');
-                } else {
-                    console.log('Fetched messages:', userMessages);
-                }
-
-                // Fetch names for all unique senders
                 const senderIds = [...new Set(userMessages.map((msg) => msg.SenderID))];
                 const userMapTemp = {};
                 for (const senderId of senderIds) {
-                    const senderDocId = senderId.replace('/User/', ''); // Adjust the path to match Firestore structure
+                    const senderDocId = senderId.replace('/User/', '');
                     const senderDoc = await getDoc(doc(db, 'User', senderDocId));
                     userMapTemp[senderId] = senderDoc.exists()
                         ? `${senderDoc.data().Fname} ${senderDoc.data().Lname}`
@@ -94,9 +85,6 @@ const TalentDashboard = () => {
                 }
 
                 setUserMap(userMapTemp);
-
-                // Debugging log: Verify userMap
-                console.log('User Map:', userMapTemp);
             } catch (error) {
                 console.error('Error fetching messages:', error);
             } finally {
@@ -128,11 +116,44 @@ const TalentDashboard = () => {
             }
         };
 
+        const fetchBookmarkedOpportunities = async () => {
+            const user = auth.currentUser;
+            if (!user) {
+                return;
+            }
+
+            const userDoc = await getDoc(doc(db, 'User', user.uid));
+            if (userDoc.exists()) {
+                const userData = userDoc.data();
+                setBookmarkedOpportunities(userData.bookmarkedOpportunities || []);
+            }
+        };
+
         fetchOpportunities();
         fetchApplications();
         fetchMessages();
         fetchAuditions();
+        fetchBookmarkedOpportunities();
     }, [navigate]);
+
+    const handleBookmarkToggle = async (opportunityId) => {
+        const user = auth.currentUser;
+        if (!user) {
+            alert('You must be logged in.');
+            return;
+        }
+
+        const updatedBookmarks = bookmarkedOpportunities.includes(opportunityId)
+            ? bookmarkedOpportunities.filter((id) => id !== opportunityId)
+            : [...bookmarkedOpportunities, opportunityId];
+
+        setBookmarkedOpportunities(updatedBookmarks);
+
+        // Update the user's bookmarked opportunities in Firestore
+        await updateDoc(doc(db, 'User', user.uid), {
+            bookmarkedOpportunities: updatedBookmarks,
+        });
+    };
 
     const handleLogout = async () => {
         try {
@@ -180,11 +201,47 @@ const TalentDashboard = () => {
                                     <button onClick={() => navigate(`/apply/${opportunity.id}`)}>
                                         Apply
                                     </button>
+                                    <button onClick={() => handleBookmarkToggle(opportunity.id)}>
+                                        {bookmarkedOpportunities.includes(opportunity.id)
+                                            ? 'Unbookmark'
+                                            : 'Bookmark'}
+                                    </button>
                                 </div>
                             ))}
                         </div>
                     ) : (
                         <p>No opportunities available at the moment.</p>
+                    )}
+                </div>
+
+                {/* Bookmarked Opportunities Section */}
+                <div className="dashboard-section">
+                    <h2>Bookmarked Opportunities</h2>
+                    {bookmarkedOpportunities.length === 0 ? (
+                        <p>You have not bookmarked any opportunities.</p>
+                    ) : (
+                        <div className="opportunities-scrollable">
+                            {opportunities
+                                .filter((opportunity) =>
+                                    bookmarkedOpportunities.includes(opportunity.id)
+                                )
+                                .map((opportunity) => (
+                                    <div key={opportunity.id} className="opportunity-card">
+                                        <h3>{opportunity.Title}</h3>
+                                        <p>{opportunity.Description}</p>
+                                        <p>
+                                            <strong>Deadline:</strong>{' '}
+                                            {new Date(opportunity.Deadline.seconds * 1000).toLocaleDateString()}
+                                        </p>
+                                        <button onClick={() => navigate(`/apply/${opportunity.id}`)}>
+                                            Apply
+                                        </button>
+                                        <button onClick={() => handleBookmarkToggle(opportunity.id)}>
+                                            Unbookmark
+                                        </button>
+                                    </div>
+                                ))}
+                        </div>
                     )}
                 </div>
 
@@ -215,22 +272,24 @@ const TalentDashboard = () => {
                 <div className="dashboard-section">
                     <h2>Your Messages</h2>
                     {loadingMessages ? (
-                        <p>Loading messages...</p>
+                        <p>Loading your messages...</p>
                     ) : messages.length > 0 ? (
-                        messages.map((msg) => (
-                            <div key={msg.id} className="message-card">
-                                <p>
-                                    <strong>From:</strong> {userMap[msg.SenderID] || 'Unknown'}
-                                </p>
-                                <p>{msg.Message}</p>
-                                <p>
-                                    <strong>Sent:</strong>{' '}
-                                    {new Date(msg.Timestamp.seconds * 1000).toLocaleString()}
-                                </p>
-                            </div>
-                        ))
+                        <ul className="messages-list">
+                            {messages.map((message) => (
+                                <li key={message.id} className="message-item">
+                                    <p>
+                                        <strong>From:</strong> {userMap[message.SenderID] || 'Unknown'}
+                                    </p>
+                                    <p>{message.Content}</p>
+                                    <p>
+                                        <strong>Date:</strong>{' '}
+                                        {new Date(message.Timestamp.seconds * 1000).toLocaleString()}
+                                    </p>
+                                </li>
+                            ))}
+                        </ul>
                     ) : (
-                        <p>You have no messages.</p>
+                        <p>You have no new messages.</p>
                     )}
                 </div>
 
@@ -238,28 +297,28 @@ const TalentDashboard = () => {
                 <div className="dashboard-section">
                     <h2>Your Auditions</h2>
                     {loadingAuditions ? (
-                        <p>Loading auditions...</p>
+                        <p>Loading your auditions...</p>
                     ) : auditions.length > 0 ? (
                         <table className="auditions-table">
                             <thead>
                             <tr>
                                 <th>Entertainer</th>
-                                <th>Date & Time</th>
+                                <th>Event</th>
                                 <th>Status</th>
                             </tr>
                             </thead>
                             <tbody>
                             {auditions.map((audition) => (
                                 <tr key={audition.id}>
-                                    <td>{userMap[audition.OrganizerID] || 'Unknown Entertainer'}</td>
-                                    <td>{new Date(audition.DateTime.seconds * 1000).toLocaleString()}</td>
+                                    <td>{audition.EntertainerName}</td>
+                                    <td>{audition.EventTitle}</td>
                                     <td>{audition.Status}</td>
                                 </tr>
                             ))}
                             </tbody>
                         </table>
                     ) : (
-                        <p>You have no auditions scheduled.</p>
+                        <p>You have no upcoming auditions.</p>
                     )}
                 </div>
             </div>
@@ -268,3 +327,4 @@ const TalentDashboard = () => {
 };
 
 export default TalentDashboard;
+
