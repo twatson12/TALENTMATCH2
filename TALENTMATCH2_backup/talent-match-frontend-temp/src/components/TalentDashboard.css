@@ -448,3 +448,72 @@ button:hover {
     background-color: #2a3456; /* Darker purple on hover */
     transform: scale(1.05);
 }
+
+.notification-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.notification-button {
+    background-color: #3b3b98;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.notification-button:hover {
+    background-color: #2a2a7a;
+}
+
+.dropdown-menu {
+    position: absolute;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    z-index: 10;
+    padding: 10px;
+}
+
+.dropdown-item {
+    padding: 10px;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.dropdown-item p {
+    margin: 0;
+    color: #333;
+    font-size: 14px;
+}
+
+.clear-button {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background-color: #f05454;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.clear-button:hover {
+    background-color: #c70039;
+}
+
+.no-notifications {
+    color: #999;
+    text-align: center;
+    padding: 10px;
+}

@@ -11,7 +11,7 @@ const MonitorContentPage = () => {
     const [flaggedContent, setFlaggedContent] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // Fetch user names based on user ID
+    // Fetch usernames based on user ID
     const fetchUserName = async (userId) => {
         try {
             const userDoc = await getDoc(doc(db, 'User', userId));
