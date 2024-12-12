@@ -25,6 +25,7 @@ import ProfileRegistar from "./components/ProfileRegistar";
 import CreateProfile from "./components/CreateProfile";
 import ManageSubscriptions from "./components/ManageSubscription";
 import ManageSubscription from "./components/ManageSubscription";
+import MonitoredContentPage from "./components/MonitorContentPage";
 
 function App() {
     return (
@@ -36,6 +37,7 @@ function App() {
                     <Route path="/register" element={<Register />} />
                     <Route path="/entertainer-dashboard" element={<EntertainerDashboard />} />
                     <Route path="/admin-dashboard" element={<AdminDashboard />} />
+                    <Route path="/monitored-content" element={<MonitoredContentPage />} />
                     <Route path="/talent-dashboard" element={<TalentDashboard />} />
                     <Route path="/moderator-dashboard" element={<ModeratorDashboard />} />
                     <Route path="/search" element={<Search />} />

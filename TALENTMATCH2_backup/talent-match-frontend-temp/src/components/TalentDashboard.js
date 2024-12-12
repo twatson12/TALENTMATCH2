@@ -174,6 +174,9 @@ const TalentDashboard = () => {
                     <button className="settings-button" onClick={() => navigate('/settings')}>
                         Settings
                     </button>
+                    <button className="view-profile-button" onClick={() => navigate('/profile')}>
+                        View Profile
+                    </button>
                     <button className="logout-button" onClick={handleLogout}>
                         Logout
                     </button>

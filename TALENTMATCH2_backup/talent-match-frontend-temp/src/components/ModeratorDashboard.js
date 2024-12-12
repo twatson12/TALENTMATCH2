@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { db, auth } from '../config/firebase';
 import { collection, getDocs, doc, deleteDoc, updateDoc, addDoc } from 'firebase/firestore';
 import './ModeratorDashboard.css';
-import AdminDashboard from "./AdminDashboard";
 
 const ModeratorDashboard = () => {
     const [moderatorRequests, setModeratorRequests] = useState([]);
@@ -64,8 +63,6 @@ const ModeratorDashboard = () => {
             alert('Failed to remove user.');
         }
     };
-
-
 
     const handleUnbanUser = async (userId) => {
         const confirmUnban = window.confirm(
@@ -160,6 +157,16 @@ const ModeratorDashboard = () => {
                 </div>
             </header>
 
+            {/* Navigation to Monitored Content */}
+            <div className="dashboard-section">
+                <button
+                    className="monitored-content-button"
+                    onClick={() => navigate('/monitored-content')}
+                >
+                    View Monitored Content
+                </button>
+            </div>
+
             {/* All Content Section */}
             <div className="dashboard-section">
                 <h2>All Content</h2>
@@ -190,7 +197,7 @@ const ModeratorDashboard = () => {
                         </tbody>
                     </table>
                 ) : (
-                    <p>No content available at the moment.</p>
+                    <p>No content available to manage.</p>
                 )}
             </div>
 
@@ -229,6 +236,7 @@ const ModeratorDashboard = () => {
                     <p>No flagged content at the moment.</p>
                 )}
             </div>
+
 
             {/* User Management Section */}
             <div className="dashboard-section">
