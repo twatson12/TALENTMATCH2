@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { auth, db } from '../config/firebase';
-import {collection, getDocs, doc, getDoc, updateDoc, addDoc, serverTimestamp, query, where} from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, updateDoc, addDoc, serverTimestamp } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import './TalentDashboard.css';
 
@@ -40,28 +40,25 @@ const TalentDashboard = () => {
 
         const fetchApplications = async () => {
             try {
-                const user = auth.currentUser;
-                if (!user) {
-                    alert('You must be logged in.');
-                    navigate('/login');
-                    return;
+                const snapshot = await getDocs(collection(db, 'Applications'));
+                const applicationsData = [];
+                for (const docSnap of snapshot.docs) {
+                    const application = { id: docSnap.id, ...docSnap.data() };
+                    const opportunityRef = application.OpportunityID.replace('/Opportunity/', '');
+                    const opportunityDoc = await getDoc(doc(db, 'Opportunities', opportunityRef));
+                    application.OpportunityTitle = opportunityDoc.exists()
+                        ? opportunityDoc.data().Title
+                        : 'Unknown Opportunity';
+                    applicationsData.push(application);
                 }
-
-                const applicationsRef = collection(db, 'Applications');
-                const q = query(applicationsRef, where('TalentID', '==', `/User/${user.uid}`));
-                const snapshot = await getDocs(q);
-                const data = snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }));
-
-                setApplications(data);
-                setLoadingApplications(false);
+                setApplications(applicationsData);
             } catch (error) {
                 console.error('Error fetching applications:', error);
+            } finally {
                 setLoadingApplications(false);
             }
         };
+
         const fetchMessages = async () => {
             try {
                 const user = auth.currentUser;
@@ -268,27 +265,7 @@ const TalentDashboard = () => {
                         </div>
                     )}
                 </div>
-
-                {/* Your Applications Section */}
-                <div className="dashboard-section">
-                    <h2>Your Applications</h2>
-                    {applications.length > 0 ? (
-                        <ul className="applications-list">
-                            {applications.map(application => (
-                                <li key={application.id} className="application-item">
-                                    <p>
-                                        <strong>Opportunity:</strong> {application.OpportunityTitle}
-                                    </p>
-                                    <p>
-                                        <strong>Status:</strong> {application.Status}
-                                    </p>
-                                </li>
-                            ))}
-                        </ul>
-                    ) : (
-                        <p>You have not applied for any opportunities yet.</p>
-                    )}
-                </div>
+                
                 {/* Your Auditions Section */}
                 <div className="dashboard-section">
                     <h2>Your Auditions</h2>
