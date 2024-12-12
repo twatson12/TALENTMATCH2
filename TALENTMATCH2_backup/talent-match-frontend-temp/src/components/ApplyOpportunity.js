@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { db, auth } from '../config/firebase';
-import { collection, addDoc, Timestamp } from 'firebase/firestore';
+import {collection, addDoc, Timestamp, getDoc, doc} from 'firebase/firestore';
 import './ApplyOpportunity.css';
 
 const ApplyOpportunity = () => {
@@ -29,8 +29,12 @@ const ApplyOpportunity = () => {
                 return;
             }
 
+            // Fetch Opportunity Data (Optional): This approach fetches the opportunity title before adding the application.
+            const opportunityDoc = await getDoc(doc(db, 'Opportunities', opportunityId));
+            const opportunityTitle = opportunityDoc.exists() ? opportunityDoc.data().Title : 'Unknown Opportunity';
+
             await addDoc(collection(db, 'Applications'), {
-                OpportunityID: `/Opportunity/${opportunityId}`,
+                OpportunityID: `${opportunityId}`,
                 TalentID: `/User/${user.uid}`,
                 Name: name, // Save the name
                 Email: email, // Save the email
@@ -38,6 +42,7 @@ const ApplyOpportunity = () => {
                 SubmissionDate: Timestamp.now(),
                 Message: message,
                 FileName: file ? file.name : null,
+                OpportunityTitle: opportunityTitle, // Add Opportunity Title
             });
 
             alert('Application submitted successfully!');

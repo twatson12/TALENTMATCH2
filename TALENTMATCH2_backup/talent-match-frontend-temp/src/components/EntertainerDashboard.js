@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { auth, db } from '../config/firebase';
-import { collection, query, where, getDocs, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, query, where, getDocs, addDoc, serverTimestamp, updateDoc, doc, getDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import './EntertainerDashboard.css';
 
@@ -14,9 +14,10 @@ const EntertainerDashboard = () => {
     const [auditionDate, setAuditionDate] = useState(''); // Audition date
     const [loadingOpportunities, setLoadingOpportunities] = useState(true);
     const [loadingTalents, setLoadingTalents] = useState(true);
+    const [applications, setApplications] = useState([]); // New state for applications
+    const [loadingApplications, setLoadingApplications] = useState(true);
     const navigate = useNavigate();
 
-    // Fetch opportunities and talents
     useEffect(() => {
         const fetchOpportunities = async () => {
             try {
@@ -62,11 +63,59 @@ const EntertainerDashboard = () => {
             }
         };
 
+        const fetchApplications = async () => {
+            try {
+                const user = auth.currentUser;
+                if (!user) {
+                    alert('You must be logged in.');
+                    navigate('/login');
+                    return;
+                }
+
+                // Get Entertainer ID
+                const entertainerId = `/User/${user.uid}`; // Assuming you have the ID
+
+                // Fetch Opportunities created by the entertainer
+                const opportunitiesRef = collection(db, 'Opportunities');
+                const q = query(opportunitiesRef, where('EntertainerID', '==', entertainerId));
+                const opportunitySnapshot = await getDocs(q);
+                const opportunityDocs = opportunitySnapshot.docs.map((doc) => doc.id); // Get opportunity IDs
+
+                // If no opportunities found, set applications to empty array
+                if (opportunityDocs.length === 0) {
+                    setApplications([]);
+                    setLoadingApplications(false);
+                    return;
+                }
+
+                // Fetch applications for the retrieved opportunity IDs
+                const applicationsRef = collection(db, 'Applications');
+                const applicationQuery = query(
+                    applicationsRef,
+                    where('OpportunityID', 'in', opportunityDocs)
+                );
+                const applicationSnapshot = await getDocs(applicationQuery);
+                const data = applicationSnapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+
+                setApplications(data);
+                setLoadingApplications(false);
+            } catch (error) {
+                console.error('Error fetching applications:', error);
+                setLoadingApplications(false);
+            }
+        };
+
         fetchOpportunities();
         fetchTalents();
+        fetchApplications();
     }, [navigate]);
 
-    const handleSearch = (e) => {
+
+
+const handleSearch = (e) => {
         const query = e.target.value.toLowerCase();
         setSearchQuery(query);
 
@@ -80,6 +129,16 @@ const EntertainerDashboard = () => {
             setFilteredTalents(filtered);
         } else {
             setFilteredTalents(talents);
+        }
+    };
+
+    const handleLogout = async () => {
+        try {
+            await auth.signOut();
+            navigate('/login');
+        } catch (error) {
+            console.error('Error logging out:', error);
+            alert('Logout failed.');
         }
     };
 
@@ -137,6 +196,29 @@ const EntertainerDashboard = () => {
         }
     };
 
+    const handleUpdateApplicationStatus = async (applicationId, newStatus) => {
+        try {
+            const applicationRef = doc(db, 'Applications', applicationId);
+            await updateDoc(applicationRef, {
+                Status: newStatus,
+            });
+
+            // Update the local state to reflect the change
+            setApplications((prevApplications) =>
+                prevApplications.map((application) =>
+                    application.id === applicationId
+                        ? { ...application, Status: newStatus }
+                        : application
+                )
+            );
+
+            alert(`Application status updated to ${newStatus}`);
+        } catch (error) {
+            console.error('Error updating application status:', error);
+        }
+    };
+
+
     return (
         <div className="entertainer-dashboard">
             <header className="dashboard-header">
@@ -145,7 +227,7 @@ const EntertainerDashboard = () => {
                     <button onClick={() => navigate('/settings')} className="settings-button">
                         Settings
                     </button>
-                    <button onClick={() => auth.signOut()} className="logout-button">
+                    <button onClick={handleLogout} className="logout-button">
                         Logout
                     </button>
                 </div>
@@ -185,6 +267,50 @@ const EntertainerDashboard = () => {
                         ))}
                         </tbody>
                     </table>
+                )}
+
+                {/* New Section: Manage Applications */}
+                <h2>Review Applications</h2>
+                {loadingApplications ? (
+                    <p>Loading applications...</p>
+                ) : applications.length > 0 ? (
+                    <table className="applications-table">
+                        <thead>
+                        <tr>
+                            <th>Opportunity Title</th>
+                            <th>Talent Name</th>
+                            <th>Message</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {applications.map((application) => (
+                            <tr key={application.id}>
+                                <td>{application.OpportunityTitle}</td>
+                                <td>{application.Name}</td>
+                                <td>{application.Message}</td>
+                                <td>{application.Status}</td>
+                                <td>
+                                    <button
+                                        onClick={() => handleUpdateApplicationStatus(application.id, 'Accepted')}
+                                        className="update-status-button"
+                                    >
+                                        Accept
+                                    </button>
+                                    <button
+                                        onClick={() => handleUpdateApplicationStatus(application.id, 'Rejected')}
+                                        className="update-status-button"
+                                    >
+                                        Reject
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                ) : (
+                    <p>No applications yet.</p>
                 )}
 
                 {/* Section for Browsing Talents */}
