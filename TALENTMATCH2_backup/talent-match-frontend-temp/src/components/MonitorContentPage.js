@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { collection, getDocs, addDoc } from 'firebase/firestore';
+import { collection, getDocs, addDoc, doc, updateDoc, deleteDoc, getDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { CSVLink } from 'react-csv';
 import './MonitorContentPage.css';
@@ -8,21 +8,68 @@ const MonitorContentPage = () => {
     const [messages, setMessages] = useState([]);
     const [reviews, setReviews] = useState([]);
     const [auditions, setAuditions] = useState([]);
+    const [flaggedContent, setFlaggedContent] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    // Fetch user names based on user ID
+    const fetchUserName = async (userId) => {
+        try {
+            const userDoc = await getDoc(doc(db, 'User', userId));
+            if (userDoc.exists()) {
+                const userData = userDoc.data();
+                return `${userData.Fname || ''} ${userData.Lname || ''}`.trim();
+            }
+            return 'Unknown User';
+        } catch (error) {
+            console.error('Error fetching user name:', error);
+            return 'Unknown User';
+        }
+    };
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // Fetch monitored data
-                const [messagesSnapshot, reviewsSnapshot, auditionsSnapshot] = await Promise.all([
+                const [messagesSnapshot, reviewsSnapshot, auditionsSnapshot, flaggedSnapshot] = await Promise.all([
                     getDocs(collection(db, 'Messages')),
                     getDocs(collection(db, 'Reviews')),
                     getDocs(collection(db, 'Auditions')),
+                    getDocs(collection(db, 'FlaggedContent')),
                 ]);
 
-                setMessages(messagesSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+                // Map messages with names
+                const messagesData = await Promise.all(
+                    messagesSnapshot.docs.map(async (doc) => {
+                        const data = doc.data();
+                        const senderName = await fetchUserName(data.SenderID?.replace('/User/', '') || '');
+                        const receiverName = await fetchUserName(data.ReceiverID?.replace('/User/', '') || '');
+                        return {
+                            id: doc.id,
+                            ...data,
+                            SenderName: senderName,
+                            ReceiverName: receiverName,
+                        };
+                    })
+                );
+
+                // Map auditions with names
+                const auditionsData = await Promise.all(
+                    auditionsSnapshot.docs.map(async (doc) => {
+                        const data = doc.data();
+                        const talentName = await fetchUserName(data.TalentID?.replace('/User/', '') || '');
+                        const hostName = await fetchUserName(data.HostID?.replace('/User/', '') || '');
+                        return {
+                            id: doc.id,
+                            ...data,
+                            TalentName: talentName,
+                            HostName: hostName,
+                        };
+                    })
+                );
+
+                setMessages(messagesData);
                 setReviews(reviewsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-                setAuditions(auditionsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+                setAuditions(auditionsData);
+                setFlaggedContent(flaggedSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
 
                 setLoading(false);
             } catch (error) {
@@ -53,6 +100,30 @@ const MonitorContentPage = () => {
         }
     };
 
+    const handleResolveFlag = async (flagId) => {
+        try {
+            await updateDoc(doc(db, 'FlaggedContent', flagId), { Status: 'Resolved' });
+            setFlaggedContent(flaggedContent.filter((flag) => flag.id !== flagId));
+            alert('Flagged content resolved.');
+        } catch (error) {
+            console.error('Error resolving flagged content:', error);
+        }
+    };
+
+    const handleDeleteFlag = async (flagId, itemId) => {
+        const reason = prompt('Enter a message to inform the user about the flagged content:');
+        if (!reason) return;
+
+        try {
+            await deleteDoc(doc(db, 'FlaggedContent', flagId));
+            await deleteDoc(doc(db, 'Content', itemId)); // Adjust the collection name as per your structure
+            setFlaggedContent(flaggedContent.filter((flag) => flag.id !== flagId));
+            alert('Flagged content deleted, and the user has been notified.');
+        } catch (error) {
+            console.error('Error deleting flagged content:', error);
+        }
+    };
+
     return (
         <div className="monitor-content-page">
             <header className="page-header">
@@ -80,10 +151,16 @@ const MonitorContentPage = () => {
                                 <tbody>
                                 {messages.map((message) => (
                                     <tr key={message.id}>
-                                        <td>{message.sender}</td>
-                                        <td>{message.receiver}</td>
-                                        <td>{message.content}</td>
-                                        <td>{new Date(message.timestamp).toLocaleString()}</td>
+                                        <td>{message.SenderName}</td>
+                                        <td>{message.ReceiverName}</td>
+                                        <td>{message.Message}</td>
+                                        <td>
+                                            {message.Timestamp
+                                                ? new Date(
+                                                    message.Timestamp.seconds * 1000
+                                                ).toLocaleString()
+                                                : 'No date provided'}
+                                        </td>
                                         <td>
                                             <button onClick={() => handleFlag(message.id, 'Message')}>
                                                 Flag
@@ -115,10 +192,10 @@ const MonitorContentPage = () => {
                                 <tbody>
                                 {reviews.map((review) => (
                                     <tr key={review.id}>
-                                        <td>{review.reviewer}</td>
-                                        <td>{review.reviewee}</td>
-                                        <td>{review.content}</td>
-                                        <td>{review.rating}</td>
+                                        <td>{review.ReviewerID}</td>
+                                        <td>{review.RevieweeID}</td>
+                                        <td>{review.Content}</td>
+                                        <td>{review.Rating}</td>
                                         <td>
                                             <button onClick={() => handleFlag(review.id, 'Review')}>
                                                 Flag
@@ -149,16 +226,58 @@ const MonitorContentPage = () => {
                                 <tbody>
                                 {auditions.map((audition) => (
                                     <tr key={audition.id}>
-                                        <td>{audition.talent}</td>
-                                        <td>{audition.host}</td>
-                                        <td>{new Date(audition.datetime).toLocaleString()}</td>
-                                        <td>{audition.location}</td>
+                                        <td>{audition.TalentName}</td>
+                                        <td>{audition.HostName}</td>
+                                        <td>
+                                            {audition.DateTime
+                                                ? new Date(audition.DateTime.seconds * 1000).toLocaleString()
+                                                : 'No date provided'}
+                                        </td>
+                                        <td>{audition.Location}</td>
                                     </tr>
                                 ))}
                                 </tbody>
                             </table>
                         ) : (
                             <p>No scheduled auditions to monitor.</p>
+                        )}
+                    </section>
+
+                    {/* Flagged Content Section */}
+                    <section className="content-section">
+                        <h2>Flagged Content</h2>
+                        {flaggedContent.length > 0 ? (
+                            <table className="content-table">
+                                <thead>
+                                <tr>
+                                    <th>Content ID</th>
+                                    <th>Type</th>
+                                    <th>Reason</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {flaggedContent.map((flag) => (
+                                    <tr key={flag.id}>
+                                        <td>{flag.ItemId}</td>
+                                        <td>{flag.Type}</td>
+                                        <td>{flag.Reason}</td>
+                                        <td>{flag.Status}</td>
+                                        <td>
+                                            <button onClick={() => handleResolveFlag(flag.id)}>
+                                                Resolve
+                                            </button>
+                                            <button onClick={() => handleDeleteFlag(flag.id, flag.ItemId)}>
+                                                Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                                </tbody>
+                            </table>
+                        ) : (
+                            <p>No flagged content to monitor.</p>
                         )}
                     </section>
 
