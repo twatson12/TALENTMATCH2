@@ -26,6 +26,8 @@ import CreateProfile from "./components/CreateProfile";
 import ManageSubscriptions from "./components/ManageSubscription";
 import ManageSubscription from "./components/ManageSubscription";
 import MonitoredContentPage from "./components/MonitorContentPage";
+import ViewProfilePage from "./components/ViewProfilePage";
+import ViewTalentProfile from "./components/ViewTalentProfile";
 
 function App() {
     return (
@@ -56,6 +58,7 @@ function App() {
                     <Route path="/registar" element={<Register />} />
                     <Route path="/DisplayRating" element={<DisplayRating/>} />
                     <Route path="/subscriptions" element={<ManageSubscription />} />
+                    <Route path="/view-profile/:id" element={<ViewProfilePage />} />
                 </Routes>
             </div>
         </Router>
