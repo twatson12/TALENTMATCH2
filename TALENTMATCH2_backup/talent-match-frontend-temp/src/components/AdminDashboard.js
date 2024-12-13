@@ -100,6 +100,32 @@ const AdminDashboard = () => {
         return <p>Loading...</p>;
     }
 
+    const handleToggleStatus = async (userId, currentStatus) => {
+        try {
+            const userRef = doc(db, 'User', userId);
+            const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
+            await updateDoc(userRef, { Status: newStatus });
+
+            setUsers((prev) =>
+                prev.map((user) =>
+                    user.id === userId ? { ...user, Status: newStatus } : user
+                )
+            );
+
+            setFilteredUsers((prev) =>
+                prev.map((user) =>
+                    user.id === userId ? { ...user, Status: newStatus } : user
+                )
+            );
+
+            alert(`User status updated to ${newStatus}`);
+        } catch (error) {
+            console.error('Error updating user status:', error);
+            alert('Failed to update user status.');
+        }
+    };
+
+
     return (
         <div className="admin-dashboard">
             <nav className="navbar">
@@ -135,78 +161,6 @@ const AdminDashboard = () => {
                 />
             </div>
 
-            <div className="subscription-plans-section">
-                <h2>Manage Subscription Plans</h2>
-                {editingPlan ? (
-                    <form onSubmit={handleUpdatePlan} className="edit-plan-form">
-                        <div>
-                            <label>Plan Name:</label>
-                            <input
-                                type="text"
-                                value={editingPlan.Name}
-                                onChange={(e) =>
-                                    setEditingPlan({ ...editingPlan, Name: e.target.value })
-                                }
-                            />
-                        </div>
-                        <div>
-                            <label>Price:</label>
-                            <input
-                                type="number"
-                                value={editingPlan.Price}
-                                onChange={(e) =>
-                                    setEditingPlan({ ...editingPlan, Price: e.target.value })
-                                }
-                            />
-                        </div>
-                        <div>
-                            <label>Features (comma-separated):</label>
-                            <textarea
-                                value={editingPlan.Features.join(', ')}
-                                onChange={(e) =>
-                                    setEditingPlan({
-                                        ...editingPlan,
-                                        Features: e.target.value.split(',').map((feature) => feature.trim()),
-                                    })
-                                }
-                            />
-                        </div>
-                        <button type="submit">Update Plan</button>
-                        <button type="button" onClick={() => setEditingPlan(null)}>
-                            Cancel
-                        </button>
-                    </form>
-                ) : (
-                    <table className="subscription-table">
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Features</th>
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {subscriptions.map((plan) => (
-                            <tr key={plan.id}>
-                                <td>{plan.Name}</td>
-                                <td>${plan.Price}</td>
-                                <td>
-                                    <ul>
-                                        {plan.Features.map((feature, index) => (
-                                            <li key={index}>{feature}</li>
-                                        ))}
-                                    </ul>
-                                </td>
-                                <td>
-                                    <button onClick={() => handleEditPlan(plan)}>Edit</button>
-                                </td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
-                )}
-            </div>
 
             <div className="user-list">
                 <h2>All Users</h2>
@@ -219,6 +173,7 @@ const AdminDashboard = () => {
                             <th>Role</th>
                             <th>Subscription Plan</th>
                             <th>Status</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -226,9 +181,21 @@ const AdminDashboard = () => {
                             <tr key={user.id}>
                                 <td>{user.Email}</td>
                                 <td>{`${user.Fname || ''} ${user.Lname || ''}`}</td>
-                                <td>{user.RoleId || 'Unknown'}</td>
-                                <td>{user.SubscriptionPlanId || 'Unknown'}</td>
+                                <td>{`${user.RoleName || ''}`}</td>
+                                <td>{user.SubscriptionName || 'Unknown'}</td>
                                 <td>{user.Status || 'active'}</td>
+                                <td>
+                                    <button
+                                        onClick={() =>
+                                            handleToggleStatus(user.id, user.Status || 'active')
+                                        }
+                                        className={`toggle-status-button ${
+                                            user.Status === 'active' ? 'deactivate' : 'activate'
+                                        }`}
+                                    >
+                                        {user.Status === 'active' ? 'Deactivate' : 'Activate'}
+                                    </button>
+                                </td>
                             </tr>
                         ))}
                         </tbody>
@@ -242,4 +209,3 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
-
