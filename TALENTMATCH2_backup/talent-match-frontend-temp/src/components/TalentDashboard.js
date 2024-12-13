@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { auth, db } from '../config/firebase';
-
 import { collection,onSnapshot, getDocs, doc, getDoc, updateDoc, addDoc, serverTimestamp } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import './TalentDashboard.css';
@@ -20,6 +19,9 @@ const TalentDashboard = () => {
     const navigate = useNavigate();
     const [showDropdown, setShowDropdown] = useState(false);
     const user = auth.currentUser;
+    const [activeSender, setActiveSender] = useState(null);
+    const [newMessage, setNewMessage] = useState('');
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -43,6 +45,7 @@ const TalentDashboard = () => {
                 }
             };
 
+
             const fetchApplications = async () => {
                 try {
                     const snapshot = await getDocs(collection(db, 'Applications'));
@@ -64,36 +67,33 @@ const TalentDashboard = () => {
                 }
             };
 
-            const fetchMessages = async () => {
-                try {
-                    const user = auth.currentUser;
-                    if (!user) {
-                        navigate('/login');
-                        return;
-                    }
-                    const snapshot = await getDocs(collection(db, 'Messages'));
-                    const userMessages = snapshot.docs
-                        .map((doc) => ({id: doc.id, ...doc.data()}))
-                        .filter((msg) => msg.ReceiverID === `/User/${user.uid}`);
-                    setMessages(userMessages);
-                    const senderIds = [...new Set(userMessages.map((msg) => msg.SenderID))];
-                    const userMapTemp = {};
-                    for (const senderId of senderIds) {
-                        const senderDocId = senderId.replace('/User/', '');
-                        const senderDoc = await getDoc(doc(db, 'User', senderDocId));
-                        userMapTemp[senderId] = senderDoc.exists()
-                            ? `${senderDoc.data().Fname} ${senderDoc.data().Lname}`
-                            : 'Unknown Sender';
-                    }
-                    setUserMap(userMapTemp);
-                } catch (error) {
-                    console.error('Error fetching messages:', error);
-                } finally {
-                    setLoadingMessages(false);
+        const fetchMessages = async () => {
+            try {
+                const user = auth.currentUser;
+                if (!user) {
+                    navigate('/login');
+                    return;
                 }
-            };
 
-            const fetchAuditions = async () => {
+                const snapshot = await getDocs(collection(db, 'Messages'));
+                const userMessages = snapshot.docs
+                    .map((doc) => ({ id: doc.id, ...doc.data() }))
+                    .filter((msg) => msg.ReceiverID === `/User/${user.uid}`);
+
+                console.log('Fetched Messages:', userMessages); // Debugging
+                setMessages(userMessages);
+            } catch (error) {
+                console.error('Error fetching messages:', error);
+            } finally {
+                setLoadingMessages(false);
+            }
+        };
+
+
+
+
+
+        const fetchAuditions = async () => {
                 try {
                     const user = auth.currentUser;
                     if (!user) {
@@ -121,6 +121,13 @@ const TalentDashboard = () => {
                     setBookmarkedOpportunities(userDoc.data().bookmarkedOpportunities || []);
                 }
             };
+        const groupedMessages = messages.reduce((acc, message) => {
+            const senderName = userMap[message.SenderID] || 'Unknown Sender';
+            if (!acc[senderName]) acc[senderName] = [];
+            acc[senderName].push(message);
+            return acc;
+        }, {});
+
 
         const user = auth.currentUser;
         if (!user) {
@@ -175,9 +182,39 @@ const TalentDashboard = () => {
         };
     }, [user, navigate]);
 
+    const groupedMessages = messages.reduce((acc, message) => {
+        const senderName = userMap[message.SenderID] || 'Unknown Sender';
+        if (!acc[senderName]) acc[senderName] = [];
+        acc[senderName].push(message);
+        return acc;
+    }, {});
+
+    const handleSendMessage = async (receiverName) => {
+        try {
+            const receiverID = Object.keys(userMap).find((id) => userMap[id] === receiverName);
+
+            if (!receiverID || receiverID === `/User/${auth.currentUser.uid}`) {
+                alert('Cannot send a message to yourself!');
+                return;
+            }
+
+            await addDoc(collection(db, 'Messages'), {
+                SenderID: `/User/${auth.currentUser.uid}`,
+                ReceiverID: receiverID,
+                MessageText: newMessage,
+                Timestamp: serverTimestamp(),
+            });
+
+            setNewMessage('');
+            alert('Message sent successfully!');
+        } catch (error) {
+            console.error('Error sending message:', error);
+            alert('Failed to send message.');
+        }
+    };
 
 
-        const handleBookmarkToggle = async (opportunityId) => {
+    const handleBookmarkToggle = async (opportunityId) => {
             const user = auth.currentUser;
             if (!user) {
                 alert('You must be logged in.');
@@ -299,25 +336,56 @@ const TalentDashboard = () => {
                         <h2>Your Messages</h2>
                         {loadingMessages ? (
                             <p>Loading your messages...</p>
-                        ) : messages.length > 0 ? (
-                            <ul className="messages-list">
-                                {messages.map((message) => (
-                                    <li key={message.id} className="message-item">
-                                        <p>
-                                            <strong>From:</strong> {userMap[message.SenderID] || 'Unknown Sender'}
-                                        </p>
-                                        <p>{message.Content}</p>
-                                        <p>
-                                            <strong>Date:</strong>{' '}
-                                            {new Date(message.Timestamp.seconds * 1000).toLocaleString()}
-                                        </p>
-                                    </li>
-                                ))}
-                            </ul>
+                        ) : Object.keys(groupedMessages).length > 0 ? (
+                            Object.keys(groupedMessages).map((sender) => (
+                                <div key={sender} className="message-thread">
+                                    <h3
+                                        onClick={() => setActiveSender(activeSender === sender ? null : sender)}
+                                        className="thread-sender"
+                                    >
+                                        Messages from {sender}
+                                    </h3>
+                                    {activeSender === sender && (
+                                        <div className="chat-box">
+                                            <div className="chat-messages">
+                                                {groupedMessages[sender].map((msg) => (
+                                                    <div
+                                                        key={msg.id}
+                                                        className={`chat-message ${
+                                                            msg.SenderID === `/User/${auth.currentUser.uid}`
+                                                                ? 'sent-message'
+                                                                : 'received-message'
+                                                        }`}
+                                                    >
+                                                        {/* Display the message content */}
+                                                        <p>{msg.MessageText || 'No content available'}</p>
+                                                        <span>
+                                        {msg.Timestamp
+                                            ? new Date(msg.Timestamp.seconds * 1000).toLocaleString()
+                                            : 'No timestamp available'}
+                                    </span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                            <div className="chat-input">
+                                                <input
+                                                    type="text"
+                                                    value={newMessage}
+                                                    onChange={(e) => setNewMessage(e.target.value)}
+                                                    placeholder="Type your message..."
+                                                />
+                                                <button onClick={() => handleSendMessage(sender)}>Send</button>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            ))
                         ) : (
                             <p>You have no new messages.</p>
                         )}
                     </div>
+
+
                     {/* Bookmarked Opportunities Section */}
                     <div className="dashboard-section">
                         <h2>Bookmarked Opportunities</h2>

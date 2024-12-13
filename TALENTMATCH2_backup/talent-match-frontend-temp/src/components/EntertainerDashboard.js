@@ -17,6 +17,12 @@ const EntertainerDashboard = () => {
     const [applications, setApplications] = useState([]); // New state for applications
     const [loadingApplications, setLoadingApplications] = useState(true);
     const navigate = useNavigate();
+    const [messages, setMessages] = useState([]);
+    const [loadingMessages, setLoadingMessages] = useState(false);
+
+
+
+
 
     useEffect(() => {
         const fetchOpportunities = async () => {
@@ -62,6 +68,7 @@ const EntertainerDashboard = () => {
                 setLoadingTalents(false);
             }
         };
+
 
         const fetchApplications = async () => {
             try {
@@ -141,6 +148,48 @@ const handleSearch = (e) => {
             alert('Logout failed.');
         }
     };
+// Define fetchMessagesForSelectedTalent at the top
+    const fetchMessagesForSelectedTalent = async () => {
+        if (!selectedTalent) return;
+
+        setLoadingMessages(true);
+
+        try {
+            const user = auth.currentUser;
+            if (!user) {
+                alert('You must be logged in.');
+                navigate('/login');
+                return;
+            }
+
+            const snapshot = await getDocs(collection(db, 'Messages'));
+            const talentMessages = snapshot.docs
+                .map((doc) => ({ id: doc.id, ...doc.data() }))
+                .filter(
+                    (msg) =>
+                        (msg.SenderID === `/User/${user.uid}` && msg.ReceiverID === `/User/${selectedTalent.id}`) ||
+                        (msg.ReceiverID === `/User/${user.uid}` && msg.SenderID === `/User/${selectedTalent.id}`)
+                );
+
+            // Sort messages by timestamp
+            const sortedMessages = talentMessages.sort((a, b) => {
+                const timeA = a.Timestamp?.seconds || 0; // Use 0 as fallback if Timestamp is missing
+                const timeB = b.Timestamp?.seconds || 0;
+                return timeA - timeB;
+            });
+
+            setMessages(sortedMessages);
+        } catch (error) {
+            console.error('Error fetching messages:', error);
+        } finally {
+            setLoadingMessages(false);
+        }
+    };
+
+// Then include this in useEffect
+    useEffect(() => {
+        fetchMessagesForSelectedTalent(); // Fetch messages when selectedTalent changes
+    }, [selectedTalent]);
 
     const handleSendMessage = async () => {
         if (!message.trim()) {
@@ -155,19 +204,30 @@ const handleSearch = (e) => {
                 return;
             }
 
+            if (!selectedTalent) {
+                alert('Please select a talent to send a message.');
+                return;
+            }
+
             await addDoc(collection(db, 'Messages'), {
                 SenderID: `/User/${user.uid}`,
                 ReceiverID: `/User/${selectedTalent.id}`,
-                Message: message,
+                MessageText: message.trim(),
                 Timestamp: serverTimestamp(),
             });
 
             alert('Message sent successfully!');
-            setMessage('');
+            setMessage(''); // Clear the message input field
+
+            // Refresh messages
+            fetchMessagesForSelectedTalent();
         } catch (error) {
             console.error('Error sending message:', error);
+            alert('Failed to send the message.');
         }
     };
+
+
 
     const handleScheduleAudition = async () => {
         if (!auditionDate.trim()) {
@@ -365,27 +425,90 @@ const handleSearch = (e) => {
                 ) : (
                     <p>No talents found matching your search.</p>
                 )}
-
-                {/* Section for Messaging Talent */}
+                {/* Section to View Messages */}
                 <div className="dashboard-section">
-                    <h2>Send Message</h2>
+                    <h2>Messages</h2>
                     {selectedTalent ? (
                         <div>
-                            <h3>Send a message to {selectedTalent.Fname} {selectedTalent.Lname}</h3>
-                            <textarea
-                                value={message}
-                                onChange={(e) => setMessage(e.target.value)}
-                                placeholder="Type your message..."
-                                className="message-textarea"
-                            ></textarea>
-                            <button onClick={handleSendMessage} className="send-message-button">
-                                Send Message
-                            </button>
+                            <h3>Conversation with {selectedTalent.Fname} {selectedTalent.Lname}</h3>
+                            <div className="message-list">
+                                {messages.length > 0 ? (
+                                    messages.map((msg) => (
+                                        <div
+                                            key={msg.id}
+                                            className={`chat-message ${
+                                                msg.SenderID === `/User/${auth.currentUser.uid}`
+                                                    ? 'sent-message'
+                                                    : 'received-message'
+                                            }`}
+                                        >
+                                            <p>{msg.MessageText}</p>
+                                            <span>
+                                {msg.Timestamp
+                                    ? new Date(msg.Timestamp.seconds * 1000).toLocaleString()
+                                    : 'No timestamp'}
+                            </span>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p>No messages to display.</p>
+                                )}
+                            </div>
                         </div>
                     ) : (
-                        <p>Select a talent to send a message.</p>
+                        <p>Select a talent to view messages.</p>
                     )}
                 </div>
+                
+
+                {/* Section for Messages and Sending */}
+                <div className="dashboard-section">
+                    <h2>{selectedTalent ? `Conversation with ${selectedTalent.Fname}` : 'Messages'}</h2>
+                    {selectedTalent ? (
+                        <div>
+                            {/* Message Thread */}
+                            <div className="message-list">
+                                {messages.length > 0 ? (
+                                    messages.map((msg) => (
+                                        <div
+                                            key={msg.id}
+                                            className={`chat-message ${
+                                                msg.SenderID === `/User/${auth.currentUser.uid}`
+                                                    ? 'sent-message'
+                                                    : 'received-message'
+                                            }`}
+                                        >
+                                            <p>{msg.MessageText}</p>
+                                            <span>
+                                {msg.Timestamp
+                                    ? new Date(msg.Timestamp.seconds * 1000).toLocaleString()
+                                    : 'No timestamp'}
+                            </span>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p>No messages to display.</p>
+                                )}
+                            </div>
+
+                            {/* Send Message */}
+                            <div className="send-message-section">
+                <textarea
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder="Type your message..."
+                    className="message-textarea"
+                ></textarea>
+                                <button onClick={handleSendMessage} className="send-message-button">
+                                    Send Message
+                                </button>
+                            </div>
+                        </div>
+                    ) : (
+                        <p>Select a talent to view messages and send a message.</p>
+                    )}
+                </div>
+
 
                 {/* Section for Scheduling Auditions */}
                 <div className="dashboard-section">
